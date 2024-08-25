@@ -18,7 +18,34 @@
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true
+    "noFallthroughCasesInSwitch": true,
+
+    "types": ["node"],
+    "paths": {
+      "@/*": ["./src/*"]
+    }
   },
-  "include": ["src"]
+  "include": ["src"],
+
+  "references": [{ "path": "./tsconfig.node.json" }]
 }
+
+//Example
+//{
+//  "compilerOptions": {
+//    "baseUrl": ".",
+//    ...
+//    "paths": {
+//      "*": ["src/*", "node_modules/*"],
+//      "components/*": ["src/components/*"],
+//      "containers/*": ["src/containers/*"],
+//      "pages/*": ["src/constants/*"],
+//      "store/*": ["src/store/*"],
+//      "types/*": ["src/types/*"],
+//      "NestedFolder/*": [
+//        "src/components/NestedFolder/*"
+//      ],
+//    }
+//  },
+//  "include": ["src/**/*", "*"]
+//}
