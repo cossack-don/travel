@@ -1,7 +1,7 @@
 import {customConfigAxios} from "@/api/index";
 
 
-export const ApiAdapter = async (config:any)=>{
+export const apiAdapter = async (config)=>{
     try {
         const response = await customConfigAxios(config)
 
