@@ -1,3 +1,3 @@
-# Travel app
+### api - backend 
 
-- React, React Router, RTK, Axios, CSS-modules
+### client - frontend
