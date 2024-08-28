@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Link } from 'react-router-dom';
-import { Counter } from '@/feat/counter/Counter';
-import {UICheckBox} from "@/UI";
+import { Counter } from '@/features/counter/Counter';
+import {UICheckBox} from "../shared/UI";
 import {useState} from "react";
 
 export default function TypeTrip() {
