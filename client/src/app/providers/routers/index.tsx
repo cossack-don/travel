@@ -1,6 +1,7 @@
 import * as React from 'react';
 
 import { Routes, Route } from 'react-router-dom';
+import { BrowserRouter } from 'react-router-dom';
 
 import Start from '@/pages/Start.tsx';
 import Gender from '@/pages/Gender.tsx';
@@ -11,7 +12,7 @@ import NotFoundPage from "@/pages/NotFoundPage.tsx";
 import TypeTrip from "@/pages/TypeTrip.tsx";
 import Result from "@/pages/Result.tsx";
 
-export default function Routers() {
+const Routers = () => {
     return (
         <div>
             <Routes>
@@ -27,3 +28,7 @@ export default function Routers() {
         </div>
 );
 }
+
+const Router = ()=> <BrowserRouter><Routers/></BrowserRouter>
+
+export default Router

@@ -1,11 +1,18 @@
-import Routers from './routers';
+import '@/app//style/reset.css'
+import '@/app/style/palette.css'
+import '@/app/style/index.css'
 
-function App() {
+import StoreProvider from '@/app/providers/store'
+import Router from "@/app/providers/routers";
+import DefaultLayout from "@/app/providers/layouts/DefaultLayout";
 
+const App = () => {
   return (
-    <>
-        <Routers/>
-    </>
+        <StoreProvider>
+            <DefaultLayout>
+                <Router/>
+            </DefaultLayout>
+        </StoreProvider>
   )
 }
 
