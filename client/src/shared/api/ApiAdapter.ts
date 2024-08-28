@@ -1,4 +1,4 @@
-import {customConfigAxios} from "@/api/index";
+import {customConfigAxios} from "@/shared/api/index.ts";
 
 
 export const apiAdapter = async (config)=>{
