@@ -8,7 +8,8 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "prepare": "husky"
+    "prepare": "cd .. && husky install client/.husky",
+    "f": "husky"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^2.2.7",
