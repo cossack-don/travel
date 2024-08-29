@@ -1,0 +1,47 @@
+#!/bin/sh
+
+GREEN='\033[0;32m'
+ORANGE='\033[93m'
+
+RED='\033[0;31m'
+BOLD_TEXT='\033[1m'
+DEFAULT_COLOR='\033[0m'
+regex="^(build|chore|ci|docs|feat|fix|perf|refactor|revert|style|test|next|breaking)(\([a-z \-]+\))?!?: .+$"
+commit_msg=$(cat $1)
+
+error_msg="
+  ${RED} ${BOLD_TEXT} Сообщение commit-a написано не верно - не по стандартам Conventional Commit standard!
+  ${GREEN}  Пример valid commit-message:
+    git commit -m 'feat(login): add new button' или git commit -m 'fix: add new button'
+    Подробнее: https://www.conventionalcommits.org/en/v1.0.0/#summary ${DEFAULT_COLOR}
+"
+
+if [[ ! $commit_msg =~ $regex ]]; then
+    echo "${ORANGE} STEP_1_START_VALIDATE_NAME_COMMIT ${DEFAULT_COLOR}"
+    echo "$error_msg" >&2
+    echo "${ORANGE} STEP_1_END_VALIDATE_NAME_COMMIT ${DEFAULT_COLOR}"
+    exit 1
+fi
+
+if [[ $commit_msg =~ $regex ]]; then
+   echo "${ORANGE} STEP_1_START_VALIDATE_NAME_COMMIT ${DEFAULT_COLOR}"
+
+   echo "${GREEN} ${BOLD_TEXT} Сообщение commit-a message написано верно - в соответсвии с Conventional Commit standards...${DEFAULT_COLOR}"
+
+   echo "${ORANGE} STEP_1_END_VALIDATE_NAME_COMMIT ${DEFAULT_COLOR}"
+
+   echo "${ORANGE} STEP_2_START_PRETTIER_FIX ${DEFAULT_COLOR}"
+
+   echo "${ORANGE} STEP_2_END_PRETTIER_FIX ${DEFAULT_COLOR}"
+
+   echo "${ORANGE} STEP_3_START_LINTER_FIX ${DEFAULT_COLOR}"
+   echo 'echo run linter'
+   echo "${ORANGE} STEP_3_END_LINTER_FIX ${DEFAULT_COLOR}"
+
+   echo "${ORANGE} STEP_4_START_TESTS ${DEFAULT_COLOR}"
+   echo 'echo run test'
+   echo "${ORANGE} STEP_4_END_TESTS ${DEFAULT_COLOR}"
+   exit 0
+fi
+
+
