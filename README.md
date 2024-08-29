@@ -42,7 +42,9 @@
 - Vite
 - React Routing
 - TS
-- CSS Grid/Flex pkg
+- CSS Grid/Flex pkg - [Docs](http://flexboxgrid.com/)
 - CSS modules
 - Axios
 - StoryBook
+- commit-lint [Docs](https://commitlint.js.org/)
+- Husky [Docs](https://typicode.github.io/husky/) 
