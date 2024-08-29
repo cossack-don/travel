@@ -1,6 +1,5 @@
 #!/bin/sh
 
-#!/bin/sh
 GREEN='\033[0;32m'
 ORANGE='\033[93m'
 
