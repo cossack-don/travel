@@ -4,14 +4,12 @@ import '@/app/style/index.css'
 import 'flexboxgrid/dist/flexboxgrid.min.css'
 import StoreProvider from '@/app/providers/store'
 import Router from "@/app/providers/routers";
-import DefaultLayout from "@/app/providers/layouts/DefaultLayout";
+
 
 const App = () => {
   return (
         <StoreProvider>
-            <DefaultLayout>
-                <Router/>
-            </DefaultLayout>
+            <Router/>
         </StoreProvider>
   )
 }

@@ -1,9 +1,12 @@
-:root[data-theme="light"] {
-    --text: black;
-    --background: white;
+/*[data-theme="light"]*/
+:root {
+    --first-color: #e0ffcd;
+    --second-color: #fdffcd;
+    --third-color: #ffebbb;
+    --fourth-color: #ffcab0;
 }
 
 :root[data-theme="dark"] {
-    --text: white;
-    --background: black;
+
 }
+
