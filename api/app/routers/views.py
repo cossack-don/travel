@@ -36,14 +36,14 @@ async def get_destination(destination: Destination):
 
 
 @router.get("/weather/{weather_type}")
-async def get_destination(weather_type: Weather):
+async def get_weather(weather_type: Weather):
     return JSONResponse(
         content={"weather": weather_type}, status_code=status.HTTP_200_OK
     )
 
 
 @router.get("/type/{type_of_trip}")
-async def get_destination(type_of_trip: Trip):
+async def get_trip_type(type_of_trip: Trip):
     return JSONResponse(
-        content={"weather": type_of_trip}, status_code=status.HTTP_200_OK
+        content={"trip_type": type_of_trip}, status_code=status.HTTP_200_OK
     )

@@ -34,7 +34,11 @@
 
 
 ### Запуск Backend приложения - api
-- 0
+- 0 устанавливаем через pip менеджер зависимостей Poetry (если не установлен)
+- 1 открываем терминал
+- 2 переходим в папку api
+- 3 устанавливаем зависимости командой poetry install (если ранее не установлены)
+- 4 запускаем приложение командой make run в терминале
 
 ### Стек Frontend app
 - React.js
@@ -48,3 +52,12 @@
 - StoryBook
 - commit-lint [Docs](https://commitlint.js.org/)
 - Husky [Docs](https://typicode.github.io/husky/) 
+
+### Стек Backend app
+- Fastapi
+- SQLite
+- SQLAlchemy
+- Alembic
+- Pydantic
+- Pytest
+- Black
