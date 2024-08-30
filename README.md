@@ -50,7 +50,7 @@
 - CSS modules
 - Axios
 - StoryBook
-- commit-lint [Docs](https://commitlint.js.org/)
+- commit-lint [Docs](https://commitlint.js.org/) + [Статья](https://dev.to/mahmudulhsn/install-husky-in-your-project-for-proper-commit-lint-with-pre-commit-hooks-25b2)
 - Husky [Docs](https://typicode.github.io/husky/) 
 
 ### Стек Backend app
