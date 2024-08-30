@@ -4,13 +4,13 @@ type Props = {
     children: ReactNode;
 }
 
-const DefaultLayout = ({children}:Props) => {
+const MainDashboardLayout = ({children}:Props) => {
     return (
         <div className='gg'>
-            <UIHeader/>
+            header
             {children}
         </div>
     )
 }
 
-export default DefaultLayout
+export default MainDashboardLayout
