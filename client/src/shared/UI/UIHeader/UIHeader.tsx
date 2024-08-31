@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import styles from './UIHeader.module.css'
+import styles from './UIHeader.module.scss'
 
 
 const UIHeader = ()=>{
