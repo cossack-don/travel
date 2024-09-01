@@ -3,9 +3,11 @@
 ## Краткое руководство по проекту
 
 ### Git Flow
+
 - 1 Заходим в ветку dev
 - 2 Делаем git pull
-- 3 Создаем новую ветку от dev (для backend разработчиков префикс **back-название-задачи**, для frontend разработчиков **front-название-задачи**)
+- 3 Создаем новую ветку от dev (для backend разработчиков префикс **back-название-задачи**, для frontend
+  разработчиков **front-название-задачи**)
 - 4 Как задача сделана, оформляем PR/MR в dev ветку
 
 ### Стандарты Git Commits Conventional
@@ -27,13 +29,14 @@
 - chore - Все, что не подходит по типы выше
 
 ### Запуск Frontend приложения - папка client - работает на 5000 Порту
+
 - 1 открываем терминал
 - 2 переходим в папку client
 - 3 устанавливаем зависимости npm i (если ранее не были установлены)
 - 4 пишем в терминале команду npm run dev
 
-
 ### Запуск Backend приложения - api Swagger http://127.0.0.1:8000/api/docs
+
 - 0 устанавливаем через pip менеджер зависимостей Poetry (если не установлен)
 - 1 открываем терминал
 - 2 переходим в папку api
@@ -41,6 +44,7 @@
 - 4 запускаем приложение командой make run в терминале
 
 ### Стек Frontend app
+
 - React.js
 - RTK
 - Vite
@@ -50,10 +54,12 @@
 - CSS modules
 - Axios
 - StoryBook
-- commit-lint [Docs](https://commitlint.js.org/) + [Статья](https://dev.to/mahmudulhsn/install-husky-in-your-project-for-proper-commit-lint-with-pre-commit-hooks-25b2)
-- Husky [Docs](https://typicode.github.io/husky/) 
+- commit-lint [Docs](https://commitlint.js.org/)
+  + [Статья](https://dev.to/mahmudulhsn/install-husky-in-your-project-for-proper-commit-lint-with-pre-commit-hooks-25b2)
+- Husky [Docs](https://typicode.github.io/husky/)
 
 ### Стек Backend app
+
 - Fastapi
 - SQLite
 - SQLAlchemy
@@ -62,6 +68,8 @@
 - Pytest
 - Black
 
-
 ### Общее
+
 - Палитра цветов [Docs](https://palettes.shecodes.io/)
+- Настройка Prettier +
+  Linters [Статья - настраивал по ней](https://www.devbookmarks.com/p/vite-answer-eslint-prettier-react-integration)
