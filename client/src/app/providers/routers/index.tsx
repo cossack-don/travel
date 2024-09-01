@@ -9,7 +9,7 @@ import {
 	CreateApp,
 	TemplateApp,
 	StepSex,
-	Index,
+	Home,
 	Dashboard,
 	StepNumberOfDays,
 	StepTypePlace,
@@ -26,7 +26,7 @@ const Routers = () => {
 
 			<Route path="/" element={
 				<WrapperTypeLayout name="default">
-					<Index />
+					<Home />
 				</WrapperTypeLayout>}
 			/>
 			<Route path="/dashboard" element={

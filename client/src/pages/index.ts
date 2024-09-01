@@ -15,7 +15,7 @@ import TemplateApp from "@/pages/TemplateApp"
 import NotFoundPage from "@/pages/NotFoundPage"
 
 //index page
-import Index from "@/pages/Index"
+import Home from "@/pages/Home"
 import Dashboard from "@/pages/Dashboard"
 
 export {
@@ -32,6 +32,6 @@ export {
 
 	NotFoundPage,
 
-	Index,
+	Home,
 	Dashboard
 }
