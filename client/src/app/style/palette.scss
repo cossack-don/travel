@@ -1,9 +1,13 @@
 /*[data-theme="light"]*/
 :root {
-    --first-color: #e0ffcd;
-    --second-color: #fdffcd;
-    --third-color: #ffebbb;
-    --fourth-color: #ffcab0;
+	--white: #ffffff;
+	--black: #000;
+	--gray: #f2f4f7;
+	--green: #3aba61;
+	--green-hover: #f2f4f7;
+
+	--border-radius-16: 16px;
+	--border-color-green: #3aba61;
 }
 
 :root[data-theme="dark"] {
