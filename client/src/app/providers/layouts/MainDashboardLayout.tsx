@@ -8,7 +8,7 @@ type Props = {
 
 const MainDashboardLayout = ({ children }: Props) => {
 	return (
-		<div className="gg">
+		<div>
 			<div style={{ "background": "pink" }}>header
 				<Link to="/dashboard"
 							style={{ "color": "green", width: "200px", height: "200px", marginRight: "15px" }}>
@@ -17,6 +17,11 @@ const MainDashboardLayout = ({ children }: Props) => {
 				<Link to="/dashboard/create-app"
 							style={{ "color": "green", width: "200px", height: "200px", marginRight: "15px" }}>
 					Create-App
+				</Link>
+
+				<Link to="/"
+							style={{ "color": "green", width: "200px", height: "200px", marginRight: "15px" }}>
+					Выйти
 				</Link>
 			</div>
 			{children}
