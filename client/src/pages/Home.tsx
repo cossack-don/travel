@@ -1,5 +1,5 @@
-
 import { useEffect } from "react"
+import { UISpinner, UIButton } from "@/shared/UI"
 
 const Home = () => {
 
@@ -12,7 +12,11 @@ const Home = () => {
 		<div className="row between-xs" style={{ height: "100vh", padding: "15px", background: "var(--gray)" }}>
 			<div className="col-xs-12">
 				<div className="box">
-					home page
+					<div>
+						<h3>Примеры draft компонентов</h3>
+						<UISpinner />
+						<UIButton>Example</UIButton>
+					</div>
 				</div>
 			</div>
 		</div>
