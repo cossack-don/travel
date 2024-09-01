@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom"
+
 import { useEffect } from "react"
 
 const Home = () => {
@@ -9,7 +9,7 @@ const Home = () => {
 	}, [])
 
 	return (
-		<div className="row between-xs">
+		<div className="row between-xs" style={{ height: "100vh", padding: "15px", background: "var(--gray)" }}>
 			<div className="col-xs-12">
 				<div className="box">
 					home page

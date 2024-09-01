@@ -1,16 +1,17 @@
-import { ReactNode } from 'react';
-import {UIHeader} from "@/shared/UI";
+import { ReactNode } from "react"
+import { UIHeader } from "@/shared/UI"
+
 type Props = {
-    children: ReactNode;
+	children: ReactNode;
 }
 
-const DefaultLayout = ({children}:Props) => {
-    return (
-        <div className='gg'>
-            <UIHeader/>
-            {children}
-        </div>
-    )
+const DefaultLayout = ({ children }: Props) => {
+	return (
+		<div>
+			<UIHeader />
+			{children}
+		</div>
+	)
 }
 
 export default DefaultLayout
