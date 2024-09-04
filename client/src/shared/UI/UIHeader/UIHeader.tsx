@@ -3,6 +3,7 @@ import styles from "./UIHeader.module.scss"
 import { UIButton } from "@/shared/UI"
 
 
+
 const UIHeader = () => {
 
 	const navigate = useNavigate()
@@ -21,7 +22,7 @@ const UIHeader = () => {
 						<div className="row end-xs">
 							<div className="col-xs-6">
 								<div className="box">
-									<UIButton onClick={() => navigate("/dashboard")}>Вход</UIButton>
+									<UIButton onClick={() => navigate("/dashboard")} size="xl">Вход</UIButton>
 								</div>
 							</div>
 						</div>
