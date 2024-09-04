@@ -15,7 +15,7 @@ const Home = () => {
 					<div>
 						<h3>Примеры draft компонентов</h3>
 						<UISpinner />
-						<UIButton>Example</UIButton>
+						<UIButton size="md">Icon</UIButton>
 					</div>
 				</div>
 			</div>
