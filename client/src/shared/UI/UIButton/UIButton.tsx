@@ -1,7 +1,6 @@
 import { ReactNode } from "react"
 import styles from "@/shared/UI/UIButton/UIButton.module.scss"
-
-// import { Link } from "react-router-dom"
+import { Link } from "react-router-dom"
 
 interface Props {
 	children: ReactNode;
@@ -29,12 +28,18 @@ export default function UIButton({ children, onClick, href, size = "md", iconLef
 	);
 
 	if (href) {
-		return (
-			<a href={href} className={className}>
-				{content}
-			</a>
+		const isExternal = href.startsWith('http');
+	  
+		return isExternal ? (
+		  <a href={href} className={className} target="_blank" rel="noopener noreferrer">
+			{content}
+		  </a>
+		) : (
+		  <Link to={'/' + href} className={className}>
+			{content}
+		  </Link>
 		);
-	}
+	  }
 
 	return (
 		<button onClick={onClick} className={className}>
