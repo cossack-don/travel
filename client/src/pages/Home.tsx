@@ -1,5 +1,5 @@
 import { useEffect } from "react"
-import { UISpinner, UIButton } from "@/shared/UI"
+import { UISpinner, UIButton, UICard } from "@/shared/UI"
 
 const Home = () => {
 
@@ -15,7 +15,8 @@ const Home = () => {
 					<div>
 						<h3>Примеры draft компонентов</h3>
 						<UISpinner />
-						<UIButton>Example</UIButton>
+						<UIButton size="md">Button</UIButton>
+						<UICard isLink>Card</UICard>
 					</div>
 				</div>
 			</div>
