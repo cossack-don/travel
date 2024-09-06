@@ -1,31 +1,52 @@
 import { ReactNode } from "react"
-import { UIHeader } from "@/shared/UI"
-import { Link } from "react-router-dom"
+import {UIButton, UIHeader, UILogo, UIFooter, UILink} from "@/shared/UI"
+import { Link, useNavigate } from "react-router-dom"
+import style from './MainDashBoardLayout.module.scss'
 
 type Props = {
 	children: ReactNode;
 }
 
-const MainDashboardLayout = ({ children }: Props) => {
-	return (
-		<div style={{background:'var(--gray)'}}>
-			<div style={{ "background": "pink" }}>header
-				<Link to="/dashboard"
-							style={{ "color": "green", width: "200px", height: "200px", marginRight: "15px" }}>
-					Dashboard
-				</Link>
-				<Link to="/dashboard/create-app"
-							style={{ "color": "green", width: "200px", height: "200px", marginRight: "15px" }}>
-					Create-App
-				</Link>
+const list = [
+	{
+		id:1,
+		name:'Дашборд',
+		url:'/dashboard'
+	},
+	{
+		id:2,
+		name:'Создать App',
+		url:'/dashboard/create-app'
+	},
+]
 
-				<Link to="/"
-							style={{ "color": "green", width: "200px", height: "200px", marginRight: "15px" }}>
-					Выйти
-				</Link>
-			</div>
-			{children}
-		</div>
+const ListLinks = () => {
+	return (
+		<ul style={{display:'flex', alignItems:'center'}}>
+			{list.map((item)=>{
+				return (<li style={{marginRight:'15px'}} key={item.id}>
+					<UILink to={item.url}>{item.name}</UILink>
+				</li>)
+			})}
+		</ul>
+	)
+}
+const MainDashboardLayout = ({ children }: Props) => {
+	const navigate = useNavigate()
+	return (
+		<>
+
+			<UIHeader
+				leftElement={<UILogo>LOGO</UILogo>}
+				centerElement={<ListLinks/>}
+				rightElement={<UIButton onClick={() => navigate("/")}>Выход</UIButton>}
+			/>
+
+			<main className={style.wrapper}>
+				{children}
+			</main>
+			<UIFooter>Footer</UIFooter>
+		</>
 	)
 }
 

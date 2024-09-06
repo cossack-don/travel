@@ -1,6 +1,7 @@
 import { useParams, Link, useNavigate } from "react-router-dom"
 import { useEffect } from "react"
 import { mockApp } from "@/shared/mockData/mockApp"
+import {UINavigation} from "@/shared/UI";
 
 const TemplateApp = () => {
 	const params = useParams()
@@ -12,8 +13,10 @@ const TemplateApp = () => {
 
 	return (
 		<div style={{ display: "flex" }}>
-			<div style={{ width: "30%", background: "gray" }}>
-				navigation
+			<div style={{ width: "30%", background: "white", marginTop:'25px' }}>
+				<UINavigation>
+					Навигация
+				</UINavigation>
 				<ul>
 					<li>Список вещей</li>
 					<li>Расширение функционала</li>

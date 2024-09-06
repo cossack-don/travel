@@ -1,14 +1,17 @@
 import { ReactNode } from "react"
 import styles from "@/shared/UI/UILink/UILink.module.scss"
+import { Link } from "react-router-dom"
 
-//f
 interface Props {
 	children: ReactNode
+	to?:string
 }
 
-export default function UILink({ children }: Props) {
+const UILink = ({ children,to }: Props) => {
 
 	return (
-		<button className={}>{children}</button>
+		<Link to={to} className={styles.wrapper}>{children}</Link>
 	)
 }
+
+export default UILink
