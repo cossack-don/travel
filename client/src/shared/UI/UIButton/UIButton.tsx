@@ -1,23 +1,21 @@
 import { ReactNode } from "react"
 import styles from "@/shared/UI/UIButton/UIButton.module.scss"
 import { Link } from "react-router-dom"
+import { EnumSizes, listSizes } from "./listSizes"
 
 interface Props {
 	children: ReactNode;
 	onClick?: () => void;
 	href?: string;
-	size?: "xl" | "md" | "sm";
+	size?: EnumSizes;
 	iconLeft?: ReactNode;
 	iconRight?: ReactNode;
 }
 
-// Sizes xl / md / sm
-export default function UIButton({ children, onClick, href, size = "md", iconLeft, iconRight }: Props) {
-	const buttonSizeClass = size === 'xl' ? styles.sizeXl
-                        : size === 'md' ? styles.sizeMd
-                        : styles.sizeSm;
+export default function UIButton({ children, onClick, href, size = EnumSizes.MD, iconLeft, iconRight }: Props) {
+	const buttonSizeClass = listSizes[size];
 
-  const className = `${styles.button} ${buttonSizeClass}`;
+  	const className = `${styles.button} ${styles[size]}`;
 
 	const content = (
 		<>
@@ -30,20 +28,22 @@ export default function UIButton({ children, onClick, href, size = "md", iconLef
 	if (href) {
 		const isExternal = href.startsWith('http');
 	  
-		return isExternal ? (
-		  <a href={href} className={className} target="_blank" rel="noopener noreferrer">
+		return (
+		  	<Link 
+		  		to={href}
+				className={className}
+				style={buttonSizeClass}
+				onClick={onClick}
+				{...(isExternal ? { target: "_blank", rel: "noopener noreferrer"} : {})}
+			>
 			{content}
-		  </a>
-		) : (
-		  <Link to={'/' + href} className={className}>
-			{content}
-		  </Link>
-		);
-	  }
-
-	return (
-		<button onClick={onClick} className={className}>
-			{content}
-		</button>
-	)
+		  	</Link>
+		) 
+	} else {
+		return (
+			<button className={className} style={buttonSizeClass} onClick={onClick}>
+				{content}
+			</button>
+		)
+	}	
 }

@@ -1,8 +1,6 @@
-import { Link, useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import styles from "./UIHeader.module.scss"
 import { UIButton } from "@/shared/UI"
-
-
 
 const UIHeader = () => {
 
@@ -22,7 +20,7 @@ const UIHeader = () => {
 						<div className="row end-xs">
 							<div className="col-xs-6">
 								<div className="box">
-									<UIButton onClick={() => navigate("/dashboard")} size="xl">Вход</UIButton>
+									<UIButton onClick={() => navigate("/dashboard")} >Вход</UIButton>
 								</div>
 							</div>
 						</div>
