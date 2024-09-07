@@ -11,9 +11,11 @@ import UILink from "@/shared/UI/UILink/UILink";
 import UIContainer from "@/shared/UI/UIGrid/UIContainer";
 import UICol from "@/shared/UI/UIGrid/UICol";
 import UITextArea from "@/shared/UI/UITextArea/UITextArea";
+import UICardRadioButton from "@/shared/UI/UICardRadioButton/UICardRadioButton";
+import UIWrapperCardRadioButtons from "@/shared/UI/UIWrapperCardRadioButtons/UIWrapperCardRadioButtons";
 
 export {
 	UICheckBox, UIHeader, UIButton, UISpinner,UICard,
 	UILogo,UIFooter,UINavigation,UIInput,UILink,UICol,UIContainer,
-	UITextArea
+	UITextArea,UICardRadioButton,UIWrapperCardRadioButtons
 }
