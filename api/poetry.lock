@@ -302,6 +302,17 @@ tomli = {version = ">=1", markers = "python_version < \"3.11\""}
 dev = ["argcomplete", "attrs (>=19.2)", "hypothesis (>=3.56)", "mock", "pygments (>=2.7.2)", "requests", "setuptools", "xmlschema"]
 
 [[package]]
+name = "python-dotenv"
+version = "1.0.1"
+description = "Read key-value pairs from a .env file and set them as environment variables"
+category = "main"
+optional = false
+python-versions = ">=3.8"
+
+[package.extras]
+cli = ["click (>=5.0)"]
+
+[[package]]
 name = "requests"
 version = "2.32.3"
 description = "Python HTTP for Humans."
@@ -435,7 +446,7 @@ standard = ["colorama (>=0.4)", "httptools (>=0.5.0)", "python-dotenv (>=0.13)",
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.10"
-content-hash = "eb9db7c699adf5c6c57fd45cab16aedda38b02b28501ab39482ebe36871e38c4"
+content-hash = "746064e24f8235acde2083083ecc70e4e72ce83812610408e058d9b2611370db"
 
 [metadata.files]
 aiosqlite = []
@@ -463,6 +474,7 @@ pluggy = []
 pydantic = []
 pydantic-core = []
 pytest = []
+python-dotenv = []
 requests = []
 sniffio = []
 sqlalchemy = []
