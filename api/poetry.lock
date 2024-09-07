@@ -228,7 +228,7 @@ python-versions = ">=3.8"
 
 [[package]]
 name = "platformdirs"
-version = "4.2.2"
+version = "4.3.1"
 description = "A small Python package for determining appropriate platform-specific dirs, e.g. a `user data dir`."
 category = "main"
 optional = false

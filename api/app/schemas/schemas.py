@@ -10,6 +10,3 @@ class Choice(BaseModel):
     destination: Optional[Destination] = Field(default=None, example=Destination.abroad)
     weather: Optional[Weather] = Field(default=None, example=Weather.cold)
     trip_type: Optional[Trip] = Field(default=None, example=Trip.skies)
-
-
-
