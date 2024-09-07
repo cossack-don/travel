@@ -6,16 +6,16 @@ import { EnumSizes, listSizes } from "./listSizes"
 interface Props {
 	children: ReactNode;
 	onClick?: () => void;
-	href?: string;
+	to?: string;
 	size?: EnumSizes;
+	target?:string;
 	iconLeft?: ReactNode;
 	iconRight?: ReactNode;
 }
 
-export default function UIButton({ children, onClick, href, size = EnumSizes.MD, iconLeft, iconRight }: Props) {
+export default function UIButton({ children, onClick, to = undefined, size = EnumSizes.MD, iconLeft, iconRight, target }: Props) {
 	const buttonSizeClass = listSizes[size];
-
-  	const className = `${styles.button} ${styles[size]}`;
+  const className = `${styles.button} ${styles[size]}`;
 
 	const content = (
 		<>
@@ -25,25 +25,27 @@ export default function UIButton({ children, onClick, href, size = EnumSizes.MD,
 		</>
 	);
 
-	if (href) {
-		const isExternal = href.startsWith('http');
-	  
-		return (
-		  	<Link 
-		  		to={href}
+	return (
+		<>
+			{ to && <Link
+					to={to}
+					className={className}
+					style={buttonSizeClass}
+					onClick={onClick}
+					target={target}
+				>
+					{content}
+				</Link>
+			}
+
+			{ !to && <button
 				className={className}
 				style={buttonSizeClass}
-				onClick={onClick}
-				{...(isExternal ? { target: "_blank", rel: "noopener noreferrer"} : {})}
-			>
-			{content}
-		  	</Link>
-		) 
-	} else {
-		return (
-			<button className={className} style={buttonSizeClass} onClick={onClick}>
+				onClick={onClick}>
 				{content}
 			</button>
-		)
-	}	
+			}
+		</>
+	)
 }
+
