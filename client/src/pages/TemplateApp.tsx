@@ -23,7 +23,7 @@ const TemplateApp = () => {
 					<li>Настройки</li>
 				</ul>
 			</div>
-			<div style={{ width: "70%", background: "yellow" }}>
+			<div style={{ width: "70%" }}>
 				<div>
 					HASH APP - {params.id}
 					<br />
