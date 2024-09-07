@@ -1,7 +1,7 @@
 import { useParams, Link, useNavigate } from "react-router-dom"
 import { useEffect } from "react"
 import { mockApp } from "@/shared/mockData/mockApp"
-import {UINavigation} from "@/shared/UI";
+import {UINavigation, UIButton, UIInput} from "@/shared/UI";
 
 const TemplateApp = () => {
 	const params = useParams()
@@ -28,7 +28,7 @@ const TemplateApp = () => {
 					HASH APP - {params.id}
 					<br />
 
-					<button onClick={() => navigate(`/dashboard/app/${mockApp.hashApp}/step-sex`)}>Собрать вещи</button>
+					<UIButton onClick={() => navigate(`/dashboard/app/${mockApp.hashApp}/step-sex`)}>Собрать вещи</UIButton>
 				</div>
 			</div>
 		</div>
