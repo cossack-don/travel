@@ -1,7 +1,7 @@
 import { ReactNode } from "react"
 import styles from "@/shared/UI/UIButton/UIButton.module.scss"
 import { Link } from "react-router-dom"
-import { EnumSizes, listSizes } from "./listSizes"
+import { EnumSizes } from "./listSizes"
 
 interface Props {
 	children: ReactNode;
@@ -14,8 +14,7 @@ interface Props {
 }
 
 export default function UIButton({ children, onClick, to = undefined, size = EnumSizes.MD, iconLeft, iconRight, target }: Props) {
-	const buttonSizeClass = listSizes[size];
-  const className = `${styles.button} ${styles[size]}`;
+  	const buttonClassName = `${styles.button} ${styles[size]}`;
 
 	const content = (
 		<>
@@ -29,8 +28,6 @@ export default function UIButton({ children, onClick, to = undefined, size = Enu
 		<>
 			{ to && <Link
 					to={to}
-					className={className}
-					style={buttonSizeClass}
 					onClick={onClick}
 					target={target}
 				>
@@ -39,8 +36,7 @@ export default function UIButton({ children, onClick, to = undefined, size = Enu
 			}
 
 			{ !to && <button
-				className={className}
-				style={buttonSizeClass}
+				className={buttonClassName}
 				onClick={onClick}>
 				{content}
 			</button>
