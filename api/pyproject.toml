@@ -11,9 +11,13 @@ aiosqlite = "^0.20.0"
 alembic = "^1.13.2"
 uvicorn = "^0.30.6"
 black = "^24.8.0"
+pytest = "^8.3.2"
+requests = "^2.32.3"
+python-dotenv = "^1.0.1"
 
 [tool.poetry.dev-dependencies]
-pytest = "^5.2"
+pytest = "^8.3.2"
+
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

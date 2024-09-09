@@ -1,32 +1,46 @@
-import { useNavigate } from "react-router-dom"
 import styles from "./UIHeader.module.scss"
-import { UIButton } from "@/shared/UI"
+import {ReactNode} from "react";
 
-const UIHeader = () => {
+interface Props {
+	leftElement: ReactNode,
+	centerElement?:ReactNode,
+	rightElement:ReactNode
+}
 
-	const navigate = useNavigate()
-
+const UIHeader = ({leftElement, centerElement,rightElement}:Props) => {
 	return (
 		<>
-
-			<div className={`row between-xs ${styles.header}`}>
-				<div className="col-xs-6">
+			<header className={`row between-xs middle-xs ${styles.header}`}>
+				<div className="col-xs-2">
 					<div className="box">
-						LOGO
+						{leftElement}
 					</div>
 				</div>
-				<div className="col-xs-6">
+
+				<div className="col-xs-8">
 					<div className="box">
-						<div className="row end-xs">
-							<div className="col-xs-6">
+						<div className="row center-xs">
+							<div className="col-xs-12">
 								<div className="box">
-									<UIButton onClick={() => navigate("/dashboard")} >Вход</UIButton>
+									{centerElement}
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-			</div>
+
+				<div className="col-xs-2">
+					<div className="box">
+						<div className="row end-xs">
+							<div className="col-xs-6">
+								<div className="box">
+									{rightElement}
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</header>
 		</>)
 }
 

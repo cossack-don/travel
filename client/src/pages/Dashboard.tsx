@@ -1,30 +1,49 @@
-import { Link } from "react-router-dom"
-import { UICard } from "@/shared/UI"
+import { Link,useNavigate } from "react-router-dom"
+import { UICard, UIButton } from "@/shared/UI"
+import {mockListApps} from "@/shared/mockData/mockApp";
 
+const ListApps = ()=> {
+	return (
+		<div className='row between-xs'>
+			{
+				mockListApps.map((item)=>{
+					return (
+						<div className='col-xs-3'>
+							<UICard key={item.id}
+											header={<div>ID - {item.id}, {item.title}</div>}
+											footer={<div>footer</div>}
+											listClasses="mr-15"
+											isLink
+											to={`/dashboard/app/${item.hashApp}`}>
+								{item.description}
+							</UICard>
+						</div>
+					)
+				})
+			}
+		</div>
+
+)
+}
 const Dashboard = () => {
-
+	const navigate = useNavigate()
 	return (<div>
 		<h1> Page Дашборд</h1>
 
-		<Link style={{ "background": "red", width: "200px", height: "50px", display: "block", marginBottom: "15px" }}
-					to="/dashboard/create-app">Создать
-			App</Link>
 
-		<div style={{ display: "flex" }}>
-			<UICard header={<div>header</div>} footer={<div>footer</div>} listClasses="mr-15" isLink to={'/dashboard/app/8743b52063cd84097a65d1633f5c74f5'}>
-				body
-			</UICard>
-			<UICard isLink listClasses="mr-15" to={'/dashboard/app/8743b52063cd84097a65d1633f5c74f5'}>
-				App 2
-			</UICard>
-			<UICard isLink listClasses="mr-15" to={'/dashboard/app/8743b52063cd84097a65d1633f5c74f5'}>
-				App 3
-			</UICard>
-			<UICard isLink to={'/dashboard/app/8743b52063cd84097a65d1633f5c74f5'}>
-				App 4
-			</UICard>
 
+<div style={{width:'1400px',margin:'0 auto'}}>
+	<div className='row mb-15'>
+		<div className='col-xs-12'>
+			<UIButton onClick={()=>navigate("/dashboard/create-app") }>Создать App</UIButton>
 		</div>
+	</div>
+
+	<ListApps/>
+</div>
+
+
+
 
 	</div>)
 }
