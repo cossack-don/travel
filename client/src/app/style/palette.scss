@@ -1,9 +1,19 @@
 /*[data-theme="light"]*/
 :root {
-    --first-color: #e0ffcd;
-    --second-color: #fdffcd;
-    --third-color: #ffebbb;
-    --fourth-color: #ffcab0;
+	--white: #ffffff;
+	--black: #000;
+	--gray: #f2f4f7;
+	--green: #3aba61;
+	--green-hover: #25ad4e;
+	--red:#fe6b6b;
+
+	--transition-0-5: 0.5s;
+
+	--border-radius-16: 16px;
+	--border-radius-8: 8px;
+	--border-color-green: #3aba61;
+
+	--box-shadow: 4px 4px 10px 4px rgba(34, 60, 80, 0.2);
 }
 
 :root[data-theme="dark"] {

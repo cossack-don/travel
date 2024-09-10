@@ -2,24 +2,22 @@ import * as React from "react"
 
 import { Routes, Route } from "react-router-dom"
 import { BrowserRouter } from "react-router-dom"
-
-import Index from "@/pages/Index"
-import Dashboard from "@/pages/Dashboard"
-
-import Start from "@/pages/Start.tsx"
-import Gender from "@/pages/Gender.tsx"
-import Periods from "@/pages/Periods.tsx"
-
-import Seasons from "@/pages/Seasons.tsx"
-import NotFoundPage from "@/pages/NotFoundPage.tsx"
-import TypeTrip from "@/pages/TypeTrip.tsx"
-import Result from "@/pages/Result.tsx"
-import CreateApp from "@/pages/CreateApp"
-import TemplateApp from "@/pages/TemplateApp"
-import Stepper from "@/pages/Stepper"
-
-import DefaultLayout from "@/app/providers/layouts/DefaultLayout"
 import WrapperTypeLayout from "@/app/providers/layouts/WrapperTypeLayout"
+
+import {
+	NotFoundPage,
+	CreateApp,
+	TemplateApp,
+	StepSex,
+	Home,
+	Dashboard,
+	StepNumberOfDays,
+	StepTypePlace,
+	StepTypeOfTrip,
+	StepTypeSeasons,
+	StepListOfThings
+} from "@/pages"
+
 
 const Routers = () => {
 	return (
@@ -28,7 +26,7 @@ const Routers = () => {
 
 			<Route path="/" element={
 				<WrapperTypeLayout name="default">
-					<Index />
+					<Home />
 				</WrapperTypeLayout>}
 			/>
 			<Route path="/dashboard" element={
@@ -49,20 +47,40 @@ const Routers = () => {
 				</WrapperTypeLayout>}
 			/>
 
-			<Route path="/dashboard/app/:id/stepper" element={
+			<Route path="/dashboard/app/:id/step-sex" element={
 				<WrapperTypeLayout name="dashboard">
-					<Stepper />
+					<StepSex />
 				</WrapperTypeLayout>}
 			/>
 
-			{/*<Route path="id-app-edit" element={<CreateApp />}>*/}
-			{/*<Route path="/start" element={<Start />} />*/}
-			{/*<Route path="/gender" element={<Gender />} />*/}
-			{/*<Route path="/periods" element={<Periods />} />*/}
-			{/*<Route path="/seasons" element={<Seasons />} />*/}
-			{/*<Route path="/type-trip" element={<TypeTrip />} />*/}
-			{/*<Route path="/result" element={<Result />} />*/}
-			{/*</Route>*/}
+			<Route path="/dashboard/app/:id/step-number-of-days" element={
+				<WrapperTypeLayout name="dashboard">
+					<StepNumberOfDays />
+				</WrapperTypeLayout>}
+			/>
+
+			<Route path="/dashboard/app/:id/step-type-place" element={
+				<WrapperTypeLayout name="dashboard">
+					<StepTypePlace />
+				</WrapperTypeLayout>}
+			/>
+
+			<Route path="/dashboard/app/:id/step-type-seasons" element={
+				<WrapperTypeLayout name="dashboard">
+					<StepTypeSeasons />
+				</WrapperTypeLayout>}
+			/>
+			<Route path="/dashboard/app/:id/step-type-of-trip" element={
+				<WrapperTypeLayout name="dashboard">
+					<StepTypeOfTrip />
+				</WrapperTypeLayout>}
+			/>
+
+			<Route path="/dashboard/app/:id/step-list-of-things" element={
+				<WrapperTypeLayout name="dashboard">
+					<StepListOfThings />
+				</WrapperTypeLayout>}
+			/>
 
 
 			<Route path="*" element={<NotFoundPage />} />
