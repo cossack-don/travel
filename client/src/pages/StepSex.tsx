@@ -33,12 +33,7 @@ const StepSex = () => {
 
 		const cards = listData.map(item => {
 			return (
-				<UICardRadioButton
-					key={item.id}
-					onChange={onChangeRadio}
-					defaultValue={item.value}
-					isActive={value}
-				>
+				<UICardRadioButton key={item.id} onChange={onChangeRadio} defaultValue={item.value} isActive={value}>
 					{item.text}
 				</UICardRadioButton>
 			)

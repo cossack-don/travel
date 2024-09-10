@@ -46,12 +46,7 @@ const Home = () => {
 
 		const cards = listData.map(item => {
 			return (
-				<UICardRadioButton
-					key={item.id}
-					onChange={onChangeRadio}
-					defaultValue={item.value}
-					isActive={value}
-				>
+				<UICardRadioButton key={item.id} onChange={onChangeRadio} defaultValue={item.value} isActive={value}>
 					{item.text}
 				</UICardRadioButton>
 			)
@@ -61,10 +56,7 @@ const Home = () => {
 	}
 
 	return (
-		<div
-			className="row between-xs"
-			style={{ height: "100vh", padding: "15px", background: "var(--gray)" }}
-		>
+		<div className="row between-xs" style={{ height: "100vh", padding: "15px", background: "var(--gray)" }}>
 			<div className="col-xs-12">
 				<div className="box">
 					<div>
@@ -73,11 +65,7 @@ const Home = () => {
 						<UIButton size="md">Button</UIButton>
 						<UICard isLink>Card</UICard>
 						<UIInput type="text" />
-						<ListCards
-							setActiveValue={setActiveValue}
-							listData={dataCards}
-							defaultValue={isActiveValue}
-						/>
+						<ListCards setActiveValue={setActiveValue} listData={dataCards} defaultValue={isActiveValue} />
 						{isActiveValue}
 					</div>
 				</div>

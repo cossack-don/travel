@@ -14,12 +14,7 @@ export default function UICardRadioButton({ children, defaultValue, isActive, on
 			className={`${style.wrapper} ${defaultValue === isActive ? style.activeButton : style.notActiveButton}`}
 		>
 			{children}
-			<input
-				type="radio"
-				onChange={onChange}
-				value={defaultValue}
-				checked={defaultValue === isActive}
-			/>
+			<input type="radio" onChange={onChange} value={defaultValue} checked={defaultValue === isActive} />
 		</label>
 	)
 }
