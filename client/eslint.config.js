@@ -6,8 +6,10 @@ import tsParser from "@typescript-eslint/parser"
 import react from "eslint-plugin-react"
 import prettier from "eslint-plugin-prettier"
 import prettierConfig from "eslint-config-prettier"
+import js from "@eslint/js"
 
 export default [
+	js.configs.recommended,
 	{
 		ignores: ["dist"]
 	},
@@ -26,7 +28,7 @@ export default [
 			prettier: prettier
 		},
 		rules: {
-			// ...reactHooks.configs.recommended.rules,
+			// ...reactHooks.configs.recommended,
 			"react-refresh/only-export-components": ["warn", { allowConstantExport: true }],
 			"prettier/prettier": "error",
 			"react/react-in-jsx-scope": "off",

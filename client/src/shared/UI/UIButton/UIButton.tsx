@@ -5,6 +5,7 @@ import styles from "@/shared/UI/UIButton/UIButton.module.scss"
 
 interface Props {
 	children: ReactNode
+	onClick: () => void
 }
 
 // Sizes xl / md / sm
