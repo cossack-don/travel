@@ -3,7 +3,7 @@ import { UIHeader, UILogo, UIButton } from "@/shared/UI"
 import { Link, useNavigate } from "react-router-dom"
 
 type Props = {
-	children: ReactNode;
+	children: ReactNode
 }
 
 const DefaultLayout = ({ children }: Props) => {

@@ -1,28 +1,28 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
-import * as path from "path";
+import { defineConfig } from "vite"
+import react from "@vitejs/plugin-react"
+import * as path from "path"
 
 const NUMBER_PORT = 5000
 
 export default defineConfig({
-  plugins: [react()],
-    server: {
-        port: NUMBER_PORT,
-    },
-  resolve: {
-    alias: [
-        { find: "@", replacement: path.resolve(__dirname, "src") },
-        { find: "@api", replacement: path.resolve(__dirname, "src/api/") },
-        { find: "@helpers", replacement: path.resolve(__dirname, "src/helpers/") },
-    ],
-  },
-    css: {
-        modules: {
-            scopeBehaviour: 'local',
-            generateScopedName: '[name]__[local]___[hash:base64:5]',
-            localsConvention: 'camelCaseOnly'
-        }
-    }
+	plugins: [react()],
+	server: {
+		port: NUMBER_PORT
+	},
+	resolve: {
+		alias: [
+			{ find: "@", replacement: path.resolve(__dirname, "src") },
+			{ find: "@api", replacement: path.resolve(__dirname, "src/api/") },
+			{ find: "@helpers", replacement: path.resolve(__dirname, "src/helpers/") }
+		]
+	},
+	css: {
+		modules: {
+			scopeBehaviour: "local",
+			generateScopedName: "[name]__[local]___[hash:base64:5]",
+			localsConvention: "camelCaseOnly"
+		}
+	}
 })
 
 // Example

@@ -10,6 +10,8 @@ interface Props {
 // Sizes xl / md / sm
 export default function UIButton({ children, onClick }: Props) {
 	return (
-		<button onClick={onClick} className={styles.button}>{children}</button>
+		<button onClick={onClick} className={styles.button}>
+			{children}
+		</button>
 	)
 }

@@ -5,8 +5,5 @@ interface Props {
 }
 
 export default function UIFooter({ children }: Props) {
-
-	return (
-		<footer >{children}</footer>
-	)
+	return <footer>{children}</footer>
 }

@@ -8,7 +8,6 @@ import "@/app/style/index.scss"
 import StoreProvider from "@/app/providers/store"
 import Router from "@/app/providers/routers"
 
-
 const App = () => {
 	return (
 		<StoreProvider>

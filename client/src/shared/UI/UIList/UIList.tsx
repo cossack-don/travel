@@ -5,7 +5,5 @@ interface Props {
 }
 
 export default function UIList({ children }: Props) {
-	return (
-		<div>{children}</div>
-	)
+	return <div>{children}</div>
 }
