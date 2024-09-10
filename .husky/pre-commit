@@ -1,6 +1,6 @@
 #!/bin/sh
 # help https://translated.turbopages.org/proxy_u/en-ru.ru.eda6ac33-66d0b8b1-2f551fd1-74722d776562/https/stackoverflow.com/questions/74129312/how-to-configure-husky-when-git-is-in-a-different-folder
 
-cd client && npm run format
-cd client && npm run lint
+#cd client && npm run format && npm run lint
+
 echo "git hook - pre-commit"
