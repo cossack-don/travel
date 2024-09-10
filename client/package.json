@@ -9,7 +9,7 @@
 		"lint": "eslint .",
 		"preview": "vite preview",
 		"prepare": "cd .. && husky install client/.husky",
-		"lint-two": "eslint . --ext .js,.jsx",
+		"lint-two": "eslint . --ext .js,.jsx,.ts,.tsx",
 		"format": "prettier --write ."
 	},
 	"dependencies": {
