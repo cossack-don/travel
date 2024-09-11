@@ -39,12 +39,7 @@ export const UINotification: FC<UINotificationType> = ({
 					<div className={cls.wrapper}>
 						<div className={cls.title}>{title}</div>
 						<div className={cls.description}>{description}</div>
-						<progress
-							id="progress"
-							className={cls.progress}
-							value={progressValue}
-							max="100"
-						></progress>
+						<progress id="progress" className={cls.progress} value={progressValue} max="100"></progress>
 						<span className={cls.close} onClick={() => setActivePoint(false)}>
 							X
 						</span>

@@ -6,12 +6,13 @@ import "@/app/style/helpers.scss"
 import "@/app/style/index.scss"
 
 import StoreProvider from "@/app/providers/store"
-import Router from "@/app/providers/routers"
+import { router } from "@/app/providers/routers"
+import { RouterProvider } from "react-router-dom"
 
 const App = () => {
 	return (
 		<StoreProvider>
-			<Router />
+			<RouterProvider router={router} />
 		</StoreProvider>
 	)
 }

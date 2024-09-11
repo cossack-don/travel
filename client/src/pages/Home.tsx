@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react"
 import {
-	UISpinner,
 	UIButton,
 	UICard,
+	UICardRadioButton,
 	UIInput,
-	UIWrapperCardRadioButtons,
-	UICardRadioButton
+	UISpinner,
+	UIWrapperCardRadioButtons
 } from "@/shared/UI"
 
 const Home = () => {
