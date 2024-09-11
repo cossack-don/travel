@@ -2,13 +2,39 @@
 	background: var(--green);
 	color: var(--white);
 	border: none;
-	padding: 8px 16px;
 	border-radius: var(--border-radius-8);
 	transition: var(--transition-0-5);
-	font-size: 18px;
 
 	&:hover {
 		background: var(--green-hover);
 		cursor: pointer;
 	}
+}
+
+.icon {
+	display: inline-flex;
+	margin: 0 8px;
+
+	&:first-child {
+		margin-left: 0;
+	}
+
+	&:last-child {
+		margin-right: 0;
+	}
+}
+
+.xl {
+	padding: 16px 32px;
+	font-size: 20px;
+}
+
+.md {
+	padding: 12px 24px;
+	font-size: 18px;
+}
+
+.sm {
+	padding: 8px 16px;
+	font-size: 16px;
 }
