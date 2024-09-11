@@ -3,13 +3,13 @@
 	"private": true,
 	"version": "0.0.0",
 	"type": "module",
+	"license": "MIT",
 	"scripts": {
 		"dev": "vite",
 		"build": "tsc -b && vite build",
-		"lint": "eslint .",
 		"preview": "vite preview",
 		"prepare": "cd .. && husky install client/.husky",
-		"lint-two": "eslint . --ext .js,.jsx,.ts,.tsx",
+		"lint": "eslint .",
 		"format": "prettier --write ."
 	},
 	"dependencies": {
