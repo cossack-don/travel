@@ -22,16 +22,13 @@ export {
 	SettingApp,
 	CreateApp,
 	TemplateApp,
-
 	StepListOfThings,
 	StepTypePlace,
 	StepSex,
 	StepTypeSeasons,
 	StepNumberOfDays,
 	StepTypeOfTrip,
-
 	NotFoundPage,
-
 	Home,
 	Dashboard
 }

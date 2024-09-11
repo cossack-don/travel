@@ -4,8 +4,8 @@
 }
 
 .input {
-	color:#808080;
-	outline:none;
+	color: #808080;
+	outline: none;
 	background: #fff;
 	border: 1px solid #f2f4f7;
 	border-radius: 12px;
@@ -15,7 +15,7 @@
 	transition: all 0.3s ease-in-out;
 
 	&:focus {
-		border:solid 1px var(--green);
+		border: solid 1px var(--green);
 	}
 }
 
@@ -24,20 +24,20 @@
 }
 
 .label {
-	color:#808080;
+	color: #808080;
 	text-align: left;
 	margin-bottom: 4px;
 	font-size: 14px;
 }
 
 .input.errorInput {
-	border:1px solid var(--red);
+	border: 1px solid var(--red);
 }
 
 .errorText {
 	text-align: left;
 	height: 15px;
 	margin-top: 4px;
-	color:var(--red);
+	color: var(--red);
 	font-size: 14px;
 }

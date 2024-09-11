@@ -1,19 +1,17 @@
-import {customConfigAxios} from "@/shared/api/index.ts";
+import { customConfigAxios } from "@/shared/api/index.ts"
 
+export const apiAdapter = async config => {
+	try {
+		const response = await customConfigAxios(config)
 
-export const apiAdapter = async (config)=>{
-    try {
-        const response = await customConfigAxios(config)
+		return Promise.resolve({
+			kind: "success",
+			...response
+		})
+	} catch (error) {
+		console.log(error)
+		//code
 
-        return Promise.resolve({
-            kind:'success',
-            ...response
-        })
-    } catch (error){
-        console.log(error)
-        //code
-
-        return Promise.reject(error)
-    }
-
+		return Promise.reject(error)
+	}
 }

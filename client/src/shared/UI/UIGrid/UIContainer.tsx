@@ -1,9 +1,5 @@
-import * as React from 'react';
+import * as React from "react"
 
 export default function UIContainer({ children, listClasses }) {
-	return (
-		<div className={`row ${listClasses}`}>
-			{children}
-		</div>
-	);
+	return <div className={`row ${listClasses}`}>{children}</div>
 }

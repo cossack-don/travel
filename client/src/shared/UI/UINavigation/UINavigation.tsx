@@ -4,10 +4,8 @@ interface Props {
 	children: ReactNode
 }
 
-const UINavigation = ({ children }: Props) =>{
-	return (
-		<div>{children}</div>
-	)
+const UINavigation = ({ children }: Props) => {
+	return <div>{children}</div>
 }
 
 export default UINavigation

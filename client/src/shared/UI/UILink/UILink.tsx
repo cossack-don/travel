@@ -4,13 +4,14 @@ import { Link } from "react-router-dom"
 
 interface Props {
 	children: ReactNode
-	to?:string
+	to?: string
 }
 
-const UILink = ({ children,to }: Props) => {
-
+const UILink = ({ children, to }: Props) => {
 	return (
-		<Link to={to} className={styles.wrapper}>{children}</Link>
+		<Link to={to} className={styles.wrapper}>
+			{children}
+		</Link>
 	)
 }
 
