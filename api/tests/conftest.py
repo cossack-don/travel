@@ -1,28 +1,28 @@
 import pytest
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from app.models.models import Choices
+from app.models.choices import *
+from app.database.engine import SessionLocal
 
-
-DATABASE_URL = "sqlite:////home/dmitry/Projects/my_pet/travel/api/database.db"
-
-engine = create_engine(DATABASE_URL, echo=True)
-Session = sessionmaker(bind=engine)
+TEST_ID = "test_entity_id"
+URL = f"http://127.0.0.1:8000/api/{TEST_ID}/"
+HEADERS = {"Content-Type": "application/json"}
 
 
 @pytest.fixture(scope="function")
-def test_entity():
+async def get_db():
+    db = SessionLocal()
+    try:
+        ch = App(id=TEST_ID)
+        db.add(ch)
+        await db.commit()
+        await db.refresh(ch)
 
-    session = Session()
+        yield db
 
-    ch = Choices(id="test_entity_id")
-    session.add(ch)
-    session.commit()
-    session.refresh(ch)
-
-    yield ch
-
-    session.query(Choices).filter(Choices.id == "test_entity_id").delete()
-    session.commit()
-
-    session.close()
+        await db.query(App).filter(App.id == "test_entity_id").delete()
+        await db.commit()
+    except Exception as e:
+        await db.rollback()
+    finally:
+        await db.close()
