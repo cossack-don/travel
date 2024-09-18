@@ -8,7 +8,7 @@ const listStatusesErrors = {
 
 const CUSTOM_CONFIG_AXIOS = customConfigAxios(import.meta.env.VITE_APP_URL || undefined)
 
-export const ADAPTER_API_REQUEST = async (config, isGenerateCamelCase = false) => {
+export const ADAPTER_API_REQUEST = async config => {
 	try {
 		const response = await CUSTOM_CONFIG_AXIOS(config)
 

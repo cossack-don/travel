@@ -37,8 +37,8 @@ const CreateApp = () => {
 			if (!isError) {
 				await navigate(`/dashboard/app/${mockApp.hashApp}/step-sex`)
 			}
-		} catch (e:any) {
-			console.log(e:any)
+		} catch (e: any) {
+			console.log(e)
 		}
 	}
 

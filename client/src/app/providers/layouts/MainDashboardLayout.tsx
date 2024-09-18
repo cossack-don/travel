@@ -1,6 +1,6 @@
 import { ReactNode } from "react"
 import { UIButton, UIHeader, UILogo, UIFooter, UILink } from "@/shared/UI"
-import { Link, useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import style from "./MainDashBoardLayout.module.scss"
 
 type Props = {

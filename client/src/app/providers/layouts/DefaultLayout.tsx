@@ -1,6 +1,6 @@
 import { ReactNode } from "react"
 import { UIHeader, UILogo, UIButton } from "@/shared/UI"
-import { Link, useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 
 type Props = {
 	children: ReactNode
