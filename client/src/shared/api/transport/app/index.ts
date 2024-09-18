@@ -20,13 +20,13 @@ export const serviceApp = {
 			method: Methods.GET,
 		})
 	},
-	create:(payload:any) => {
+	create:({name,description}:{name:string,description:string}) => {
 		return ADAPTER_API_REQUEST({
 			url: getBaseURL('/apps/create'),
 			method: Methods.POST,
 			data:{
-				"name": "Название приложения",
-				"description": "Описание"
+				name,
+				description
 			}
 		})
 	}
