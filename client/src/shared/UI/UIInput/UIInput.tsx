@@ -22,7 +22,6 @@ interface Props {
 }
 
 const UIInput = ({
-	children,
 	label = "Label",
 	errorText = "Error text",
 	isError,

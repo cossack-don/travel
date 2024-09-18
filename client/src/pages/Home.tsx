@@ -7,12 +7,9 @@ import {
 	UISpinner,
 	UIWrapperCardRadioButtons
 } from "@/shared/UI"
-import { serviceApp } from "@/shared/api/transport"
 
 const Home = () => {
 	//TODO для теста бекенда что работает
-
-
 
 	const usePickActiveCardRadio = (defaultValue: string) => {
 		const [value, setValue] = useState(defaultValue)

@@ -1,13 +1,12 @@
 import { Link, useNavigate } from "react-router-dom"
 import { UICard, UIButton } from "@/shared/UI"
-import { mockListApps } from "@/shared/mockData/mockApp"
-import {serviceApp} from "@/shared/api/transport";
-import {useEffect, useState} from "react";
+import { serviceApp } from "@/shared/api/transport"
+import { useEffect, useState } from "react"
 
 const ListApps = () => {
-	const [apps,setApps] = useState([])
+	const [apps, setApps] = useState([])
 	const apiGetListApps = async () => {
-		const {data} = await serviceApp.getAll()
+		const { data } = await serviceApp.getAll()
 		setApps(data)
 	}
 
@@ -15,9 +14,9 @@ const ListApps = () => {
 		apiGetListApps()
 	}, [])
 
-	const handlerDeleteApp = async(id:string) => {
-	 await serviceApp.deleteById(id)
-	 await apiGetListApps()
+	const handlerDeleteApp = async (id: string) => {
+		await serviceApp.deleteById(id)
+		await apiGetListApps()
 	}
 
 	return (
@@ -28,17 +27,15 @@ const ListApps = () => {
 						<UICard
 							header={
 								<div>
-								<p>Название - {item.name}</p>
+									<p>Название - {item.name}</p>
 
-									<button onClick={()=>handlerDeleteApp(item?.id)}>DELETE Card</button>
+									<button onClick={() => handlerDeleteApp(item?.id)}>DELETE Card</button>
 								</div>
 							}
 							footer={<div>Footer - ID - {item.id}</div>}
 							listClasses="mr-15"
-
-
 						>
-						<p>Описание - {item.description}</p>
+							<p>Описание - {item.description}</p>
 
 							<Link to={`/dashboard/app/${item.id}`}>Перейти</Link>
 						</UICard>

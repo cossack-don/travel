@@ -11,6 +11,7 @@ export default defineConfig({
 	},
 	resolve: {
 		alias: [
+			/* eslint-disable */
 			{ find: "@", replacement: path.resolve(__dirname, "src") },
 			{ find: "@api", replacement: path.resolve(__dirname, "src/api/") },
 			{ find: "@helpers", replacement: path.resolve(__dirname, "src/helpers/") }

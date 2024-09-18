@@ -1,4 +1,4 @@
-import { Methods,getBaseURL,ADAPTER_API_REQUEST } from "@/shared/api/axios"
+import { Methods, getBaseURL, ADAPTER_API_REQUEST } from "@/shared/api/axios"
 
 export const serviceApp = {
 	getAll: () => {
@@ -7,30 +7,27 @@ export const serviceApp = {
 			method: Methods.GET
 		})
 	},
-	deleteById: (id:string) => {
+	deleteById: (id: string) => {
 		return ADAPTER_API_REQUEST({
 			url: getBaseURL("/apps/delete"),
 			method: Methods.DELETE,
-			params:{id}
+			params: { id }
 		})
 	},
-	getById:(id:string) => {
+	getById: (id: string) => {
 		return ADAPTER_API_REQUEST({
 			url: getBaseURL(`/apps/${id}`),
-			method: Methods.GET,
+			method: Methods.GET
 		})
 	},
-	create:({name,description}:{name:string,description:string}) => {
+	create: ({ name, description }: { name: string; description: string }) => {
 		return ADAPTER_API_REQUEST({
-			url: getBaseURL('/apps/create'),
+			url: getBaseURL("/apps/create"),
 			method: Methods.POST,
-			data:{
+			data: {
 				name,
 				description
 			}
 		})
 	}
 }
-
-
-
