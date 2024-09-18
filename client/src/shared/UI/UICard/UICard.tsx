@@ -11,17 +11,17 @@ type Props = {
 	listClasses?: any
 }
 
-const UICard = ({ header, children, footer, isLink = false, to, listClasses }: Props) => {
+const UICard = ({ header, children, footer, to, listClasses }: Props) => {
 	return (
 		<>
-			{isLink && (
+			{to && (
 				<Link className={`eventHover ${style.wrapper} ${listClasses}`} to={to}>
 					{header}
 					{children}
 					{footer}
 				</Link>
 			)}
-			{!isLink && (
+			{!to && (
 				<div className={style.wrapper}>
 					{header}
 					{children}

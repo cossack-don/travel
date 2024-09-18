@@ -1,4 +1,4 @@
-import { customConfigAxios } from "@/shared/api"
+import { customConfigAxios } from "@/shared/api/axios"
 
 const listStatusesErrors = {
 	STATUS_CODE_400: 400,

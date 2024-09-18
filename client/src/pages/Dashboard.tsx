@@ -1,26 +1,46 @@
 import { Link, useNavigate } from "react-router-dom"
 import { UICard, UIButton } from "@/shared/UI"
 import { mockListApps } from "@/shared/mockData/mockApp"
+import {serviceApp} from "@/shared/api/transport";
+import {useEffect, useState} from "react";
 
 const ListApps = () => {
+	const [apps,setApps] = useState([])
+	const apiGetListApps = async () => {
+		const {data} = await serviceApp.getAll()
+		setApps(data)
+	}
+
+	useEffect(() => {
+		apiGetListApps()
+	}, [])
+
+	const handlerDeleteApp = async(id:string) => {
+	 await serviceApp.deleteById(id)
+	 await apiGetListApps()
+	}
+
 	return (
 		<div className="row between-xs">
-			{mockListApps.map(item => {
+			{apps.map(item => {
 				return (
-					<div className="col-xs-3">
+					<div key={item.id} className="col-xs-3">
 						<UICard
-							key={item.id}
 							header={
 								<div>
-									ID - {item.id}, {item.title}
+								<p>Название - {item.name}</p>
+
+									<button onClick={()=>handlerDeleteApp(item?.id)}>DELETE Card</button>
 								</div>
 							}
-							footer={<div>footer</div>}
+							footer={<div>Footer - ID - {item.id}</div>}
 							listClasses="mr-15"
-							isLink
-							to={`/dashboard/app/${item.hashApp}`}
+
+
 						>
-							{item.description}
+						<p>Описание - {item.description}</p>
+
+							<Link to={`/dashboard/app/${item.id}`}>Перейти</Link>
 						</UICard>
 					</div>
 				)

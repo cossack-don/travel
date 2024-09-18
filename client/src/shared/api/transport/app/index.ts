@@ -1,14 +1,36 @@
-import { ADAPTER_API_REQUEST } from "@/shared/api/ApiAdapter"
-import { Methods } from "@/shared/api/Methods"
+import { Methods,getBaseURL,ADAPTER_API_REQUEST } from "@/shared/api/axios"
 
-//
 export const serviceApp = {
-	getAll: (payload: any) => {
+	getAll: () => {
 		return ADAPTER_API_REQUEST({
-			url: "1",
-			methods: Methods.GET
-			// params
-			// data
+			url: getBaseURL("/apps/get_list"),
+			method: Methods.GET
+		})
+	},
+	deleteById: (id:string) => {
+		return ADAPTER_API_REQUEST({
+			url: getBaseURL("/apps/delete"),
+			method: Methods.DELETE,
+			params:{id}
+		})
+	},
+	getById:(id:string) => {
+		return ADAPTER_API_REQUEST({
+			url: getBaseURL(`/apps/${id}`),
+			method: Methods.GET,
+		})
+	},
+	create:(payload:any) => {
+		return ADAPTER_API_REQUEST({
+			url: getBaseURL('/apps/create'),
+			method: Methods.POST,
+			data:{
+				"name": "Название приложения",
+				"description": "Описание"
+			}
 		})
 	}
 }
+
+
+
