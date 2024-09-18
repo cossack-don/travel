@@ -12,7 +12,7 @@ class App(Base):
     id = Column(
         String,
         primary_key=True,
-        default=str(uuid.uuid4().hex),
+        default=lambda: str(uuid.uuid4().hex),
         unique=True,
         nullable=False,
     )
