@@ -1,5 +1,7 @@
 .wrapper {
-	display: block;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
 	background: var(--white);
 	min-width: 300px;
 	min-height: 300px;

@@ -1,18 +1,19 @@
-import axios, { AxiosResponse, InternalAxiosRequestConfig } from "axios"
+import axios, { AxiosResponse } from "axios"
 
 export interface ApiResponse extends AxiosResponse {
 	kind: string
 }
 
-//TODO Доделать
-export const customConfigAxios = () => {
+export const customConfigAxios = baseURL => {
+
 	const api = axios.create({
-		baseURL: "https://jsonplaceholder.typicode.com/posts",
-		withCredentials: false
+		baseURL: baseURL,
+		withCredentials: false,
 	})
 
-	api.interceptors.request.use(
-		(response): Promise<axios.InternalAxiosRequestConfig> => {
+	api.interceptors.response.use(
+		(response): Promise<AxiosResponse> => {
+
 			return Promise.resolve({
 				kind: "Success",
 				...response
