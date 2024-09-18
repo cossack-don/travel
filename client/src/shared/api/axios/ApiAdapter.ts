@@ -1,4 +1,5 @@
 import { customConfigAxios } from "@/shared/api/axios"
+import { toast } from "react-toastify"
 
 const listStatusesErrors = {
 	STATUS_CODE_400: 400,
@@ -11,8 +12,7 @@ const CUSTOM_CONFIG_AXIOS = customConfigAxios(import.meta.env.VITE_APP_URL || un
 export const ADAPTER_API_REQUEST = async config => {
 	try {
 		const response = await CUSTOM_CONFIG_AXIOS(config)
-
-		console.log("global-api-resolve")
+		await toast.success("🦄 Status: SUCCESS API - Global")
 
 		return Promise.resolve({
 			kind: "Success",
@@ -30,7 +30,8 @@ export const ADAPTER_API_REQUEST = async config => {
 		if (error.response.status >= listStatusesErrors.STATUS_CODE_500) {
 			console.log("STATUS-API-GLOBAL", listStatusesErrors.STATUS_CODE_500)
 		}
-		console.log("error-api-global", error)
+
+		toast.error("🦄 Status: ERROR-API - Global")
 		return Promise.reject(error)
 	}
 }

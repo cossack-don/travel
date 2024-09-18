@@ -2,13 +2,24 @@ import { Link, useNavigate } from "react-router-dom"
 import { UICard, UIButton } from "@/shared/UI"
 import { serviceApp } from "@/shared/api/transport"
 import { useEffect, useState } from "react"
+import { getRandomColor } from "@/shared/helpers"
+import { useBadResponse } from "@/shared/hooks"
 
 const ListApps = () => {
 	const [apps, setApps] = useState([])
+	const [isBadRequest, setBadRequest] = useBadResponse()
+
 	const apiGetListApps = async () => {
-		const { data } = await serviceApp.getAll()
-		setApps(data)
+		try {
+			setBadRequest(false)
+			const { data } = await serviceApp.getAll()
+			setApps(data)
+		} catch() {
+			setBadRequest(true)
+		}
 	}
+
+	const colorsArray = ["#eff9ff", "#ffd1ca", "#feeaf0", "#dcffe1", "#f0f9ff"]
 
 	useEffect(() => {
 		apiGetListApps()
@@ -21,10 +32,12 @@ const ListApps = () => {
 
 	return (
 		<div className="row between-xs">
+			{isBadRequest && <div>Бекенд упал - заглушка</div>}
 			{apps.map(item => {
 				return (
 					<div key={item.id} className="col-xs-3">
 						<UICard
+							listStyles={{ background: getRandomColor(colorsArray) }}
 							header={
 								<div>
 									<p>Название - {item.name}</p>
@@ -33,7 +46,7 @@ const ListApps = () => {
 								</div>
 							}
 							footer={<div>Footer - ID - {item.id}</div>}
-							listClasses="mr-15"
+							listClasses="mr-15 mb-15"
 						>
 							<p>Описание - {item.description}</p>
 
