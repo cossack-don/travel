@@ -1,15 +1,24 @@
 import { useNavigate, useParams } from "react-router-dom"
-import { useEffect } from "react"
+import {useEffect, useState} from "react"
 import { mockApp } from "@/shared/mockData/mockApp"
 import { UIButton, UINavigation } from "@/shared/UI"
+import {serviceApp} from "@/shared/api/transport";
 
 const TemplateApp = () => {
 	const params = useParams()
 	const navigate = useNavigate()
 
+	const [app,setApp] = useState([])
+	const apiGetByIdApp = async () => {
+		const {data} = await serviceApp.getById(params.id)
+		setApp(data)
+	}
+
 	useEffect(() => {
 		console.log(params)
+		apiGetByIdApp()
 	}, [])
+
 
 	return (
 		<div style={{ display: "flex" }}>
@@ -23,7 +32,9 @@ const TemplateApp = () => {
 			</div>
 			<div style={{ width: "70%" }}>
 				<div>
-					HASH APP - {params.id}
+					<p>Название - {app.name}</p>
+					<p>Описание - {app.description}</p>
+					<p>ID - {app.id}</p>
 					<br />
 					<UIButton onClick={() => navigate(`/dashboard/app/${mockApp.hashApp}/step-sex`)}>
 						Собрать вещи

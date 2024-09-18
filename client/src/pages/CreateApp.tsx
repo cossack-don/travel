@@ -3,6 +3,7 @@ import { mockApp } from "@/shared/mockData/mockApp"
 import { UIButton, UIInput, UICol, UIContainer } from "@/shared/UI"
 import { useEffect, useState } from "react"
 import style from "./CreateApp.module.scss"
+import {serviceApp} from "@/shared/api/transport";
 
 const CreateApp = () => {
 	const [name, setName] = useState("")
@@ -27,6 +28,11 @@ const CreateApp = () => {
 	const handlerSubmitForm = async () => {
 		try {
 			//api fetch
+			const payload = {
+				name,
+				description
+			}
+			await serviceApp.create(payload)
 			console.log("FORM", name, description, isError)
 			if (!isError) {
 				await navigate(`/dashboard/app/${mockApp.hashApp}/step-sex`)
