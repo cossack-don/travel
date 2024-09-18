@@ -3,7 +3,7 @@ import { mockApp } from "@/shared/mockData/mockApp"
 import { UIButton, UIInput, UICol, UIContainer } from "@/shared/UI"
 import { useEffect, useState } from "react"
 import style from "./CreateApp.module.scss"
-import {serviceApp} from "@/shared/api/transport";
+import { serviceApp } from "@/shared/api/transport"
 
 const CreateApp = () => {
 	const [name, setName] = useState("")
@@ -37,7 +37,9 @@ const CreateApp = () => {
 			if (!isError) {
 				await navigate(`/dashboard/app/${mockApp.hashApp}/step-sex`)
 			}
-		} catch (e) {}
+		} catch (e:any) {
+			console.log(e:any)
+		}
 	}
 
 	useEffect(() => {

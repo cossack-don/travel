@@ -5,15 +5,13 @@ export interface ApiResponse extends AxiosResponse {
 }
 
 export const customConfigAxios = baseURL => {
-
 	const api = axios.create({
 		baseURL: baseURL,
-		withCredentials: false,
+		withCredentials: false
 	})
 
 	api.interceptors.response.use(
 		(response): Promise<AxiosResponse> => {
-
 			return Promise.resolve({
 				kind: "Success",
 				...response

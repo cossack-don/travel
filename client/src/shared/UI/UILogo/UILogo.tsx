@@ -1,5 +1,4 @@
 import { ReactNode } from "react"
-import styles from "@/shared/UI/UILogo/UILogo.module.scss"
 
 interface Props {
 	children: ReactNode
