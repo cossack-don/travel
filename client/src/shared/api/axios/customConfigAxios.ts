@@ -1,17 +1,19 @@
-import axios, { AxiosResponse, InternalAxiosRequestConfig } from "axios"
+import axios, { AxiosResponse } from "axios"
 
 export interface ApiResponse extends AxiosResponse {
 	kind: string
 }
 
-export const customConfigAxios = URL => {
+export const customConfigAxios = baseURL => {
+
 	const api = axios.create({
-		baseURL: URL,
-		withCredentials: false
+		baseURL: baseURL,
+		withCredentials: false,
 	})
 
 	api.interceptors.response.use(
 		(response): Promise<AxiosResponse> => {
+
 			return Promise.resolve({
 				kind: "Success",
 				...response
