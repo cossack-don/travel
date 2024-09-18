@@ -4,8 +4,7 @@ export interface ApiResponse extends AxiosResponse {
 	kind: string
 }
 
-export const customConfigAxios = (URL) => {
-
+export const customConfigAxios = URL => {
 	const api = axios.create({
 		baseURL: URL,
 		withCredentials: false

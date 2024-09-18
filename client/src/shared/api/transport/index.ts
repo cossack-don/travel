@@ -1,5 +1,3 @@
-import {serviceApp} from "@/shared/api/transport/app";
+import { serviceApp } from "@/shared/api/transport/app"
 
-export {
-	serviceApp
-}
+export { serviceApp }
