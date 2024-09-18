@@ -32,7 +32,12 @@ export default [
 			"react-refresh/only-export-components": ["warn", { allowConstantExport: true }],
 			"prettier/prettier": "error",
 			"react/react-in-jsx-scope": "off",
-			"react/prop-types": "off"
+			"react/prop-types": "off",
+			"no-unused-vars": "off",
+			"@typescript-eslint/no-unused-vars": [
+				"error",
+				{ "argsIgnorePattern": "^_" }
+			]
 		}
 	},
 	{
