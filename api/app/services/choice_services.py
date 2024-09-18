@@ -28,11 +28,16 @@ class ChoisesAppRepisitory:
             await s.refresh(new_app)
             return new_app
 
-    async def delete_app(self, id: str):
+
+    async def delete_app(self, id: int):
         async with self.db_session as s:
-            result = await s.execute(delete(ItemsCheckListEntity).where(App.id == id))
+            stmt = delete(App).where(App.id == id)
+            await s.execute(stmt) 
             await s.commit()
-            return result.scalar_one_or_none()
+            
+
+
+
 
     # @staticmethod
     # async def get_and_update_data(update_session: AsyncSession, choise_id: str, update_data, data_to_update: str):

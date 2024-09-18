@@ -9,9 +9,9 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 
 router = APIRouter(
-    prefix="/api",
+    prefix="/apps",
     tags=[
-        "Choises",
+        "Apps",
     ],
 )
 
@@ -25,8 +25,8 @@ async def get_all_apps(service: ChoisesAppRepisitory = Depends(get_choise_instan
     try:
         result = await service.get_apps()
         if not result:
-            raise HTTPException(
-                status_code=status.HTTP_404_NOT_FOUND, detail="Entity not found"
+            return JSONResponse(
+                status_code=status.HTTP_404_NOT_FOUND, content={"details":"Entity not found"}
             )
         return JSONResponse(
             content=[App_response.model_validate(item).model_dump() for item in result],
@@ -45,8 +45,8 @@ async def get_app_by_id(
     try:
         result = await service.get_app_by_id(id)
         if not result:
-            raise HTTPException(
-                status_code=status.HTTP_404_NOT_FOUND, detail="Entity not found"
+            return JSONResponse(
+                status_code=status.HTTP_404_NOT_FOUND, content={"details":"Entity not found"}
             )
         return JSONResponse(
             content=App_response.model_validate(result).model_dump(),
@@ -77,20 +77,22 @@ async def create_app(
         )
 
 
-@router.delete("/")
+@router.delete("/delete")
 async def delete_app(
     id: str, service: ChoisesAppRepisitory = Depends(get_choise_instanse)
 ):
     try:
-        result = await service.delete_app(id=id)
+        result = await service.get_app_by_id(id)
         if not result:
-            raise HTTPException(
-                status_code=status.HTTP_404_NOT_FOUND, detail="Entity not found"
+            return JSONResponse(
+                status_code=status.HTTP_404_NOT_FOUND, content={"details":"Entity not found"}
             )
-        return JSONResponse(
-            content=[{"details": "sucsessfully deleted"}],
-            status_code=status.HTTP_201_CREATED,
-        )
+        else:
+            result = await service.delete_app(id=id)
+            return JSONResponse(
+                content=[{"details": "sucsessfully deleted"}],
+                status_code=status.HTTP_201_CREATED,
+            )
     except Exception as e:
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail={e}
