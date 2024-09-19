@@ -14,7 +14,7 @@ const ListApps = () => {
 			setBadRequest(false)
 			const { data } = await serviceApp.getAll()
 			setApps(data)
-		} catch() {
+		} catch {
 			setBadRequest(true)
 		}
 	}
