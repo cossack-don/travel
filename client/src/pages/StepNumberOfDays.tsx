@@ -1,13 +1,74 @@
 import { Link } from "react-router-dom"
+import { useEffect, useState } from "react"
+import { UICardRadioButton, UIWrapperCardRadioButtons } from "@/shared/UI"
 
 const StepNumberOfDays = () => {
+	const usePickActiveCardRadio = (defaultValue: string) => {
+		const [value, setValue] = useState(defaultValue)
+
+		const onChangeRadio = e => {
+			setValue(e.target.value)
+		}
+		return [value, onChangeRadio]
+	}
+	const [isActiveValue, setActiveValue] = useState("1")
+	const dataCards = [
+		{
+			id: 1,
+			value: "1",
+			text: "1 день"
+		},
+		{
+			id: 2,
+			value: "3",
+			text: "3 дня"
+		},
+		{
+			id: 3,
+			value: "5",
+			text: "5 дней"
+		},
+		{
+			id: 4,
+			value: "7",
+			text: "7 дней"
+		},
+		{
+			id: 5,
+			value: "14",
+			text: "14 дней"
+		}
+	]
+
+	const ListCards = ({ listData, defaultValue, setActiveValue }: any) => {
+		const [value, onChangeRadio] = usePickActiveCardRadio(defaultValue)
+
+		useEffect(() => {
+			setActiveValue(value)
+		}, [value])
+
+		const cards = listData.map(item => {
+			return (
+				<UICardRadioButton key={item.id} onChange={onChangeRadio} defaultValue={item.value} isActive={value}>
+					{item.text}
+				</UICardRadioButton>
+			)
+		})
+
+		return (
+			<UIWrapperCardRadioButtons style={{ background: "#fff", padding: "35px" }}>
+				{cards}
+			</UIWrapperCardRadioButtons>
+		)
+	}
 	return (
 		<div>
 			<p>StepNumberOfDays</p>
 			<p>На сколько дней</p>
-
+			Выбран - {isActiveValue}
+			<ListCards setActiveValue={setActiveValue} listData={dataCards} defaultValue={isActiveValue} />
 			<Link
-				to="/dashboard/app/8743b52063cd84097a65d1633f5c74f5/step-type-place"
+				to="/dashboard/app/8743b52063cd84097a65d1633f5c74f5/check-list/:id/step-type-place"
 				style={{ width: "200px", height: "200px", marginRight: "15px" }}
 			>
 				к 3-му шагу

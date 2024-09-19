@@ -56,7 +56,7 @@ const StepSex = () => {
 			<br />
 			<br />
 			<Link
-				to="/dashboard/app/8743b52063cd84097a65d1633f5c74f5/step-number-of-days"
+				to="/dashboard/app/8743b52063cd84097a65d1633f5c74f5/check-list/:id/step-number-of-days"
 				style={{ width: "200px", height: "200px", marginRight: "15px" }}
 			>
 				На 2-й шаг
