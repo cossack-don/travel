@@ -1,9 +1,7 @@
-import { useNavigate } from "react-router-dom"
-import { UICard, UIButton, UILink } from "@/shared/UI"
-import { serviceApp } from "@/shared/api/transport"
 import { useEffect, useState } from "react"
-// import { getRandomColor } from "@/shared/helpers"
 import { useBadResponse } from "@/shared/hooks"
+import { serviceApp } from "@/shared/api/transport"
+import { UICard, UILink } from "@/shared/UI"
 import UIParagraphTypography from "../shared/UI/UIParagraphTypography/UIParagraphTypography"
 import UIHeadingTypography from "../shared/UI/UIHeadingTypography/UIHeadingTypography"
 
@@ -15,15 +13,12 @@ const ListApps = () => {
 		try {
 			setBadRequest(false)
 			const { data } = await serviceApp.getAll()
-			const lastFourElements = data.slice(-4)
 
-			setApps(lastFourElements)
+			setApps(data)
 		} catch {
 			setBadRequest(true)
 		}
 	}
-
-	// const colorsArray = ["#eff9ff", "#ffd1ca", "#feeaf0", "#dcffe1", "#f0f9ff"]
 
 	useEffect(() => {
 		apiGetListApps()
@@ -66,42 +61,13 @@ const ListApps = () => {
 	)
 }
 
-const BlockInformation = () => {
-	return (
-		<div
-			style={{
-				borderRadius: "var(--border-radius-16)",
-				width: "1400px",
-				margin: "0 auto",
-				background: "var(--blue)",
-				color: "white",
-				padding: "30px"
-			}}
-		>
-			<UIHeadingTypography>Инструкция по функционалу</UIHeadingTypography>
-			<UIParagraphTypography>описание</UIParagraphTypography>
-		</div>
-	)
-}
-const Dashboard = () => {
-	const navigate = useNavigate()
+const Apps = () => {
 	return (
 		<div>
-			<UIHeadingTypography as="h2">Дашборд</UIHeadingTypography>
-
-			<BlockInformation />
-			<div style={{ width: "1400px", margin: "0 auto" }}>
-				<div className="row mb-15">
-					<div className="col-xs-12">
-						<UIButton onClick={() => navigate("/dashboard/create-app")}>Создать App</UIButton>
-					</div>
-				</div>
-
-				<ListApps />
-				<UILink to={"/dashboard/apps"}>Смотреть все Apps</UILink>
-			</div>
+			<UIHeadingTypography>Все приложения</UIHeadingTypography>
+			<ListApps />
 		</div>
 	)
 }
 
-export default Dashboard
+export default Apps

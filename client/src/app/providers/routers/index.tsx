@@ -14,7 +14,9 @@ import {
 	StepTypeOfTrip,
 	StepTypePlace,
 	StepTypeSeasons,
-	TemplateApp
+	TemplateApp,
+	StepCreateCheckList,
+	Apps
 } from "@/pages"
 
 export const router = createBrowserRouter([
@@ -47,6 +49,22 @@ export const router = createBrowserRouter([
 		element: (
 			<WrapperTypeLayout name="dashboard">
 				<TemplateApp />
+			</WrapperTypeLayout>
+		)
+	},
+	{
+		path: "/dashboard/apps",
+		element: (
+			<WrapperTypeLayout name="dashboard">
+				<Apps />
+			</WrapperTypeLayout>
+		)
+	},
+	{
+		path: "/dashboard/app/:id/check-list/:id/create",
+		element: (
+			<WrapperTypeLayout name="dashboard">
+				<StepCreateCheckList />
 			</WrapperTypeLayout>
 		)
 	},

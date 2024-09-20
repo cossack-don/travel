@@ -13,6 +13,8 @@ import UICol from "@/shared/UI/UIGrid/UICol"
 import UITextArea from "@/shared/UI/UITextArea/UITextArea"
 import UICardRadioButton from "@/shared/UI/UICardRadioButton/UICardRadioButton"
 import UIWrapperCardRadioButtons from "@/shared/UI/UIWrapperCardRadioButtons/UIWrapperCardRadioButtons"
+import UIParagraphTypography from "@/shared/UI/UIParagraphTypography/UIParagraphTypography"
+import UIHeadingTypography from "@/shared/UI/UIHeadingTypography/UIHeadingTypography"
 
 export {
 	UICheckBox,
@@ -29,5 +31,7 @@ export {
 	UIContainer,
 	UITextArea,
 	UICardRadioButton,
-	UIWrapperCardRadioButtons
+	UIWrapperCardRadioButtons,
+	UIParagraphTypography,
+	UIHeadingTypography
 }
