@@ -1,4 +1,5 @@
 //Stepper
+import StepCreateCheckList from "@/pages/StepCreateCheckList"
 import StepListOfThings from "@/pages/StepListOfThings"
 import StepTypeOfTrip from "@/pages/StepTypeOfTrip"
 import StepTypePlace from "@/pages/StepTypePlace"
@@ -10,7 +11,7 @@ import StepNumberOfDays from "@/pages/StepNumberOfDays"
 import SettingApp from "@/pages/SettingApp"
 import CreateApp from "@/pages/CreateApp"
 import TemplateApp from "@/pages/TemplateApp"
-
+import Apps from "@/pages/Apps"
 //not found page
 import NotFoundPage from "@/pages/NotFoundPage"
 
@@ -30,5 +31,7 @@ export {
 	StepTypeOfTrip,
 	NotFoundPage,
 	Home,
-	Dashboard
+	Dashboard,
+	StepCreateCheckList,
+	Apps
 }

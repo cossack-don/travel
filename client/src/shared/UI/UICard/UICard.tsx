@@ -1,6 +1,7 @@
 import style from "./UICard.module.scss"
 import { ReactNode } from "react"
 import { Link } from "react-router-dom"
+import UIHeadingTypography from "../UIHeadingTypography/UIHeadingTypography"
 
 type Props = {
 	header?: ReactNode
@@ -17,14 +18,14 @@ const UICard = ({ header, children, footer, to, listClasses, listStyles }: Props
 		<>
 			{to && (
 				<Link className={`eventHover ${style.wrapper} ${listClasses}`} style={listStyles} to={to}>
-					{header}
+					<UIHeadingTypography>{header}</UIHeadingTypography>
 					{children}
 					{footer}
 				</Link>
 			)}
 			{!to && (
 				<div className={`${style.wrapper} ${listClasses}`} style={listStyles}>
-					{header}
+					<UIHeadingTypography bold="medium">{header}</UIHeadingTypography>
 					{children}
 					{footer}
 				</div>

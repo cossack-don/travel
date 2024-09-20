@@ -1,9 +1,18 @@
 .wrapper {
 	color: var(--green);
 	font-weight: 500;
-	padding-bottom: 2px;
+	border-bottom: 2px solid transparent;
+	width: min-content;
 
 	&:hover {
 		border-bottom: 2px solid var(--green);
+	}
+}
+
+.blue {
+	color: var(--blue);
+
+	&:hover {
+		border-bottom: 2px solid var(--blue);
 	}
 }

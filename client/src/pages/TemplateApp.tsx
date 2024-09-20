@@ -71,7 +71,7 @@ const TemplateApp = () => {
 
 					<Test />
 
-					<UIButton onClick={() => navigate(`/dashboard/app/${mockApp.hashApp}/check-list/:id/step-sex`)}>
+					<UIButton onClick={() => navigate(`/dashboard/app/${mockApp.hashApp}/check-list/:id/create`)}>
 						Создать новый список вещей
 					</UIButton>
 				</div>

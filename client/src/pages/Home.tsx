@@ -7,6 +7,8 @@ import {
 	UISpinner,
 	UIWrapperCardRadioButtons
 } from "@/shared/UI"
+import UIHeadingTypography from "../shared/UI/UIHeadingTypography/UIHeadingTypography"
+import UIParagraphTypography from "../shared/UI/UIParagraphTypography/UIParagraphTypography"
 
 const Home = () => {
 	//TODO для теста бекенда что работает
@@ -64,6 +66,20 @@ const Home = () => {
 						<UIInput type="text" />
 						<ListCards setActiveValue={setActiveValue} listData={dataCards} defaultValue={isActiveValue} />
 						{isActiveValue}
+
+						<UIHeadingTypography as="h1">h1</UIHeadingTypography>
+						<UIHeadingTypography as="h2">h2</UIHeadingTypography>
+						<UIHeadingTypography as="h3">h3</UIHeadingTypography>
+						<UIHeadingTypography as="h4">h4</UIHeadingTypography>
+						<UIHeadingTypography as="h5">h5</UIHeadingTypography>
+						<UIHeadingTypography as="h6">h6</UIHeadingTypography>
+						<UIParagraphTypography as="p">p</UIParagraphTypography>
+						<UIParagraphTypography as="span" bold="light">
+							span
+						</UIParagraphTypography>
+						<UIParagraphTypography as="div" bold="bold">
+							div
+						</UIParagraphTypography>
 					</div>
 				</div>
 			</div>
