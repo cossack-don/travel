@@ -17,7 +17,7 @@ const sendMessage = async (message) => {
         .then(console.log, console.log);
 };
 
-await sendMessage(
+sendMessage(
     `📣 New MR: [<a href="#">test msg link</a>]`
 );
 // const onNewMergeRequest = async () => {
