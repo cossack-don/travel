@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom"
 import { mockApp } from "@/shared/mockData/mockApp"
-import { UIButton, UIInput, UICol, UIContainer,UITextArea } from "@/shared/UI"
+import { UIButton, UIInput, UICol, UIContainer, UITextArea } from "@/shared/UI"
 import { useEffect, useState } from "react"
 import style from "./CreateApp.module.scss"
 import { serviceApp } from "@/shared/api/transport"
@@ -59,7 +59,12 @@ const CreateApp = () => {
 						value={name}
 						onInput={handlerUpdateInputName}
 					/>
-					<UITextArea rows={8} label={infoFields.description.label} value={description} onInput={handlerUpdateInputDescription} />
+					<UITextArea
+						rows={8}
+						label={infoFields.description.label}
+						value={description}
+						onInput={handlerUpdateInputDescription}
+					/>
 
 					<UIButton onClick={handlerSubmitForm}>Создать приложение</UIButton>
 				</UICol>

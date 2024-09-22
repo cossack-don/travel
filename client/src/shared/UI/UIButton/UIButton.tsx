@@ -11,8 +11,7 @@ interface Props {
 	target?: string
 	iconLeft?: ReactNode
 	iconRight?: ReactNode
-	disabled?:boolean
-
+	disabled?: boolean
 }
 
 export default function UIButton({
