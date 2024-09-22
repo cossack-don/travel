@@ -3,7 +3,7 @@ on:
     branches: [ dev, main]
     types:
       - closed
-      - open
+      - opened
 
 jobs:
   if_merged:
