@@ -24,7 +24,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
         - name: 'Test PR'
-        - run: echo 'test'
+          run: echo 'test'
 
 
         
