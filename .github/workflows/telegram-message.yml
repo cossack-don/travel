@@ -13,7 +13,10 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '20.x'
-      - run: node bot.js
+      - run: node telegram-bot.js
+      - name: Semantic Release
+        env:
+            GITHUB_TOKEN: ${{ secrets.TG_BOT_TOKEN }}
 #      - run:
 #          using: 'node20'
 #          main: 'node bot.js'
