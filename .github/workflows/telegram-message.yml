@@ -17,6 +17,7 @@ jobs:
       - name: Semantic Release
         env:
             GITHUB_TOKEN: ${{ secrets.TG_BOT_TOKEN }}
+      - run: echo token
 #      - run:
 #          using: 'node20'
 #          main: 'node bot.js'
