@@ -1,5 +1,24 @@
+html,
+body {
+	height: 100%;
+	width: 100%;
+}
+
 body {
 	font-weight: 400;
 	font-style: normal;
 	background: #fff;
+}
+
+#root {
+	min-height: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: stretch;
+}
+
+header,
+main,
+footer {
+	flex-shrink: 0;
 }

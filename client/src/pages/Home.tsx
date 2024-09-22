@@ -55,19 +55,17 @@ const Home = () => {
 	}
 
 	return (
-		<div className="row between-xs" style={{ height: "100vh", padding: "15px", background: "var(--gray)" }}>
+		<div className="row between-xs" style={{ padding: "15px", background: "pink" }}>
 			<div className="col-xs-12">
 				<div className="box">
 					<div>
-						<UIHeadingTypography as='h2'>Компоненты UI</UIHeadingTypography>
+						<UIHeadingTypography as="h2">Компоненты UI</UIHeadingTypography>
 
 						<UIHeadingTypography as="h3">UI Loader</UIHeadingTypography>
 						<UISpinner />
 
 						<UIHeadingTypography as="h3">UI Button</UIHeadingTypography>
-						<UIButton>
-							Кнопка
-						</UIButton>
+						<UIButton>Кнопка</UIButton>
 
 						<UIHeadingTypography as="h3">UI Card</UIHeadingTypography>
 						<UICard isLink>Card</UICard>
@@ -94,11 +92,15 @@ const Home = () => {
 						<UIHeadingTypography as="h3">UI Типография текст</UIHeadingTypography>
 
 						<UIParagraphTypography as="p">p</UIParagraphTypography>
-						<UIParagraphTypography as="span" bold="light">span</UIParagraphTypography>
-						<UIParagraphTypography as="div" bold="bold">div</UIParagraphTypography>
+						<UIParagraphTypography as="span" bold="light">
+							span
+						</UIParagraphTypography>
+						<UIParagraphTypography as="div" bold="bold">
+							div
+						</UIParagraphTypography>
 
 						<UIHeadingTypography as="h3">UI Draft CheckBox</UIHeadingTypography>
-						<UICheckBox/>
+						<UICheckBox />
 					</div>
 				</div>
 			</div>

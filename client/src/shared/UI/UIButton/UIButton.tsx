@@ -11,6 +11,8 @@ interface Props {
 	target?: string
 	iconLeft?: ReactNode
 	iconRight?: ReactNode
+	disabled?:boolean
+
 }
 
 export default function UIButton({
@@ -20,7 +22,8 @@ export default function UIButton({
 	size = EnumSizes.MD,
 	iconLeft,
 	iconRight,
-	target
+	target,
+	disabled
 }: Props) {
 	const buttonClassName = `${styles.button} ${styles[size]}`
 
@@ -40,7 +43,7 @@ export default function UIButton({
 			)}
 
 			{!to && (
-				<button className={buttonClassName} onClick={onClick}>
+				<button disabled={disabled} className={buttonClassName} onClick={onClick}>
 					{content}
 				</button>
 			)}

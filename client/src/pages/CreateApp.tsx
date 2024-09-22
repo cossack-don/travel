@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom"
 import { mockApp } from "@/shared/mockData/mockApp"
-import { UIButton, UIInput, UICol, UIContainer } from "@/shared/UI"
+import { UIButton, UIInput, UICol, UIContainer,UITextArea } from "@/shared/UI"
 import { useEffect, useState } from "react"
 import style from "./CreateApp.module.scss"
 import { serviceApp } from "@/shared/api/transport"
@@ -35,7 +35,7 @@ const CreateApp = () => {
 			await serviceApp.create(payload)
 			console.log("FORM", name, description, isError)
 			if (!isError) {
-				await navigate(`/dashboard/app/${mockApp.hashApp}/step-sex`)
+				await navigate(`/dashboard/app/${mockApp.hashApp}`)
 			}
 		} catch (e: any) {
 			console.log(e)
@@ -50,7 +50,7 @@ const CreateApp = () => {
 
 	return (
 		<>
-			<UIContainer listClasses={`center-xs middle-xs`}>
+			<UIContainer listClasses={`row center-xs middle-xs`}>
 				<UICol listClasses={`col-sm-4 ${style.wrapperForm}`}>
 					<UIInput
 						errorText={infoFields.name.textError}
@@ -59,11 +59,8 @@ const CreateApp = () => {
 						value={name}
 						onInput={handlerUpdateInputName}
 					/>
-					<UIInput
-						label={infoFields.description.label}
-						value={description}
-						onInput={handlerUpdateInputDescription}
-					/>
+					<UITextArea rows={8} label={infoFields.description.label} value={description} onInput={handlerUpdateInputDescription} />
+
 					<UIButton onClick={handlerSubmitForm}>Создать приложение</UIButton>
 				</UICol>
 			</UIContainer>
