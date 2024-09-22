@@ -29,5 +29,5 @@ const [, , event] = process.argv;
 const eventHandlersMap = {
     newMr: onNewMergeRequest,
 };
-
+console.log(event,'event')
 (async () => await eventHandlersMap[event]())();
