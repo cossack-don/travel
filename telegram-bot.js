@@ -17,17 +17,19 @@ const sendMessage = async (message) => {
         .then(console.log, console.log);
 };
 
-
-const onNewMergeRequest = async () => {
-    await sendMessage(
-        `📣 New MR: [<a href="#">test msg link</a>]`
-    );
-};
-
-const [, , event] = process.argv;
-
-const eventHandlersMap = {
-    newMr: onNewMergeRequest,
-};
-console.log(event,'event')
-(async () => await eventHandlersMap[event]())();
+await sendMessage(
+    `📣 New MR: [<a href="#">test msg link</a>]`
+);
+// const onNewMergeRequest = async () => {
+//     await sendMessage(
+//         `📣 New MR: [<a href="#">test msg link</a>]`
+//     );
+// };
+//
+// const [, , event] = process.argv;
+//
+// const eventHandlersMap = {
+//     newMr: onNewMergeRequest,
+// };
+// console.log(event,'event')
+// (async () => await eventHandlersMap[event]())();
