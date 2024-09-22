@@ -1,5 +1,5 @@
 import { ReactNode } from "react"
-import styles from './UIFooter.module.scss'
+import styles from "./UIFooter.module.scss"
 interface Props {
 	children: ReactNode
 }

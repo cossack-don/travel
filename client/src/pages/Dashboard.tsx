@@ -1,10 +1,17 @@
 import { useNavigate } from "react-router-dom"
-import {UICard, UIButton, UILink, UIContainer, UIParagraphTypography, UIHeadingTypography, UICol} from "@/shared/UI"
+import {
+	UICard,
+	UIButton,
+	UILink,
+	UIContainer,
+	UIParagraphTypography,
+	UIHeadingTypography,
+	UICol
+} from "@/shared/UI"
 import { serviceApp } from "@/shared/api/transport"
 import { useEffect, useState } from "react"
 // import { getRandomColor } from "@/shared/helpers"
 import { useBadResponse } from "@/shared/hooks"
-
 
 const ListApps = () => {
 	const [apps, setApps] = useState([])
@@ -84,49 +91,43 @@ const BlockInformation = () => {
 const Dashboard = () => {
 	const navigate = useNavigate()
 	return (
+		<UIContainer listClasses={"row"}>
+			<UICol listClasses={"col-lg-12 col-md-12"}>
+				<UIContainer listClasses={"row"}>
+					<UICol listClasses={"col-lg-12 col-md-12"}>
+						<UIHeadingTypography as="h2">Дашборд</UIHeadingTypography>
+					</UICol>
+				</UIContainer>
+			</UICol>
 
+			<UICol listClasses={"col-lg-12 col-md-12"}>
+				<UIContainer listClasses={"row"}>
+					<UICol listClasses={"col-lg-12 col-md-12 col-sm-12"}>
+						<BlockInformation />
+					</UICol>
+				</UIContainer>
+			</UICol>
 
-			<UIContainer listClasses={'row'}>
+			<UICol listClasses={"col-lg-12 col-md-12"}>
+				<UIContainer listClasses={"row"}>
+					<UICol listClasses={"col-lg-12 col-md-12 col-sm-12"}>
+						<UIButton onClick={() => navigate("/dashboard/create-app")}>Создать App</UIButton>
+					</UICol>
+				</UIContainer>
+			</UICol>
 
-				<UICol listClasses={'col-lg-12 col-md-12'}>
-					<UIContainer listClasses={'row'}>
-						<UICol listClasses={'col-lg-12 col-md-12'}><UIHeadingTypography as="h2">Дашборд</UIHeadingTypography></UICol>
-					</UIContainer>
-				</UICol>
+			<UICol listClasses={"col-lg-12 col-md-12"}>
+				<ListApps />
+			</UICol>
 
-				<UICol listClasses={'col-lg-12 col-md-12'}>
-					<UIContainer listClasses={'row'}>
-						<UICol listClasses={'col-lg-12 col-md-12 col-sm-12'}>
-							<BlockInformation />
-						</UICol>
-					</UIContainer>
-				</UICol>
-
-				<UICol listClasses={'col-lg-12 col-md-12'}>
-					<UIContainer listClasses={'row'}>
-						<UICol listClasses={'col-lg-12 col-md-12 col-sm-12'}>
-							<UIButton onClick={() => navigate("/dashboard/create-app")}>Создать App</UIButton>
-						</UICol>
-					</UIContainer>
-				</UICol>
-
-				<UICol listClasses={'col-lg-12 col-md-12'}>
-							<ListApps />
-				</UICol>
-
-				<UICol listClasses={'col-lg-12 col-md-12'}>
-					<UIContainer listClasses={'row'}>
-						<UICol listClasses={'col-lg-12 col-md-12 col-sm-12'}>
-							<UILink to={"/dashboard/apps"}>Смотреть все Apps</UILink>
-						</UICol>
-					</UIContainer>
-				</UICol>
-
-			</UIContainer>
-
-
-
-
+			<UICol listClasses={"col-lg-12 col-md-12"}>
+				<UIContainer listClasses={"row"}>
+					<UICol listClasses={"col-lg-12 col-md-12 col-sm-12"}>
+						<UILink to={"/dashboard/apps"}>Смотреть все Apps</UILink>
+					</UICol>
+				</UIContainer>
+			</UICol>
+		</UIContainer>
 	)
 }
 

@@ -12,7 +12,7 @@ const CUSTOM_CONFIG_AXIOS = customConfigAxios(import.meta.env.VITE_APP_URL || un
 export const ADAPTER_API_REQUEST = async config => {
 	try {
 		const response = await CUSTOM_CONFIG_AXIOS(config)
-		await toast.success("🦄 Status: SUCCESS API - Global",{position:'bottom-right'})
+		await toast.success("🦄 Status: SUCCESS API - Global", { position: "bottom-right" })
 
 		return Promise.resolve({
 			kind: "Success",

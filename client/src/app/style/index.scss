@@ -1,5 +1,5 @@
-
-html, body {
+html,
+body {
 	height: 100%;
 	width: 100%;
 }
@@ -10,7 +10,6 @@ body {
 	background: #fff;
 }
 
-
 #root {
 	min-height: 100%;
 	display: flex;
@@ -18,6 +17,8 @@ body {
 	align-items: stretch;
 }
 
-header, main, footer {
+header,
+main,
+footer {
 	flex-shrink: 0;
 }

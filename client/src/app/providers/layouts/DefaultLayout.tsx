@@ -1,7 +1,7 @@
 import { ReactNode } from "react"
 import { UIHeader, UILogo, UIButton, UIFooter } from "@/shared/UI"
 import { useNavigate } from "react-router-dom"
-import styles from './DefaultLayout.module.scss'
+import styles from "./DefaultLayout.module.scss"
 
 type Props = {
 	children: ReactNode
