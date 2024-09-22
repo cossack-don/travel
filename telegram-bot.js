@@ -27,7 +27,7 @@ const sendMessage = async (message) => {
 // );
 // const onNewMergeRequest = async () => {
 //     await sendMessage(
-//         `📣 New MR: [<a href="#">test msg link</a>]`
+//         `📣 New MR: [<a href="#">test msg link</a>]` Пример сообщения PR merged success in dev branch - author-nickName - url Repo
 //     );
 // };
 //
