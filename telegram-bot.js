@@ -17,9 +17,53 @@ const sendMessage = async (message) => {
         .then(console.log, console.log);
 };
 
-sendMessage(
-    `📣 New MR: [<a href="#">test msg link</a>]`
-);
+const exit = (message) => {
+    console.log(message);
+    process.exit(1);
+};
+
+const useArgv = (keys) => {
+    const [, , , ...args] = process.argv;
+    return Object.fromEntries(
+        keys.map((k, i) => {
+            args[i] || exit(`${k} is null, check args`);
+            return [k, args[i]];
+        })
+    );
+};
+
+const onNewMergeRequest = async () => {
+    const args = useArgv([
+        "author",
+        "mergeRequestLink",
+        "title",
+        "repoName",
+        "repoUrl",
+    ]);
+
+    const author = args.author.replaceAll("<", "").replaceAll(">", "");
+    const title = args.title.replace(
+        /([A-Z]+)\-[0-9]+/gm,
+        (b) => `<a href="https://jira.mtt.ru:8443/browse/${b}">${b}</a>`
+    );
+
+    console.log(args,'ARGS')
+    // await sendMessage(
+    //     `📣 New MR: [<a href="${args.repoUrl}">${args.repoName}</a>] ${title}, от ${author}. <a href="${args.mergeRequestLink}">[open]</a>`
+    // );
+};
+
+const [, , event] = process.argv;
+
+const eventHandlersMap = {
+    newMr: onNewMergeRequest,
+};
+
+(async () => await eventHandlersMap[event]())();
+
+// sendMessage(
+//     `📣 New MR: [<a href="#">test msg link</a>]`
+// );
 // const onNewMergeRequest = async () => {
 //     await sendMessage(
 //         `📣 New MR: [<a href="#">test msg link</a>]`
