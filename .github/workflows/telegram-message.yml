@@ -19,6 +19,6 @@ jobs:
       - name: Печать токена
         run:
           echo "GitHub Token: ${{ secrets.TG_BOT_TOKEN }}"
-      - run: node telegram-bot.js
+#      - run: node telegram-bot.js
 
         
