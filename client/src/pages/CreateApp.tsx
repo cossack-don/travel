@@ -50,7 +50,7 @@ const CreateApp = () => {
 
 	return (
 		<>
-			<UIContainer listClasses={`center-xs middle-xs`}>
+			<UIContainer listClasses={`row center-xs middle-xs`}>
 				<UICol listClasses={`col-sm-4 ${style.wrapperForm}`}>
 					<UIInput
 						errorText={infoFields.name.textError}

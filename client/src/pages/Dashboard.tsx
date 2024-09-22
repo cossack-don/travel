@@ -1,11 +1,10 @@
 import { useNavigate } from "react-router-dom"
-import { UICard, UIButton, UILink } from "@/shared/UI"
+import {UICard, UIButton, UILink, UIContainer, UIParagraphTypography, UIHeadingTypography, UICol} from "@/shared/UI"
 import { serviceApp } from "@/shared/api/transport"
 import { useEffect, useState } from "react"
 // import { getRandomColor } from "@/shared/helpers"
 import { useBadResponse } from "@/shared/hooks"
-import UIParagraphTypography from "../shared/UI/UIParagraphTypography/UIParagraphTypography"
-import UIHeadingTypography from "../shared/UI/UIHeadingTypography/UIHeadingTypography"
+
 
 const ListApps = () => {
 	const [apps, setApps] = useState([])
@@ -35,11 +34,11 @@ const ListApps = () => {
 	}
 
 	return (
-		<div className="row between-xs">
+		<UIContainer listClasses="row between-xs">
 			{isBadRequest && <div>Бекенд упал - заглушка</div>}
 			{apps.map(item => {
 				return (
-					<div key={item.id} className="col-xs-3">
+					<UICol key={item.id} listClasses="col-xs-3">
 						<UICard
 							// listStyles={{ background: getRandomColor(colorsArray) }}
 							header={`App: ${item.name}`}
@@ -59,10 +58,10 @@ const ListApps = () => {
 							</UIParagraphTypography>
 							ID - {item.id}
 						</UICard>
-					</div>
+					</UICol>
 				)
 			})}
-		</div>
+		</UIContainer>
 	)
 }
 
@@ -71,8 +70,7 @@ const BlockInformation = () => {
 		<div
 			style={{
 				borderRadius: "var(--border-radius-16)",
-				width: "1400px",
-				margin: "0 auto",
+				// margin: "0 auto",
 				background: "var(--blue)",
 				color: "white",
 				padding: "30px"
@@ -86,21 +84,49 @@ const BlockInformation = () => {
 const Dashboard = () => {
 	const navigate = useNavigate()
 	return (
-		<div>
-			<UIHeadingTypography as="h2">Дашборд</UIHeadingTypography>
 
-			<BlockInformation />
-			<div style={{ width: "1400px", margin: "0 auto" }}>
-				<div className="row mb-15">
-					<div className="col-xs-12">
-						<UIButton onClick={() => navigate("/dashboard/create-app")}>Создать App</UIButton>
-					</div>
-				</div>
 
-				<ListApps />
-				<UILink to={"/dashboard/apps"}>Смотреть все Apps</UILink>
-			</div>
-		</div>
+			<UIContainer listClasses={'row'}>
+
+				<UICol listClasses={'col-lg-12 col-md-12'}>
+					<UIContainer listClasses={'row'}>
+						<UICol listClasses={'col-lg-12 col-md-12'}><UIHeadingTypography as="h2">Дашборд</UIHeadingTypography></UICol>
+					</UIContainer>
+				</UICol>
+
+				<UICol listClasses={'col-lg-12 col-md-12'}>
+					<UIContainer listClasses={'row'}>
+						<UICol listClasses={'col-lg-12 col-md-12 col-sm-12'}>
+							<BlockInformation />
+						</UICol>
+					</UIContainer>
+				</UICol>
+
+				<UICol listClasses={'col-lg-12 col-md-12'}>
+					<UIContainer listClasses={'row'}>
+						<UICol listClasses={'col-lg-12 col-md-12 col-sm-12'}>
+							<UIButton onClick={() => navigate("/dashboard/create-app")}>Создать App</UIButton>
+						</UICol>
+					</UIContainer>
+				</UICol>
+
+				<UICol listClasses={'col-lg-12 col-md-12'}>
+							<ListApps />
+				</UICol>
+
+				<UICol listClasses={'col-lg-12 col-md-12'}>
+					<UIContainer listClasses={'row'}>
+						<UICol listClasses={'col-lg-12 col-md-12 col-sm-12'}>
+							<UILink to={"/dashboard/apps"}>Смотреть все Apps</UILink>
+						</UICol>
+					</UIContainer>
+				</UICol>
+
+			</UIContainer>
+
+
+
+
 	)
 }
 

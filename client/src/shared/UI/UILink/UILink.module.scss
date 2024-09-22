@@ -2,8 +2,8 @@
 	color: var(--green);
 	font-weight: 500;
 	border-bottom: 2px solid transparent;
-	width: min-content;
-	//width: fit-content;
+	//width: min-content;
+	width: fit-content;
 
 	&:hover {
 		border-bottom: 2px solid var(--green);
