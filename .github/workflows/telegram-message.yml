@@ -1,7 +1,9 @@
 on:
   pull_request_target:
+    branches: [ dev, main]
     types:
       - closed
+      - open
 
 jobs:
   if_merged:
@@ -17,5 +19,13 @@ jobs:
         with:
           node-version: '20.x'
       - run: node telegram-bot.js
+
+  if_PR_open:
+    if: github.event.pull_request.opened == true
+    runs-on: ubuntu-latest
+    steps:
+        - name: 'Test PR'
+          run: echo 'test'
+
 
         
