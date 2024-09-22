@@ -8,7 +8,8 @@ jobs:
     if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     env:
-      MY_VARIABLE: 'some_value'  # Define your environment variable here
+      TG_BOT_TOKEN: ${{ secrets.TG_BOT_TOKEN }} # Define your environment variable here
+      TG_CHAT_ID: ${{ secrets.TG_CHAT_ID }} # Define your environment variable here
     steps:
       - uses: actions/checkout@v4
       - name: Use Node.js
