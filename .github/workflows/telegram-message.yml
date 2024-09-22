@@ -14,8 +14,5 @@ jobs:
         with:
           node-version: '20.x'
       - run: node telegram-bot.js
-      - name: TG_TOKEN
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: echo token ${{ secrets.TG_BOT_TOKEN }}
+
         
