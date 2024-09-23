@@ -1,8 +1,8 @@
 const test = process.env;
 const {TG_BOT_TOKEN,TG_CHAT_ID, IS_CREATE_PULL_REQUEST, IS_MERGED_PULL_REQUEST} = process.env;
 
-console.log('message TEST',TG_BOT_TOKEN,TG_CHAT_ID, IS_CREATE_PULL_REQUEST, IS_MERGED_PULL_REQUEST);
-const g = process.argv
+console.log('message TEST',TG_BOT_TOKEN,TG_CHAT_ID, typeof IS_CREATE_PULL_REQUEST, typeof IS_MERGED_PULL_REQUEST);
+const g = process
 console.log('all-list-process-logs',g)
 const sendMessage = async (message) => {
     await fetch(`https://api.telegram.org/bot${TG_BOT_TOKEN}/sendMessage`, {
