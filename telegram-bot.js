@@ -5,9 +5,9 @@ const isCreatePullRequest = Boolean(IS_CREATE_PULL_REQUEST)
 const isMergedPullRequest = Boolean(IS_MERGED_PULL_REQUEST)
 
 console.log('message TEST',TG_BOT_TOKEN,TG_CHAT_ID, typeof IS_CREATE_PULL_REQUEST, typeof IS_MERGED_PULL_REQUEST, GITHUB_ACTOR);
-const g = process
-console.log('all-list-process-logs',g)
-
+// const g = process
+// console.log('all-list-process-logs',g)
+console.log(isMergedPullRequest,isCreatePullRequest)
 const sendMessage = async (message) => {
     if(message === null) return
 
