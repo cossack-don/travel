@@ -9,6 +9,8 @@ const g = process
 console.log('all-list-process-logs',g)
 
 const sendMessage = async (message) => {
+    if(message === null) return
+
     await fetch(`https://api.telegram.org/bot${TG_BOT_TOKEN}/sendMessage`, {
         method: "POST",
         body: JSON.stringify({
@@ -22,10 +24,26 @@ const sendMessage = async (message) => {
         .then(console.log, console.log);
 };
 
+const listEvents = {
+    MERGED_PR_TO_DEV_BRANCH:{
+        title:'Merged PR in dev branch',
+        bodyMessage:`📣 ${listEvents.MERGED_PR_TO_DEV_BRANCH.title} от ${GITHUB_ACTOR} в проект[<a href="https://github.com/cossack-don/travel">CheckList</a>]`
 
-sendMessage(
-    `📣 New MR: [<a href="https://github.com/cossack-don/travel">test-link</a>] isStatus-test, от 'name-test'. <a href="#">[open]</a>`
-);
+    },
+    OPEN_PR:{
+        title:'New PR in dev branch',
+        bodyMessage:`📣 ${listEvents.OPEN_PR.title} от ${GITHUB_ACTOR} в проект[<a href="https://github.com/cossack-don/travel">CheckList</a>]`
+    }
+}
+
+isCreatePullRequest ? sendMessage(listEvents.MERGED_PR_TO_DEV_BRANCH.bodyMessage): null
+isMergedPullRequest ? sendMessage(listEvents.OPEN_PR.bodyMessage): null
+
+
+// sendMessage(
+//     `📣 New MR: [<a href="https://github.com/cossack-don/travel">test-link</a>] isStatus-test, от 'name-test'. <a href="#">[open]</a>`
+// );
+
 // const onNewMergeRequest = async () => {
 //
 //     await sendMessage(
