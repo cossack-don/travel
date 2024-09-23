@@ -1,30 +1,35 @@
 on:
   pull_request_target:
-    branches: [ dev, main]
+    branches: [dev, main]
     types:
       - closed
   pull_request:
-    branches: [ dev, main]
+    branches: [dev, main]
     types: [opened]
 
 jobs:
-#  if_merged:
+  MERGED_PR_MAIN_BRANCH:
 #    if: github.event.pull_request.merged == true
-#    runs-on: ubuntu-latest
-#    env:
-#      TG_BOT_TOKEN: ${{ secrets.TG_BOT_TOKEN }} # Define your environment variable here
-#      TG_CHAT_ID: ${{ secrets.TG_CHAT_ID }} # Define your environment variable here
-#    steps:
-#      - uses: actions/checkout@v4
-#      - name: Use Node.js
-#        uses: actions/setup-node@v4
-#        with:
-#          node-version: '20.x'
-#      - run: node telegram-bot.js
+    runs-on: ubuntu-latest
+    env:
+      TG_BOT_TOKEN: ${{ secrets.TG_BOT_TOKEN }} # Define your environment variable here
+      TG_CHAT_ID: ${{ secrets.TG_CHAT_ID }} # Define your environment variable here
+      IS_MERGED_PULL_REQUEST: true
+    steps:
+      - uses: actions/checkout@v4
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
+      - run: node telegram-bot.js
 
-  if_PR_open:
+  CREATE_PR:
 #    if: ${{ github.event.action == 'opened' }}
     runs-on: ubuntu-latest
+    env:
+      TG_BOT_TOKEN: ${{ secrets.TG_BOT_TOKEN }} # Define your environment variable here
+      TG_CHAT_ID: ${{ secrets.TG_CHAT_ID }} # Define your environment variable here
+      IS_CREATE_PULL_REQUEST: true
     steps:
         - uses: actions/checkout@v4
         - name: Use Node.js
