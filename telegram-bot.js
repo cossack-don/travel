@@ -34,8 +34,8 @@ const listEvents = {
     }
 }
 
-isCreatePullRequest ? sendMessage(listEvents?.OPEN_PR?.bodyMessage): null
-isMergedPullRequest ? sendMessage(listEvents?.MERGED_PR_TO_DEV_BRANCH?.bodyMessage): null
+// isCreatePullRequest ? sendMessage(listEvents?.OPEN_PR?.bodyMessage): null
+// isMergedPullRequest ? sendMessage(listEvents?.MERGED_PR_TO_DEV_BRANCH?.bodyMessage): null
 
 
 // sendMessage(
