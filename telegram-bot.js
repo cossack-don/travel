@@ -27,17 +27,17 @@ const sendMessage = async (message) => {
 const listEvents = {
     MERGED_PR_TO_DEV_BRANCH:{
         title:'Merged PR in dev branch',
-        bodyMessage:`📣 ${this.MERGED_PR_TO_DEV_BRANCH.title} от ${GITHUB_ACTOR} в проект [<a href="https://github.com/cossack-don/travel">CheckList</a>]`
+        bodyMessage:`📣 ${this?.MERGED_PR_TO_DEV_BRANCH?.title} от ${GITHUB_ACTOR} в проект [<a href="https://github.com/cossack-don/travel">CheckList</a>]`
 
     },
     OPEN_PR:{
         title:'New PR in dev branch',
-        bodyMessage:`📣 ${this.OPEN_PR.title} от ${GITHUB_ACTOR} в проект [<a href="https://github.com/cossack-don/travel">CheckList</a>]`
+        bodyMessage:`📣 ${this?.OPEN_PR?.title} от ${GITHUB_ACTOR} в проект [<a href="https://github.com/cossack-don/travel">CheckList</a>]`
     }
 }
 
-isCreatePullRequest ? sendMessage(listEvents.MERGED_PR_TO_DEV_BRANCH.bodyMessage): null
-isMergedPullRequest ? sendMessage(listEvents.OPEN_PR.bodyMessage): null
+isCreatePullRequest ? sendMessage(listEvents?.MERGED_PR_TO_DEV_BRANCH?.bodyMessage): null
+isMergedPullRequest ? sendMessage(listEvents?.OPEN_PR?.bodyMessage): null
 
 
 // sendMessage(
