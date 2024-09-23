@@ -9,7 +9,7 @@ on:
 
 jobs:
   MERGED_PR_MAIN_BRANCH:
-#    if: github.event.pull_request.merged == true
+    if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     env:
       TG_BOT_TOKEN: ${{ secrets.TG_BOT_TOKEN }} # Define your environment variable here
@@ -24,7 +24,7 @@ jobs:
       - run: node telegram-bot.js
 
   CREATE_PR:
-#    if: ${{ github.event.action == 'opened' }}
+    if: ${{ github.event.action == 'opened' }}
     runs-on: ubuntu-latest
     env:
       TG_BOT_TOKEN: ${{ secrets.TG_BOT_TOKEN }} # Define your environment variable here
