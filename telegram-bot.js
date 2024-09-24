@@ -6,14 +6,12 @@ const isMergedPullRequest = Boolean(IS_MERGED_PULL_REQUEST)
 const listEvents = {
     MERGED_PR_TO_DEV_BRANCH:{
         bodyMessage:`
-                        📣 Merged PR in dev branch от ${GITHUB_ACTOR} в проект 
-                        [<a href="https://github.com/cossack-don/travel">CheckList</a>]
+                    📣 Merged PR in dev branch от ${GITHUB_ACTOR} в проект [<a href="https://github.com/cossack-don/travel">CheckList</a>]
                     `
     },
     OPEN_PR:{
         bodyMessage:`
-                        📣 New PR in dev branch от ${GITHUB_ACTOR} в проект 
-                        [<a href="https://github.com/cossack-don/travel">CheckList</a>]
+                     📣 New PR in dev branch от ${GITHUB_ACTOR} в проект [<a href="https://github.com/cossack-don/travel">CheckList</a>]
                     `
     }
 }
