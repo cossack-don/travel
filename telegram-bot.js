@@ -5,17 +5,22 @@ const isMergedPullRequest = Boolean(IS_MERGED_PULL_REQUEST)
 
 const listEvents = {
     MERGED_PR_TO_DEV_BRANCH:{
-        bodyMessage:`📣 Merged PR in dev branch от ${GITHUB_ACTOR} в проект [<a href="https://github.com/cossack-don/travel">CheckList</a>]`
+        bodyMessage:`
+                    📣 Merged PR in dev branch от ${GITHUB_ACTOR} в проект [<a href="https://github.com/cossack-don/travel">CheckList</a>]
+                    `
     },
     OPEN_PR:{
-        bodyMessage:`📣 New PR in dev branch от ${GITHUB_ACTOR} в проект [<a href="https://github.com/cossack-don/travel">CheckList</a>]`
+        bodyMessage:`
+                     📣 New PR in dev branch от ${GITHUB_ACTOR} в проект [<a href="https://github.com/cossack-don/travel">CheckList</a>]
+                    `
     }
 }
 
 const sendMessage = async (message) => {
     if(message === null) return
 
-    await fetch(`https://api.telegram.org/bot${TG_BOT_TOKEN}/sendMessage`, {
+    const URL = `https://api.telegram.org/bot${TG_BOT_TOKEN}/sendMessage`
+    const options = {
         method: "POST",
         body: JSON.stringify({
             chat_id: TG_CHAT_ID,
@@ -23,9 +28,11 @@ const sendMessage = async (message) => {
             text: message,
         }),
         headers: { "Content-Type": "application/json" },
-    })
-        .then((v) => v.json())
-        .then(console.log, console.log);
+    }
+
+   const response = await fetch(URL, options)
+   const responseParse = await response.json()
+   console.log(responseParse)
 };
 
 // Push Message in telegram
