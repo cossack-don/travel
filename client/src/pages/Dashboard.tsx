@@ -1,31 +1,9 @@
 import { useNavigate } from "react-router-dom"
-import {
-	UIButton,
-	UILink,
-	UIContainer,
-	UIParagraphTypography,
-	UIHeadingTypography,
-	UICol
-} from "@/shared/UI"
+import { UIButton, UILink, UIContainer, UIHeadingTypography, UICol } from "@/shared/UI"
 
 import { RenderListApps } from "@/features/App/RenderListApps"
+import { RenderBannerInfo } from "@/features/BannerInfo/RenderBannerInfo"
 
-const BlockInformation = () => {
-	return (
-		<div
-			style={{
-				borderRadius: "var(--border-radius-16)",
-				// margin: "0 auto",
-				background: "var(--blue)",
-				color: "white",
-				padding: "30px"
-			}}
-		>
-			<UIHeadingTypography>Инструкция по функционалу</UIHeadingTypography>
-			<UIParagraphTypography>описание</UIParagraphTypography>
-		</div>
-	)
-}
 const Dashboard = () => {
 	const navigate = useNavigate()
 	return (
@@ -41,7 +19,7 @@ const Dashboard = () => {
 			<UICol listClasses={"col-lg-12 col-md-12"}>
 				<UIContainer listClasses={"row"}>
 					<UICol listClasses={"col-lg-12 col-md-12 col-sm-12"}>
-						<BlockInformation />
+						<RenderBannerInfo />
 					</UICol>
 				</UIContainer>
 			</UICol>
