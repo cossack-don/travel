@@ -1,7 +1,7 @@
 import { ListApps } from "@/entities/App"
-import {useEffect, useState} from "react";
-import {serviceApp} from "@/shared/api/transport";
-import {useBadResponse} from "@/shared/hooks";
+import { useEffect, useState } from "react"
+import { serviceApp } from "@/shared/api/transport"
+import { useBadResponse } from "@/shared/hooks"
 
 const RenderListFourApps = () => {
 	const [apps, setApps] = useState([])

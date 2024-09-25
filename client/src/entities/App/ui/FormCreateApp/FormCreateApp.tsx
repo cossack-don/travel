@@ -3,10 +3,10 @@ import { useEffect, useState } from "react"
 import style from "./FormCreateApp.module.scss"
 
 interface Props {
-	handlerSubmitForm:any
+	handlerSubmitForm: any
 }
 
-const FormCreateApp = ({handlerSubmitForm}:Props) => {
+const FormCreateApp = ({ handlerSubmitForm }: Props) => {
 	const [name, setName] = useState("")
 	const [description, setDescription] = useState("")
 	const [isError, setError] = useState(false)
@@ -49,7 +49,9 @@ const FormCreateApp = ({handlerSubmitForm}:Props) => {
 						onInput={handlerUpdateInputDescription}
 					/>
 
-					<UIButton onClick={()=>handlerSubmitForm(name,description,isError)}>Создать приложение</UIButton>
+					<UIButton onClick={() => handlerSubmitForm(name, description, isError)}>
+						Создать приложение
+					</UIButton>
 				</UICol>
 			</UIContainer>
 		</>

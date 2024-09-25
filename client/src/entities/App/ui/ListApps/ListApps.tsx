@@ -1,18 +1,16 @@
 import { UICard, UICol, UIContainer, UILink, UIParagraphTypography } from "@/shared/UI"
 
 interface Props {
-	list:any
-	isBadRequest:any
-	onDeleteCardById?:any
+	list: any
+	isBadRequest: any
+	onDeleteCardById?: any
 }
-const ListApps = ({apps,isBadRequest, onDeleteCardById}:Props) => {
-
-
+const ListApps = ({ apps, isBadRequest, onDeleteCardById }: Props) => {
 	return (
 		<UIContainer listClasses="row between-xs">
 			{isBadRequest && <div>Бекенд упал - заглушка</div>}
 
-			{apps.map((item:any) => {
+			{apps.map((item: any) => {
 				return (
 					<UICol key={item.id} listClasses="col-xs-3">
 						<UICard

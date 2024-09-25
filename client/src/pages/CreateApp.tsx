@@ -1,9 +1,9 @@
-import {CreateNewApp} from "@/features/App/CreateNewApp";
+import { CreateNewApp } from "@/features/App/CreateNewApp"
 
 const CreateApp = () => {
 	return (
 		<>
-			<CreateNewApp/>
+			<CreateNewApp />
 		</>
 	)
 }

@@ -1,13 +1,12 @@
-import {mockApp} from "@/shared/mockData/mockApp";
+import { mockApp } from "@/shared/mockData/mockApp"
 import { useNavigate } from "react-router-dom"
-import {FormCreateApp} from "@/entities/App";
-import {serviceApp} from "@/shared/api/transport";
-
+import { FormCreateApp } from "@/entities/App"
+import { serviceApp } from "@/shared/api/transport"
 
 const CreateNewApp = () => {
 	const navigate = useNavigate()
 
-	const handlerSubmitForm = async (name:any,description:any,isError:any) => {
+	const handlerSubmitForm = async (name: any, description: any, isError: any) => {
 		try {
 			//api fetch
 			const payload = {
@@ -26,7 +25,7 @@ const CreateNewApp = () => {
 
 	return (
 		<>
-			<FormCreateApp handlerSubmitForm={handlerSubmitForm}/>
+			<FormCreateApp handlerSubmitForm={handlerSubmitForm} />
 		</>
 	)
 }

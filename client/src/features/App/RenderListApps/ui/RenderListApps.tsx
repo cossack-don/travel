@@ -1,7 +1,7 @@
 import { ListApps } from "@/entities/App"
-import {useEffect, useState} from "react";
-import {serviceApp} from "@/shared/api/transport";
-import {useBadResponse} from "@/shared/hooks";
+import { useEffect, useState } from "react"
+import { serviceApp } from "@/shared/api/transport"
+import { useBadResponse } from "@/shared/hooks"
 
 const RenderListApps = () => {
 	const [apps, setApps] = useState([])
@@ -22,11 +22,11 @@ const RenderListApps = () => {
 		apiGetListApps()
 	}, [])
 
-		const handlerDeleteAppById = async (id: number) => {
-			// await serviceApp.deleteById(id)
-			// await apiGetListApps()
-			console.log(id)
-		}
+	const handlerDeleteAppById = async (id: number) => {
+		// await serviceApp.deleteById(id)
+		// await apiGetListApps()
+		console.log(id)
+	}
 
 	return (
 		<>
