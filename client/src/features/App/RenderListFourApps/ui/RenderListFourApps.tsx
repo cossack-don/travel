@@ -3,7 +3,7 @@ import {useEffect, useState} from "react";
 import {serviceApp} from "@/shared/api/transport";
 import {useBadResponse} from "@/shared/hooks";
 
-const RenderListApps = () => {
+const RenderListFourApps = () => {
 	const [apps, setApps] = useState([])
 	const [isBadRequest, setBadRequest] = useBadResponse()
 
@@ -11,28 +11,22 @@ const RenderListApps = () => {
 		try {
 			setBadRequest(false)
 			const { data } = await serviceApp.getAll()
+			const lastFourElements = data.slice(-4)
 
-			setApps(data)
+			setApps(lastFourElements)
 		} catch {
 			setBadRequest(true)
 		}
 	}
-
 	useEffect(() => {
 		apiGetListApps()
 	}, [])
 
-		const handlerDeleteAppById = async (id: number) => {
-			// await serviceApp.deleteById(id)
-			// await apiGetListApps()
-			console.log(id)
-		}
-
 	return (
 		<>
-			<ListApps apps={apps} onDeleteCardById={handlerDeleteAppById} isBadRequest={isBadRequest} />
+			<ListApps apps={apps} isBadRequest={isBadRequest} />
 		</>
 	)
 }
 
-export default RenderListApps
+export default RenderListFourApps

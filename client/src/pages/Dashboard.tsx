@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom"
 import { UIButton, UILink, UIContainer, UIHeadingTypography, UICol } from "@/shared/UI"
 
-import { RenderListApps } from "@/features/App/RenderListApps"
+import { RenderListFourApps } from "@/features/App/RenderListFourApps"
 import { RenderBannerInfo } from "@/features/BannerInfo/RenderBannerInfo"
 
 const Dashboard = () => {
@@ -33,7 +33,7 @@ const Dashboard = () => {
 			</UICol>
 
 			<UICol listClasses={"col-lg-12 col-md-12"}>
-				<RenderListApps />
+				<RenderListFourApps />
 			</UICol>
 
 			<UICol listClasses={"col-lg-12 col-md-12"}>
