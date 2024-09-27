@@ -1,5 +1,5 @@
 import { ReactNode } from "react"
-import style from "./UIInput.module.scss"
+import styles from "./UIInput.module.scss"
 
 interface Props {
 	children?: ReactNode
@@ -19,6 +19,7 @@ interface Props {
 	maxLength?: number | undefined
 	name?: string
 	placeholder?: string
+	style?: any
 }
 
 const UIInput = ({
@@ -36,11 +37,12 @@ const UIInput = ({
 	fullWidth = false,
 	listClasses,
 	placeholder = "Placeholder",
-	name
+	name,
+	style
 }: Props) => {
 	return (
-		<div className={style.wrapper}>
-			<span className={style.label}>{label}</span>
+		<div className={styles.wrapper} style={style}>
+			<span className={styles.label}>{label}</span>
 			<input
 				placeholder={placeholder}
 				name={name}
@@ -51,10 +53,10 @@ const UIInput = ({
 				onBlur={onBlur}
 				onFocus={onFocus}
 				onChange={onChange}
-				className={`${style.input} ${fullWidth ? style.fullWidth : ""} ${listClasses} ${isError ? style.errorInput : ""}`}
+				className={`${styles.input} ${fullWidth ? styles.fullWidth : ""} ${listClasses} ${isError ? styles.errorInput : ""}`}
 				type={type}
 			/>
-			<span className={style.errorText}>{isError ? errorText : ""}</span>
+			<span className={styles.errorText}>{isError ? errorText : ""}</span>
 		</div>
 	)
 }

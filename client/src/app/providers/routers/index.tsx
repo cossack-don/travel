@@ -16,7 +16,8 @@ import {
 	StepTypeSeasons,
 	TemplateApp,
 	StepCreateCheckList,
-	Apps
+	Apps,
+	SettingApp
 } from "@/pages"
 
 export const router = createBrowserRouter([
@@ -49,6 +50,14 @@ export const router = createBrowserRouter([
 		element: (
 			<WrapperTypeLayout name="dashboard">
 				<TemplateApp />
+			</WrapperTypeLayout>
+		)
+	},
+	{
+		path: "/dashboard/app/:id/settings",
+		element: (
+			<WrapperTypeLayout name="dashboard">
+				<SettingApp />
 			</WrapperTypeLayout>
 		)
 	},

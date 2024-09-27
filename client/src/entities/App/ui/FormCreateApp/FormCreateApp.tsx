@@ -1,4 +1,4 @@
-import { UIButton, UIInput, UICol, UIContainer, UITextArea } from "@/shared/UI"
+import { UIButton, UIInput, UICol, UIContainer, UITextArea, UIHeadingTypography } from "@/shared/UI"
 import { useEffect, useState } from "react"
 import style from "./FormCreateApp.module.scss"
 
@@ -33,25 +33,39 @@ const FormCreateApp = ({ handlerSubmitForm }: Props) => {
 
 	return (
 		<>
-			<UIContainer listClasses={`row center-xs middle-xs`}>
-				<UICol listClasses={`col-sm-4 ${style.wrapperForm}`}>
-					<UIInput
-						errorText={infoFields.name.textError}
-						isError={isError}
-						label={infoFields.name.label}
-						value={name}
-						onInput={handlerUpdateInputName}
-					/>
-					<UITextArea
-						rows={8}
-						label={infoFields.description.label}
-						value={description}
-						onInput={handlerUpdateInputDescription}
-					/>
+			<UIContainer listClasses={`row`}>
+				<UICol listClasses={" cols-sm-12 col-md-12"}>
+					<UIHeadingTypography as={"h2"} bold="medium">
+						Новое приложение
+					</UIHeadingTypography>
+				</UICol>
 
-					<UIButton onClick={() => handlerSubmitForm(name, description, isError)}>
-						Создать приложение
-					</UIButton>
+				<UICol listClasses={`col-sm-12`}>
+					<div className={style.wrapperForm}>
+						<UIInput
+							placeholder={"Название приложения"}
+							label={infoFields.name.label}
+							value={name}
+							style={{ width: "80%" }}
+							onInput={handlerUpdateInputName}
+						/>
+						<UITextArea
+							placeholder={"Для чего используется приложение"}
+							style={{ width: "80%" }}
+							rows={2}
+							label={infoFields.description.label}
+							value={description}
+							onInput={handlerUpdateInputDescription}
+						/>
+					</div>
+				</UICol>
+
+				<UICol listClasses={"col-md-12"}>
+					<div className="d-flex justify-content-center">
+						<UIButton className={style.button} onClick={() => handlerSubmitForm(name, description, isError)}>
+							Создать приложение
+						</UIButton>
+					</div>
 				</UICol>
 			</UIContainer>
 		</>
