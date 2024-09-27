@@ -1,7 +1,7 @@
 import { Link, useNavigate, useParams } from "react-router-dom"
 import { useEffect, useState } from "react"
 import { mockApp } from "@/shared/mockData/mockApp"
-import { UIButton, UINavigation } from "@/shared/UI"
+import { UIButton, UILink, UINavigation } from "@/shared/UI"
 import { serviceApp } from "@/shared/api/transport"
 
 const TemplateApp = () => {
@@ -55,11 +55,13 @@ const TemplateApp = () => {
 	return (
 		<div style={{ display: "flex" }}>
 			<div style={{ width: "30%", background: "white", marginTop: "25px" }}>
-				<UINavigation>Навигация</UINavigation>
+				<UINavigation>
+					<UILink to={`/dashboard/app/${params.id}/settings`}>Настройки</UILink>
+				</UINavigation>
+
 				<ul>
 					<li>Список вещей</li>
 					<li>Расширение функционала</li>
-					<li>Настройки</li>
 				</ul>
 			</div>
 			<div style={{ width: "70%" }}>

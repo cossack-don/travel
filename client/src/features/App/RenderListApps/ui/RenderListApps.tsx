@@ -22,15 +22,9 @@ const RenderListApps = () => {
 		apiGetListApps()
 	}, [])
 
-	const handlerDeleteAppById = async (id: number) => {
-		// await serviceApp.deleteById(id)
-		// await apiGetListApps()
-		console.log(id)
-	}
-
 	return (
 		<>
-			<ListApps apps={apps} onDeleteCardById={handlerDeleteAppById} isBadRequest={isBadRequest} />
+			<ListApps apps={apps} isBadRequest={isBadRequest} />
 		</>
 	)
 }
