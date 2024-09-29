@@ -20,7 +20,7 @@ import {
 	Auth,
 	Registration,
 	SettingApp,
-	ResetPassword
+	ResetPassword, Features
 } from "@/pages"
 
 export const router = createBrowserRouter([
@@ -81,11 +81,10 @@ export const router = createBrowserRouter([
 		)
 	},
 	{
-		path: "/dashboard/app/:id/url2",
+		path: "/dashboard/app/:id/features",
 		element: (
 			<WrapperTypeLayout name="dashboard">
-				<div>test2-page</div>
-				<TemplateApp />
+				<Features />
 			</WrapperTypeLayout>
 		)
 	},

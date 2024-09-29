@@ -18,13 +18,17 @@ import NotFoundPage from "@/pages/NotFoundPage"
 //index page
 import Home from "@/pages/Home"
 import Dashboard from "@/pages/Dashboard"
+
+//
+import Features from "@/pages/Features";
+
+//auth
 import Registration from "@/pages/Registration"
 import Auth from "@/pages/Auth"
 import ResetPassword from "@/pages/ResetPassword"
 
-//auth
-
 export {
+	Features,
 	SettingApp,
 	CreateApp,
 	TemplateApp,
