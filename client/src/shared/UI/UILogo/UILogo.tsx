@@ -3,8 +3,13 @@ import { UILink } from "@/shared/UI"
 
 interface Props {
 	children: ReactNode
+	style?: any
 }
 
-export default function UILogo({ children }: Props) {
-	return <UILink to="/dashboard">{children}</UILink>
+export default function UILogo({ children, style }: Props) {
+	return (
+		<UILink style={style} to="/dashboard">
+			{children}
+		</UILink>
+	)
 }

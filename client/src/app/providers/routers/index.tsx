@@ -20,7 +20,8 @@ import {
 	Auth,
 	Registration,
 	SettingApp,
-	ResetPassword, Features
+	ResetPassword,
+	Features
 } from "@/pages"
 
 export const router = createBrowserRouter([

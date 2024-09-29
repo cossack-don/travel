@@ -20,7 +20,7 @@ import Home from "@/pages/Home"
 import Dashboard from "@/pages/Dashboard"
 
 //
-import Features from "@/pages/Features";
+import Features from "@/pages/Features"
 
 //auth
 import Registration from "@/pages/Registration"

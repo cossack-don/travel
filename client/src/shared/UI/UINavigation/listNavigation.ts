@@ -34,5 +34,4 @@ export const listNavigation = [
 		icon: "name",
 		isActive: false
 	}
-
 ]

@@ -1,6 +1,5 @@
-import { ReactNode } from "react"
-import { UIButton, UIHeader, UILogo, UIFooter, UILink } from "@/shared/UI"
-import { useNavigate } from "react-router-dom"
+import { ReactNode, useState } from "react"
+import { UIHeader, UILogo, UIFooter, UILink, UIDrawer, UIAvatar } from "@/shared/UI"
 import style from "./MainDashBoardLayout.module.scss"
 
 type Props = {
@@ -10,11 +9,6 @@ type Props = {
 const list = [
 	{
 		id: 1,
-		name: "Дашборд",
-		url: "/dashboard"
-	},
-	{
-		id: 2,
 		name: "Создать App",
 		url: "/dashboard/create-app"
 	}
@@ -34,17 +28,24 @@ const ListLinks = () => {
 	)
 }
 const MainDashboardLayout = ({ children }: Props) => {
-	const navigate = useNavigate()
+	const [showModal, setShowModal] = useState(false)
+
 	return (
 		<>
 			<UIHeader
-				leftElement={<UILogo>LOGO</UILogo>}
-				centerElement={<ListLinks />}
-				rightElement={<UIButton onClick={() => navigate("/")}>Выход</UIButton>}
+				leftElement={
+					<div style={{ display: "flex" }}>
+						<UILogo style={{ marginRight: "35px" }}>LOGO</UILogo>
+						<ListLinks />
+					</div>
+				}
+				rightElement={<UIAvatar onClick={() => setShowModal(!showModal)} />}
 			/>
 
 			<main className={style.wrapper}>{children}</main>
 			<UIFooter>Footer</UIFooter>
+
+			<UIDrawer isActive={showModal} onClose={setShowModal} />
 		</>
 	)
 }
