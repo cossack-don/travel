@@ -3,7 +3,7 @@ import { useEffect, useState } from "react"
 import { mockApp } from "@/shared/mockData/mockApp"
 import { UIButton, UINavigation, UICol, UIContainer, UIHeadingTypography } from "@/shared/UI"
 import { serviceApp } from "@/shared/api/transport"
-import {listNavigation} from "@/shared/UI/UINavigation/listNavigation";
+import { listNavigation } from "@/shared/UI/UINavigation/listNavigation"
 
 const TemplateApp = () => {
 	const params = useParams()
@@ -42,7 +42,7 @@ const TemplateApp = () => {
 	const Test = () => {
 		return app?.arrCheckList?.map(item => {
 			return (
-				<div key={item.id} style={{ border: "solid 2px green",  marginBottom: "15px" }}>
+				<div key={item.id} style={{ border: "solid 2px green", marginBottom: "15px" }}>
 					<p>{item.name}</p>
 					<p> {item.descr}</p>
 
@@ -63,7 +63,7 @@ const TemplateApp = () => {
 
 			<UICol listClasses={"col-sm-9"}>
 				<div>
-					<UIHeadingTypography as='h2'>Обзор</UIHeadingTypography>
+					<UIHeadingTypography as="h2">Обзор</UIHeadingTypography>
 					<Test />
 
 					<UIButton onClick={() => navigate(`/dashboard/app/${mockApp.hashApp}/check-list/:id/create`)}>

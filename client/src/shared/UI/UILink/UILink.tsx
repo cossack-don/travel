@@ -6,6 +6,7 @@ interface Props {
 	children: ReactNode
 	to?: string
 	color?: string
+	style?: any
 }
 
 const typeColors = {
@@ -13,9 +14,9 @@ const typeColors = {
 	green: "green"
 }
 
-const UILink = ({ children, to, color }: Props) => {
+const UILink = ({ children, to, color, style }: Props) => {
 	return (
-		<Link to={to} className={`${styles.wrapper} ${styles[typeColors[color]]}`}>
+		<Link style={style} to={to} className={`${styles.wrapper} ${styles[typeColors[color]]}`}>
 			{children}
 		</Link>
 	)

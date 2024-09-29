@@ -15,6 +15,8 @@ import UICardRadioButton from "@/shared/UI/UICardRadioButton/UICardRadioButton"
 import UIWrapperCardRadioButtons from "@/shared/UI/UIWrapperCardRadioButtons/UIWrapperCardRadioButtons"
 import UIParagraphTypography from "@/shared/UI/UIParagraphTypography/UIParagraphTypography"
 import UIHeadingTypography from "@/shared/UI/UIHeadingTypography/UIHeadingTypography"
+import UIDrawer from "@/shared/UI/UIDrawer/UIDrawer"
+import UIAvatar from "@/shared/UI/UIAvatar/UIAvatar"
 
 export {
 	UICheckBox,
@@ -33,5 +35,7 @@ export {
 	UICardRadioButton,
 	UIWrapperCardRadioButtons,
 	UIParagraphTypography,
-	UIHeadingTypography
+	UIHeadingTypography,
+	UIDrawer,
+	UIAvatar
 }

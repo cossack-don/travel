@@ -1,0 +1,64 @@
+.wrapperDrawer {
+}
+
+.content {
+	background: var(--white);
+	width: 350px;
+	/*height: 100%;*/
+	padding: 15px;
+	position: fixed;
+	top: 0;
+	height: 100vh;
+	right: 0;
+	/*overflow: hidden;*/
+	bottom: 0;
+
+	/*border-left: 2px solid var(--green);*/
+	display: flex;
+	flex-direction: column;
+	z-index: 9999999999;
+	transition: all 0.2s ease-in-out;
+	text-align: center;
+	touch-action: none;
+	-webkit-overflow-scrolling: none;
+	-ms-touch-action: none;
+	min-height: 100%;
+}
+
+.body {
+}
+.bg {
+	position: fixed;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+	background: rgba(0, 0, 0, 0.2);
+	backdrop-filter: blur(7.5px);
+	z-index: 88;
+	overflow: hidden;
+	touch-action: none;
+	-webkit-overflow-scrolling: none;
+	-ms-touch-action: none;
+}
+
+.drawer-enter-from .drawer-content,
+.drawer-leave-to .drawer-content {
+	transform: translateX(100%);
+}
+
+.drawer-move,
+.drawer-enter-active,
+.drawer-leave-active {
+	transition: all 0.2s ease;
+}
+
+.header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 45px;
+}
+.footer {
+	margin-top: auto;
+}

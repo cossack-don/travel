@@ -1,5 +1,6 @@
 import styles from "./UIHeader.module.scss"
 import { ReactNode } from "react"
+import { UIContainer, UICol } from "@/shared/UI"
 
 interface Props {
 	leftElement: ReactNode
@@ -10,27 +11,19 @@ interface Props {
 const UIHeader = ({ leftElement, centerElement, rightElement }: Props) => {
 	return (
 		<>
-			<header className={`row between-xs middle-xs ${styles.header}`}>
-				<div className="col-xs-3">
+			<UIContainer as="header" listClasses={`row between-xs middle-xs ${styles.header}`}>
+				<UICol listClasses={"col-xs-3"}>
 					<div>{leftElement}</div>
-				</div>
+				</UICol>
 
-				<div className="col-xs-6">
-					<div className="row center-xs">
-						<div className="col-xs-12">
-							<div>{centerElement}</div>
-						</div>
-					</div>
-				</div>
+				<UICol listClasses={"col-xs-6"}>
+					<div>{centerElement}</div>
+				</UICol>
 
-				<div className="col-xs-3">
-					<div className="row end-xs">
-						<div className="col-xs-6">
-							<div>{rightElement}</div>
-						</div>
-					</div>
-				</div>
-			</header>
+				<UICol className="col-xs-3">
+					<div>{rightElement}</div>
+				</UICol>
+			</UIContainer>
 		</>
 	)
 }

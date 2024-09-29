@@ -1,5 +1,5 @@
-import {  UINavigation, UICol, UIContainer, UIHeadingTypography } from "@/shared/UI"
-import {listNavigation} from "@/shared/UI/UINavigation/listNavigation";
+import { UINavigation, UICol, UIContainer, UIHeadingTypography } from "@/shared/UI"
+import { listNavigation } from "@/shared/UI/UINavigation/listNavigation"
 
 const Features = () => {
 	return (
@@ -12,7 +12,7 @@ const Features = () => {
 
 			<UICol listClasses={"col-sm-9"}>
 				<div>
-					<UIHeadingTypography as='h2'>Будущие фичи</UIHeadingTypography>
+					<UIHeadingTypography as="h2">Будущие фичи</UIHeadingTypography>
 				</div>
 			</UICol>
 		</UIContainer>
