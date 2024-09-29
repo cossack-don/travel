@@ -18,6 +18,11 @@ import NotFoundPage from "@/pages/NotFoundPage"
 //index page
 import Home from "@/pages/Home"
 import Dashboard from "@/pages/Dashboard"
+import Registration from "@/pages/Registration"
+import Auth from "@/pages/Auth"
+import ResetPassword from "@/pages/ResetPassword"
+
+//auth
 
 export {
 	SettingApp,
@@ -32,6 +37,9 @@ export {
 	NotFoundPage,
 	Home,
 	Dashboard,
+	Auth,
 	StepCreateCheckList,
-	Apps
+	Apps,
+	Registration,
+	ResetPassword
 }

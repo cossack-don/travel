@@ -1,7 +1,7 @@
 import { Link, useNavigate, useParams } from "react-router-dom"
 import { useEffect, useState } from "react"
 import { mockApp } from "@/shared/mockData/mockApp"
-import { UIButton, UILink, UINavigation } from "@/shared/UI"
+import { UIButton, UINavigation, UICol, UIContainer } from "@/shared/UI"
 import { serviceApp } from "@/shared/api/transport"
 
 const TemplateApp = () => {
@@ -53,32 +53,23 @@ const TemplateApp = () => {
 		})
 	}
 	return (
-		<div style={{ display: "flex" }}>
-			<div style={{ width: "30%", background: "white", marginTop: "25px" }}>
-				<UINavigation>
-					<UILink to={`/dashboard/app/${params.id}/settings`}>Настройки</UILink>
-				</UINavigation>
-
-				<ul>
-					<li>Список вещей</li>
-					<li>Расширение функционала</li>
-				</ul>
-			</div>
-			<div style={{ width: "70%" }}>
+		<UIContainer>
+			<UICol listClasses={"col-sm-3"}>
 				<div>
-					<p>Название - {app.name}</p>
-					<p>Описание - {app.description}</p>
-					<p>ID - {app.id}</p>
-					<br />
+					<UINavigation />
+				</div>
+			</UICol>
 
+			<UICol listClasses={"col-sm-9"}>
+				<div>
 					<Test />
 
 					<UIButton onClick={() => navigate(`/dashboard/app/${mockApp.hashApp}/check-list/:id/create`)}>
 						Создать новый список вещей
 					</UIButton>
 				</div>
-			</div>
-		</div>
+			</UICol>
+		</UIContainer>
 	)
 }
 

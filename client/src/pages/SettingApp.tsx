@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom"
-import { UIButton, UICol, UIContainer, UIHeadingTypography } from "@/shared/UI"
+import { UIButton, UICol, UIContainer, UIHeadingTypography, UINavigation } from "@/shared/UI"
 
 const SettingApp = () => {
 	const params = useParams()
@@ -12,14 +12,18 @@ const SettingApp = () => {
 
 	return (
 		<UIContainer>
-			<UICol listClasses={"col-md-4"}>
-				<UIContainer>
-					<UICol>navigation</UICol>
+			<UICol listClasses={"col-sm-3"}>
+				<UIContainer listClasses={"row"}>
+					<UICol listClasses={"col-sm-12"}>
+						<div>
+							<UINavigation />
+						</div>
+					</UICol>
 				</UIContainer>
 			</UICol>
 
-			<UICol listClasses={"col-md-8"}>
-				<UIContainer>
+			<UICol listClasses={"col-sm-9"}>
+				<UIContainer listClasses={"row"}>
 					<UICol listClasses={"col-md-12"}>
 						<UIHeadingTypography>Настройки приложения</UIHeadingTypography>
 					</UICol>

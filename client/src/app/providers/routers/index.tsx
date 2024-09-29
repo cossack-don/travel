@@ -17,7 +17,10 @@ import {
 	TemplateApp,
 	StepCreateCheckList,
 	Apps,
-	SettingApp
+	Auth,
+	Registration,
+	SettingApp,
+	ResetPassword
 } from "@/pages"
 
 export const router = createBrowserRouter([
@@ -27,6 +30,30 @@ export const router = createBrowserRouter([
 			<WrapperTypeLayout name="default">
 				<Home />
 			</WrapperTypeLayout>
+		)
+	},
+	{
+		path: "/auth",
+		element: (
+			// <WrapperTypeLayout name="default">
+			<Auth />
+			// </WrapperTypeLayout>
+		)
+	},
+	{
+		path: "/registration",
+		element: (
+			// <WrapperTypeLayout name="default">
+			<Registration />
+			// </WrapperTypeLayout>
+		)
+	},
+	{
+		path: "/reset-password",
+		element: (
+			// <WrapperTypeLayout name="default">
+			<ResetPassword />
+			// </WrapperTypeLayout>
 		)
 	},
 	{
@@ -49,6 +76,15 @@ export const router = createBrowserRouter([
 		path: "/dashboard/app/:id",
 		element: (
 			<WrapperTypeLayout name="dashboard">
+				<TemplateApp />
+			</WrapperTypeLayout>
+		)
+	},
+	{
+		path: "/dashboard/app/:id/url2",
+		element: (
+			<WrapperTypeLayout name="dashboard">
+				<div>test2-page</div>
 				<TemplateApp />
 			</WrapperTypeLayout>
 		)

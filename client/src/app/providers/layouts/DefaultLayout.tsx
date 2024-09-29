@@ -14,7 +14,12 @@ const DefaultLayout = ({ children }: Props) => {
 		<>
 			<UIHeader
 				leftElement={<UILogo>LOGO</UILogo>}
-				rightElement={<UIButton onClick={() => navigate("/dashboard")}>Вход</UIButton>}
+				rightElement={
+					<div className={"d-flex"}>
+						<UIButton onClick={() => navigate("/auth")}>Войти</UIButton>
+						<UIButton onClick={() => navigate("/dashboard")}>Index</UIButton>
+					</div>
+				}
 			/>
 			<main className={styles.wrapper}>{children}</main>
 			<UIFooter>Footer</UIFooter>
