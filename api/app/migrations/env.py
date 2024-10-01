@@ -3,7 +3,7 @@ from sqlalchemy import pool
 from sqlalchemy.ext.asyncio import AsyncEngine, create_async_engine
 from alembic import context
 
-from app.models.choices import *
+from models.choices import *
 
 
 # this is the Alembic Config object, which provides

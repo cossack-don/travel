@@ -32,10 +32,11 @@ class ItemsCheckListEntity(Base):
     steps = relationship("Steps", back_populates="items")
 
 
+
 class Steps(Base):
     __tablename__ = "steps"
 
-    id = Column(Integer, primary_key=True)
+    id = Column(String, primary_key=True)
     sex = Column(String, nullable=True, default=None)
     days = Column(Integer, nullable=True, default=None)
     destination = Column(String, nullable=True, default=None)
