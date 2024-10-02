@@ -1,0 +1,27 @@
+.wrapper {
+	padding: 15px;
+	border-radius: 12px;
+	background: var(--white);
+	min-height: 70vh;
+}
+
+.card {
+	//background: var(--green);
+	border: solid 2px var(--gray);
+	margin-bottom: 10px;
+	padding: 5px;
+	border-radius: 4px;
+	transition: 0.5s;
+}
+
+.card:hover {
+	cursor: pointer;
+	//background: var(--green-hover);
+}
+.card:last-child {
+	margin-bottom: 0;
+}
+
+.isActive {
+	color: var(--green);
+}

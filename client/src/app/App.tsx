@@ -3,6 +3,7 @@ import "react-toastify/dist/ReactToastify.css"
 
 import "@/app//style/reset.scss"
 import "@/app/style/palette.scss"
+import "@/app/style/flex.scss"
 import "@/app/style/helpers.scss"
 import "@/app/style/index.scss"
 

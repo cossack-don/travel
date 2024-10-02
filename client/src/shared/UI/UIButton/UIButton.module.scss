@@ -38,3 +38,12 @@
 	padding: 8px 16px;
 	font-size: 16px;
 }
+
+.button-danger {
+	background: var(--red);
+}
+
+.button-danger:hover {
+	background: var(--red-hover);
+	cursor: pointer;
+}

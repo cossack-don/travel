@@ -9,6 +9,9 @@ interface Props {
 	maxLength?: number | undefined
 	cols?: number | undefined
 	rows?: number | undefined
+	style?: any
+	isError?: boolean
+	placeholder?: string
 }
 const UITextArea = ({
 	label = "Label",
@@ -17,13 +20,17 @@ const UITextArea = ({
 	value,
 	maxLength = undefined,
 	cols,
-	rows
+	rows,
+	style,
+	isError,
+	placeholder
 }: Props) => {
 	return (
-		<div className={styles.wrapper}>
+		<div className={styles.wrapper} style={style}>
 			<span className={styles.label}>{label}</span>
 
 			<textarea
+				placeholder={placeholder}
 				onInput={onInput}
 				value={value}
 				maxLength={maxLength}
@@ -32,7 +39,7 @@ const UITextArea = ({
 				rows={rows}
 			/>
 
-			<span className={styles.errorText}>{textError}</span>
+			{isError && <span className={styles.errorText}>{textError}</span>}
 		</div>
 	)
 }

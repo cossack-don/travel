@@ -1,20 +1,36 @@
-import { createSlice } from "@reduxjs/toolkit"
+import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 
-const initialState = {
-	id: 1,
-	name: "Arkady Parovozov",
-	sex: "man",
-	days: 1,
-	place: "country",
-	season: "cold",
-	typeOfTrip: "business trip"
+interface StateType {
+	id: number
+	name: string
+	sex: string
+	days: number
+	place: string
+	season: string
+	typeOfTrip: string
+}
+
+interface UserType {
+	SelectedUser: StateType | null
+}
+
+const initialState: UserType = {
+	SelectedUser: null
 }
 
 const slice = createSlice({
 	name: "user",
 	initialState,
 	reducers: {
-		userModel: () => {}
+		userModel: (state, action: PayloadAction<UserType>) => {
+			state.SelectedUser = action.payload
+		}
+	},
+	extraReducers: builder => {
+		builder
+			.addCase(state, action) => {
+
+		}
 	}
 })
 

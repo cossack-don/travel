@@ -8,13 +8,17 @@
 	padding: 10px;
 	resize: none;
 	outline: none;
-	border: 1px solid #f2f4f7;
+	border: 1px solid var(--green);
 	border-radius: 12px;
 	width: 100%;
 }
 
+.textarea::placeholder {
+	opacity: 0.7;
+}
+
 .textarea:focus {
-	border: solid 1px var(--green);
+	border: solid 1px var(--blue);
 }
 
 .label {

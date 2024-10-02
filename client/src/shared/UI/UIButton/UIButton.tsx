@@ -2,6 +2,7 @@ import { ReactNode } from "react"
 import styles from "@/shared/UI/UIButton/UIButton.module.scss"
 import { Link } from "react-router-dom"
 import { EnumSizes } from "./listSizes"
+import { UISpinner } from "@/shared/UI"
 
 interface Props {
 	children: ReactNode
@@ -12,6 +13,13 @@ interface Props {
 	iconLeft?: ReactNode
 	iconRight?: ReactNode
 	disabled?: boolean
+	className?: any
+	type?: any
+	isLoading?: boolean
+}
+
+const listTypesButton = {
+	danger: styles.buttonDanger
 }
 
 export default function UIButton({
@@ -22,10 +30,13 @@ export default function UIButton({
 	iconLeft,
 	iconRight,
 	target,
-	disabled
+	disabled,
+	className,
+	type,
+	isLoading = false
 }: Props) {
-	const buttonClassName = `${styles.button} ${styles[size]}`
-
+	const buttonClassName = `${styles.button} ${listTypesButton[type]} ${className} ${styles[size]}`
+	console.log(type, 3)
 	const content = (
 		<>
 			{iconLeft && <span className={styles.icon}>{iconLeft}</span>}
@@ -43,7 +54,17 @@ export default function UIButton({
 
 			{!to && (
 				<button disabled={disabled} className={buttonClassName} onClick={onClick}>
-					{content}
+					<div className={"d-flex align-items-center"}>
+						{isLoading && (
+							<UISpinner
+								style={{ marginRight: "4px" }}
+								fill={type === "danger" ? "var(--white)" : "var(--white)"}
+								size="xs"
+							/>
+						)}
+
+						{content}
+					</div>
 				</button>
 			)}
 		</>
