@@ -24,26 +24,31 @@ class App(Base):
 class ItemsCheckListEntity(Base):
     __tablename__ = "items"
 
-    id = Column(Integer, primary_key=True)
+    id = Column(
+        String,
+        primary_key=True,
+        default=lambda: str(uuid.uuid4().hex),
+        unique=True,
+        nullable=False,
+    )
     name = Column(String, nullable=True, default="Название списка вещей")
     description = Column(String, nullable=True, default="Описание")
     app_id = Column(Integer, ForeignKey("apps.id"))
     app = relationship("App", back_populates="items_check_list")
-    steps = relationship("Steps", back_populates="items")
-
+    steps = relationship("Steps", back_populates="items", cascade="all,delete-orphan")
 
 
 class Steps(Base):
     __tablename__ = "steps"
 
-    id = Column(String, primary_key=True)
+    id = Column(Integer, primary_key=True, autoincrement=True)
     sex = Column(String, nullable=True, default=None)
     days = Column(Integer, nullable=True, default=None)
     destination = Column(String, nullable=True, default=None)
     weather = Column(String, nullable=True, default=None)
     trip_type = Column(String, nullable=True, default=None)
 
-    check_list_entity_id = Column(Integer, ForeignKey("items.id"))
+    check_list_entity_id = Column(String, ForeignKey("items.id"))
     items = relationship("ItemsCheckListEntity", back_populates="steps")
 
     def to_dict(self):
