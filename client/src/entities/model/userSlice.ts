@@ -25,12 +25,6 @@ const slice = createSlice({
 		userModel: (state, action: PayloadAction<UserType>) => {
 			state.SelectedUser = action.payload
 		}
-	},
-	extraReducers: builder => {
-		builder
-			.addCase(state, action) => {
-
-		}
 	}
 })
 

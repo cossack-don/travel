@@ -1,8 +1,11 @@
 import { Link } from "react-router-dom"
 import { useEffect, useState } from "react"
-import { UICardRadioButton, UIWrapperCardRadioButtons, UILink } from "@/shared/UI"
+import { UICardRadioButton, UILink, UIWrapperCardRadioButtons } from "@/shared/UI"
+import { useSelector } from "react-redux"
+import { RootState } from "@/app/providers/store/store.ts"
 
 const StepSex = () => {
+	const dataCards = useSelector<RootState>(state => state.sexSelect)
 	const usePickActiveCardRadio = (defaultValue: string) => {
 		const [value, setValue] = useState(defaultValue)
 
@@ -12,18 +15,7 @@ const StepSex = () => {
 		return [value, onChangeRadio]
 	}
 	const [isActiveValue, setActiveValue] = useState("man")
-	const dataCards = [
-		{
-			id: 1,
-			value: "man",
-			text: "Мужчина"
-		},
-		{
-			id: 2,
-			value: "woman",
-			text: "Женщина"
-		}
-	]
+
 	const ListCards = ({ listData, defaultValue, setActiveValue }: any) => {
 		const [value, onChangeRadio] = usePickActiveCardRadio(defaultValue)
 

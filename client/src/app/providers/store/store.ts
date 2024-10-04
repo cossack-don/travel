@@ -1,9 +1,9 @@
 import { configureStore } from "@reduxjs/toolkit"
-import counterReducer from "@/features/counter/counterSlice.ts"
+import { sexReducer } from "@/entities/model/sexSlice.ts"
 
 export const store = configureStore({
 	reducer: {
-		counter: counterReducer
+		sexSelect: sexReducer
 	}
 })
 
