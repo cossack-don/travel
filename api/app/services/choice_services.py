@@ -132,57 +132,13 @@ class StepsRepository:
                 return steps
             return None
 
-    async def update_sex(self, app_id: str, ch_list_id: str, update_data):
-
-        res = await self.get_and_update_data(
-            app_id=app_id,
-            ch_list_id=ch_list_id,
-            update_session=self.db_session,
-            update_data=update_data,
-            data_to_update="sex",
-        )
-        return res
-
-    async def update_days(self, app_id: str, ch_list_id: str, update_data):
-
-        res = await self.get_and_update_data(
-            app_id=app_id,
-            ch_list_id=ch_list_id,
-            update_session=self.db_session,
-            update_data=update_data,
-            data_to_update="days",
-        )
-        return res
-
-    async def update_destination(self, app_id: str, ch_list_id: str, update_data):
-
-        res = await self.get_and_update_data(
-            app_id=app_id,
-            ch_list_id=ch_list_id,
-            update_session=self.db_session,
-            update_data=update_data,
-            data_to_update="destination",
-        )
-        return res
-
-    async def update_weather(self, app_id: str, ch_list_id: str, update_data):
-
-        res = await self.get_and_update_data(
-            app_id=app_id,
-            ch_list_id=ch_list_id,
-            update_session=self.db_session,
-            update_data=update_data,
-            data_to_update="weather",
-        )
-        return res
-
-    async def update_trip_type(self, app_id: str, ch_list_id: str, update_data):
-
-        res = await self.get_and_update_data(
-            app_id=app_id,
-            ch_list_id=ch_list_id,
-            update_session=self.db_session,
-            update_data=update_data,
-            data_to_update="trip_type",
-        )
-        return res
+    async def update_data(self,app_id: str, ch_list_id: str, step: str, update_data):
+        result = await self.get_and_update_data(
+                                    app_id=app_id,
+                                    update_session=self.db_session,
+                                    ch_list_id=ch_list_id,
+                                    data_to_update=step,
+                                    update_data=update_data)
+        return result
+    
+ 

@@ -1,7 +1,7 @@
+from typing import Union
 from fastapi import APIRouter, Depends, HTTPException, Query
 from fastapi import status
 from fastapi.responses import JSONResponse
-from app.schemas.enums import *
 from app.schemas.choices import *
 from app.database.session import get_db
 from app.services.choice_services import *
@@ -66,11 +66,11 @@ async def get_all_apps(
     ],
 )
 async def get_app_by_id(
-    id: str,
+    app_id: str,
     service: ChoisesAppRepisitory = Depends(get_app_instanse),
 ):
     try:
-        result = await service.get_app_by_id(id)
+        result = await service.get_app_by_id(app_id)
         if not result:
             return JSONResponse(
                 status_code=status.HTTP_404_NOT_FOUND,
@@ -245,160 +245,43 @@ async def get_steps(
 
 
 @router.patch(
-    "/{app_id}/check_list/{id}/sex/",
-    response_model=Choice,
+    "/{app_id}/check_list/{id}/{step}/",
     tags=[
         "Steps",
     ],
-)
-async def update_sex_data(
-    app_id: str,
-    id: str,
-    update_data: Sex,
-    service: StepsRepository = Depends(get_steps_instanse),
-):
-    try:
-        result = await service.update_sex(
-            app_id=app_id, ch_list_id=id, update_data=update_data
-        )
-        if not result:
-            return JSONResponse(
-                status_code=status.HTTP_404_NOT_FOUND,
-                content={"details": "Entity not found"},
-            )
-        return JSONResponse(
-            content=Choice.model_validate(result).model_dump(),
-            status_code=status.HTTP_201_CREATED,
-        )
-    except Exception as e:
-        raise HTTPException(
-            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail={e}
-        )
-
-
-@router.patch(
-    "/{app_id}/check_list/{id}/days/",
     response_model=Choice,
-    tags=[
-        "Steps",
-    ],
 )
-async def update_days_data(
+async def update_step_data(
     app_id: str,
     id: str,
-    update_data: Days,
+    step: str,
+    update_data: Union[str, int],
     service: StepsRepository = Depends(get_steps_instanse),
 ):
+    steps_check = {
+        "sex":["Мужчина","Женщина"],
+        "days":["3", "7", "14"],
+        "destination":["По стране","За границей"],
+        "weather":["Теплая","Холодная"],
+        "trip":["Горные лыжи","Пляж","Коммандировка","Поход с палатками"]
+    }
+
     try:
-        result = await service.update_days(
-            app_id=app_id, ch_list_id=id, update_data=update_data
-        )
-        if not result:
+        if not (step in steps_check.keys() and update_data in steps_check[step]):
             return JSONResponse(
                 status_code=status.HTTP_404_NOT_FOUND,
-                content={"details": "Entity not found"},
+                content={"details": "Bad request"},
             )
-        return JSONResponse(
-            content=Choice.model_validate(result).model_dump(),
-            status_code=status.HTTP_201_CREATED,
-        )
+        result = await service.update_data(app_id=app_id,ch_list_id=id,step=step,update_data=update_data)
+        return result
+    
     except Exception as e:
-        raise HTTPException(
+            raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail={e}
         )
 
-
-@router.patch(
-    "/{app_id}/check_list/{id}/weather/",
-    response_model=Choice,
-    tags=[
-        "Steps",
-    ],
-)
-async def update_weather_data(
-    app_id: str,
-    id: str,
-    update_data: Weather,
-    service: StepsRepository = Depends(get_steps_instanse),
-):
-    try:
-        result = await service.update_weather(
-            app_id=app_id, ch_list_id=id, update_data=update_data
-        )
-        if not result:
-            return JSONResponse(
-                status_code=status.HTTP_404_NOT_FOUND,
-                content={"details": "Entity not found"},
-            )
-        return JSONResponse(
-            content=Choice.model_validate(result).model_dump(),
-            status_code=status.HTTP_201_CREATED,
-        )
-    except Exception as e:
-        raise HTTPException(
-            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail={e}
-        )
+    
+    
 
 
-@router.patch(
-    "/{app_id}/check_list/{id}/destination/",
-    response_model=Choice,
-    tags=[
-        "Steps",
-    ],
-)
-async def update_destination_data(
-    app_id: str,
-    id: str,
-    update_data: Destination,
-    service: StepsRepository = Depends(get_steps_instanse),
-):
-    try:
-        result = await service.update_destination(
-            app_id=app_id, ch_list_id=id, update_data=update_data
-        )
-        if not result:
-            return JSONResponse(
-                status_code=status.HTTP_404_NOT_FOUND,
-                content={"details": "Entity not found"},
-            )
-        return JSONResponse(
-            content=Choice.model_validate(result).model_dump(),
-            status_code=status.HTTP_201_CREATED,
-        )
-    except Exception as e:
-        raise HTTPException(
-            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail={e}
-        )
 
-
-@router.patch(
-    "/{app_id}/check_list/{id}/trip_type/",
-    response_model=Choice,
-    tags=[
-        "Steps",
-    ],
-)
-async def update_trip_type_data(
-    app_id: str,
-    id: str,
-    update_data: Trip,
-    service: StepsRepository = Depends(get_steps_instanse),
-):
-    try:
-        result = await service.update_trip_type(
-            app_id=app_id, ch_list_id=id, update_data=update_data
-        )
-        if not result:
-            return JSONResponse(
-                status_code=status.HTTP_404_NOT_FOUND,
-                content={"details": "Entity not found"},
-            )
-        return JSONResponse(
-            content=Choice.model_validate(result).model_dump(),
-            status_code=status.HTTP_201_CREATED,
-        )
-    except Exception as e:
-        raise HTTPException(
-            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail={e}
-        )
