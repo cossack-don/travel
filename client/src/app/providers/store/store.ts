@@ -1,9 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit"
 import { sexReducer } from "@/entities/model/sexSlice.ts"
+import stepOfDaysReducer from "@/entities/model/stepNumbersOfDaysSlice.ts"
 
 export const store = configureStore({
 	reducer: {
-		sexSelect: sexReducer
+		sexSelect: sexReducer,
+		stepOfDays: stepOfDaysReducer
 	}
 })
 

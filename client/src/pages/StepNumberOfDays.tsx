@@ -1,6 +1,8 @@
 import { Link } from "react-router-dom"
 import { useEffect, useState } from "react"
 import { UICardRadioButton, UIWrapperCardRadioButtons } from "@/shared/UI"
+import { useSelector } from "react-redux"
+import { RootState } from "@/app/providers/store/store.ts"
 
 const StepNumberOfDays = () => {
 	const usePickActiveCardRadio = (defaultValue: string) => {
@@ -12,33 +14,35 @@ const StepNumberOfDays = () => {
 		return [value, onChangeRadio]
 	}
 	const [isActiveValue, setActiveValue] = useState("1")
-	const dataCards = [
-		{
-			id: 1,
-			value: "1",
-			text: "1 день"
-		},
-		{
-			id: 2,
-			value: "3",
-			text: "3 дня"
-		},
-		{
-			id: 3,
-			value: "5",
-			text: "5 дней"
-		},
-		{
-			id: 4,
-			value: "7",
-			text: "7 дней"
-		},
-		{
-			id: 5,
-			value: "14",
-			text: "14 дней"
-		}
-	]
+	const dataCards = useSelector<RootState>(state => state.stepOfDays)
+
+	// const dataCards = [
+	// 	{
+	// 		id: 1,
+	// 		value: "1",
+	// 		text: "1 день"
+	// 	},
+	// 	{
+	// 		id: 2,
+	// 		value: "3",
+	// 		text: "3 дня"
+	// 	},
+	// 	{
+	// 		id: 3,
+	// 		value: "5",
+	// 		text: "5 дней"
+	// 	},
+	// 	{
+	// 		id: 4,
+	// 		value: "7",
+	// 		text: "7 дней"
+	// 	},
+	// 	{
+	// 		id: 5,
+	// 		value: "14",
+	// 		text: "14 дней"
+	// 	}
+	// ]
 
 	const ListCards = ({ listData, defaultValue, setActiveValue }: any) => {
 		const [value, onChangeRadio] = usePickActiveCardRadio(defaultValue)
