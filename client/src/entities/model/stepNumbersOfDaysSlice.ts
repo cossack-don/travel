@@ -45,7 +45,7 @@ const slice = createSlice({
 	initialState,
 	reducers: {
 		stepOfDays: (state, action: PayloadAction<StepOfDaysType>) => {
-			state = action.payload
+			state.stepOfDays.push(action.payload)
 		}
 	}
 })
