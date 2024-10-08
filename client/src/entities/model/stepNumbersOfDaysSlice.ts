@@ -1,12 +1,12 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 
-type StepOfDaysType = {
+export type StepOfDaysType = {
 	id: number
 	value: string
 	text: string
 }
 
-interface StepOfDays {
+export interface StepOfDays {
 	stepOfDays: StepOfDaysType[]
 }
 

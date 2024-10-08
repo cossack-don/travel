@@ -1,14 +1,15 @@
 import { Link } from "react-router-dom"
-import { useEffect, useState } from "react"
+import { ChangeEvent, useEffect, useState } from "react"
 import { UICardRadioButton, UIWrapperCardRadioButtons } from "@/shared/UI"
 import { useSelector } from "react-redux"
 import { RootState } from "@/app/providers/store/store.ts"
+import { StepOfDaysType } from "@/entities/model/stepNumbersOfDaysSlice.ts"
 
 const StepNumberOfDays = () => {
 	const usePickActiveCardRadio = (defaultValue: string) => {
 		const [value, setValue] = useState(defaultValue)
 
-		const onChangeRadio = e => {
+		const onChangeRadio = (e: ChangeEvent<HTMLInputElement>) => {
 			setValue(e.target.value)
 		}
 		return [value, onChangeRadio]
@@ -51,7 +52,7 @@ const StepNumberOfDays = () => {
 			setActiveValue(value)
 		}, [value])
 
-		const cards = listData.stepOfDays.map(item => {
+		const cards = listData.stepOfDays.map((item: StepOfDaysType) => {
 			return (
 				<UICardRadioButton key={item.id} onChange={onChangeRadio} defaultValue={item.value} isActive={value}>
 					{item.text}
