@@ -51,7 +51,7 @@ const StepNumberOfDays = () => {
 			setActiveValue(value)
 		}, [value])
 
-		const cards = listData.map(item => {
+		const cards = listData.stepOfDays.map(item => {
 			return (
 				<UICardRadioButton key={item.id} onChange={onChangeRadio} defaultValue={item.value} isActive={value}>
 					{item.text}
