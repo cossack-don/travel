@@ -180,14 +180,15 @@ class Category(BaseModel):
 
 
 @router.get(
-    "/{app_id}/check_list/get_final",
+    "/{app_id}/check_list/{id}/result_check_list",
     response_model=List[Category],
     tags=[
         "Checklists",
     ],
 )
-async def get_final_check_list(
+async def get_result_check_list(
     app_id: str,
+    id:str,
     limit: int = Query(10, ge=0, le=100),
     offset: int = Query(
         0,
