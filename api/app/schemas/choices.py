@@ -1,6 +1,6 @@
 from pydantic import BaseModel, ConfigDict, Field
 from typing import Optional, List, AnyStr
-from app.schemas.enums import *
+
 
 
 class Base(BaseModel):
@@ -8,12 +8,18 @@ class Base(BaseModel):
 
 
 class Choice(Base):
+    sex: Optional[str] = Field(default=None, example="Женщина")
+    days: Optional[int] = Field(default=None, example=3)
+    destination: Optional[str] = Field(default=None, example="За городом")
+    weather: Optional[str] = Field(default=None, example="Теплая")
+    trip_type: Optional[str] = Field(default=None, example="Коммандировка")
+
+
+class ItemCheckListSchema(BaseModel):
     id: AnyStr
-    sex: Optional[Sex] = Field(default=None, example=Sex.woman)
-    days: Optional[Days] = Field(default=None, example=Days.three_days)
-    destination: Optional[Destination] = Field(default=None, example=Destination.abroad)
-    weather: Optional[Weather] = Field(default=None, example=Weather.cold)
-    trip_type: Optional[Trip] = Field(default=None, example=Trip.skies)
+    name: Optional[str] = Field(default="Название списка вещей")
+    description: Optional[str] = Field(default="Описание")
+    steps: List[Choice] = Field(default=None)
 
 
 class App_request(Base):
@@ -23,3 +29,7 @@ class App_request(Base):
 
 class App_response(App_request):
     id: Optional[str] = Field(default=None)
+
+
+class App_response_extended(App_response):
+    items_check_list: List[ItemCheckListSchema] = Field(default=None)
