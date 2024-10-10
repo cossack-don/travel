@@ -17,7 +17,7 @@ const initialState: Sex = [
 	{ id: 2, value: "woman", text: "Женщина" }
 ]
 
-const slice = createSlice({
+const SexSlice = createSlice({
 	name: "sex",
 	initialState,
 	reducers: {
@@ -27,5 +27,5 @@ const slice = createSlice({
 	}
 })
 
-export const { selectSex } = slice.actions
-export const sexReducer = slice.reducer
+export const { selectSexAction } = SexSlice.actions
+export const sexSlice = SexSlice.reducer

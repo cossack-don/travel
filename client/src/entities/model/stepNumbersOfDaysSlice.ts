@@ -50,5 +50,5 @@ const slice = createSlice({
 	}
 })
 
-export const { stepOfDays } = slice.actions
-export default slice.reducer
+export const { stepOfDaysAction } = slice.actions
+export const stepOfDaysSlice = slice.reducer

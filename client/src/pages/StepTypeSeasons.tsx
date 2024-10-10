@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom"
 import { useEffect, useState } from "react"
 import { UICardRadioButton, UIWrapperCardRadioButtons } from "@/shared/UI"
+import { useAppSelector } from "@/shared/hooks/hooks.ts"
 
 const StepTypeSeasons = () => {
 	const usePickActiveCardRadio = (defaultValue: string) => {
@@ -12,18 +13,19 @@ const StepTypeSeasons = () => {
 		return [value, onChangeRadio]
 	}
 	const [isActiveValue, setActiveValue] = useState("cold")
-	const dataCards = [
-		{
-			id: 1,
-			value: "cold",
-			text: "Холодно"
-		},
-		{
-			id: 2,
-			value: "warm",
-			text: "Тепло"
-		}
-	]
+	const dataCards = useAppSelector(state => state.season)
+	// const dataCards = [
+	// 	{
+	// 		id: 1,
+	// 		value: "cold",
+	// 		text: "Холодно"
+	// 	},
+	// 	{
+	// 		id: 2,
+	// 		value: "warm",
+	// 		text: "Тепло"
+	// 	}
+	// ]
 
 	const ListCards = ({ listData, defaultValue, setActiveValue }: any) => {
 		const [value, onChangeRadio] = usePickActiveCardRadio(defaultValue)

@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom"
 import { useEffect, useState } from "react"
 import { UICardRadioButton, UIWrapperCardRadioButtons } from "@/shared/UI"
+import { useAppSelector } from "@/shared/hooks/hooks.ts"
 
 const StepTypeOfTrip = () => {
 	const usePickActiveCardRadio = (defaultValue: string) => {
@@ -12,33 +13,34 @@ const StepTypeOfTrip = () => {
 		return [value, onChangeRadio]
 	}
 	const [isActiveValue, setActiveValue] = useState("alpineSkiing")
-	const dataCards = [
-		{
-			id: 1,
-			value: "alpineSkiing",
-			text: "Горные лыжи"
-		},
-		{
-			id: 2,
-			value: "beach",
-			text: "Пляж"
-		},
-		{
-			id: 3,
-			value: "businessTrips",
-			text: "Командировки"
-		},
-		{
-			id: 4,
-			value: "campingTrip",
-			text: "Поход с палатками"
-		},
-		{
-			id: 5,
-			value: "excursion",
-			text: "Экскурсия"
-		}
-	]
+	const dataCards = useAppSelector(state => state.trip)
+	// const dataCards = [
+	// 	{
+	// 		id: 1,
+	// 		value: "alpineSkiing",
+	// 		text: "Горные лыжи"
+	// 	},
+	// 	{
+	// 		id: 2,
+	// 		value: "beach",
+	// 		text: "Пляж"
+	// 	},
+	// 	{
+	// 		id: 3,
+	// 		value: "businessTrips",
+	// 		text: "Командировки"
+	// 	},
+	// 	{
+	// 		id: 4,
+	// 		value: "campingTrip",
+	// 		text: "Поход с палатками"
+	// 	},
+	// 	{
+	// 		id: 5,
+	// 		value: "excursion",
+	// 		text: "Экскурсия"
+	// 	}
+	// ]
 
 	const ListCards = ({ listData, defaultValue, setActiveValue }: any) => {
 		const [value, onChangeRadio] = usePickActiveCardRadio(defaultValue)

@@ -1,11 +1,17 @@
 import { configureStore } from "@reduxjs/toolkit"
-import { sexReducer } from "@/entities/model/sexSlice.ts"
-import stepOfDaysReducer from "@/entities/model/stepNumbersOfDaysSlice.ts"
+import { sexSlice } from "@/entities/model/sexSlice.ts"
+import { stepOfDaysSlice } from "@/entities/model/stepNumbersOfDaysSlice.ts"
+import { placeSlice } from "@/entities/model/placeSlice.ts"
+import { stepOfSeasons } from "@/entities/model/seasonsSlice.ts"
+import { stepOfTrip } from "@/entities/model/tripSlice.ts"
 
 export const store = configureStore({
 	reducer: {
-		sexSelect: sexReducer,
-		stepOfDays: stepOfDaysReducer
+		sex: sexSlice,
+		stepOfDays: stepOfDaysSlice,
+		place: placeSlice,
+		season: stepOfSeasons,
+		trip: stepOfTrip
 	}
 })
 

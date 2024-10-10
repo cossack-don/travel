@@ -1,11 +1,10 @@
 import { Link } from "react-router-dom"
 import { useEffect, useState } from "react"
 import { UICardRadioButton, UILink, UIWrapperCardRadioButtons } from "@/shared/UI"
-import { useSelector } from "react-redux"
-import { RootState } from "@/app/providers/store/store.ts"
+import { useAppSelector } from "@/shared/hooks/hooks.ts"
 
 const StepSex = () => {
-	const dataCards = useSelector<RootState>(state => state.sexSelect)
+	const dataCards = useAppSelector(state => state.sex)
 	const usePickActiveCardRadio = (defaultValue: string) => {
 		const [value, setValue] = useState(defaultValue)
 

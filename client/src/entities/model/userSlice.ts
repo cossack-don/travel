@@ -29,4 +29,4 @@ const slice = createSlice({
 })
 
 export const { userModel } = slice.actions
-export default slice.reducer
+export const userSlice = slice.reducer
