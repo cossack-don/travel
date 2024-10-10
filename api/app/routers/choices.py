@@ -168,6 +168,47 @@ async def get_check_lists(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail={e}
         )
 
+# TODO start hard-code получение итогово списка вещей, нужен рефакторинг
+class Thing(BaseModel):
+    name: str
+    is_checked:bool
+
+
+class Category(BaseModel):
+    category: str
+    list: list[Thing]
+
+
+@router.get(
+    "/{app_id}/check_list/get_final",
+    response_model=List[Category],
+    tags=[
+        "Checklists",
+    ],
+)
+async def get_final_check_list(
+    app_id: str,
+    limit: int = Query(10, ge=0, le=100),
+    offset: int = Query(
+        0,
+        ge=0,
+    ),
+#     service: ItemsCheckListRepository = Depends(get_check_list_instanse),
+):
+    final_check_list = []
+    for i in range(limit):
+        final_check_list.append(Category(category="Вещи", list=[
+        Thing(name='Носки',is_checked=False),
+        Thing(name='Куртка',is_checked=False),
+        Thing(name='Трусы',is_checked=False),
+        Thing(name='Штаны',is_checked=False),
+        Thing(name='Футболка',is_checked=False)
+        ]))
+
+    # Возвращаем ограниченный список пользователей
+    return final_check_list[offset:]
+
+# TODO end hard-code получение итогово списка вещей, нужен рефакторинг
 
 @router.post(
     "/{app_id}/check_list/create",
