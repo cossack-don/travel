@@ -27,7 +27,7 @@ async def get_steps_instanse(db: AsyncSession = Depends(get_db)):
 
 @router.get(
     "/get_list",
-    response_model=App_response,
+    response_model=AppResponse,
     tags=[
         "Apps",
     ],
@@ -41,14 +41,22 @@ async def get_all_apps(
     service: ChoisesAppRepisitory = Depends(get_app_instanse),
 ):
     try:
-        result = await service.get_apps(limit=limit, offset=offset)
+        result, total = await service.get_apps(limit=limit, offset=offset)
+
+        response_content = {
+            "limit": limit,
+            "offset": offset,
+            "total": total,
+            "data": [AppResponse.model_validate(item).model_dump() for item in result],
+        }
+
         if not result:
             return JSONResponse(
                 status_code=status.HTTP_404_NOT_FOUND,
                 content={"details": "Entity not found"},
             )
         return JSONResponse(
-            content=[App_response.model_validate(item).model_dump() for item in result],
+            content=response_content,
             status_code=status.HTTP_200_OK,
         )
 
@@ -60,7 +68,7 @@ async def get_all_apps(
 
 @router.get(
     "/{app_id}",
-    response_model=App_response_extended,
+    response_model=AppResponseExtended,
     tags=[
         "Apps",
     ],
@@ -86,13 +94,14 @@ async def get_app_by_id(
 
 @router.post(
     "/create",
-    response_model=App_response,
+    response_model=AppResponse,
     tags=[
         "Apps",
     ],
 )
 async def create_app(
-    app: App_request, service: ChoisesAppRepisitory = Depends(get_app_instanse)
+    app: AppAndChListRequest, 
+    service: ChoisesAppRepisitory = Depends(get_app_instanse)
 ):
     try:
         await service.create_app(app.name, app.description)
@@ -108,24 +117,59 @@ async def create_app(
         )
 
 
+@router.put(
+    "/{app_id}",
+    response_model=AppResponse,
+    tags=[
+        "Apps",
+    ],
+)
+async def update_app_data(
+    app_id: str,
+    update_data: AppAndChListRequest,
+    service: ChoisesAppRepisitory = Depends(get_app_instanse),
+):
+
+    try:
+        result = await service.get_app_by_id(id=app_id)
+        if not result:
+            return JSONResponse(
+                status_code=status.HTTP_404_NOT_FOUND,
+                content={"details": "Entity not found"},
+            )
+
+        update_app = await service.update_app_data(
+            app_id=app_id, 
+            name=update_data.name, 
+            descr=update_data.description
+        )
+
+        return update_app
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail={e}
+        )
+
+
 @router.delete(
-    "/delete",
+    "/{app_id}/delete",
     tags=[
         "Apps",
     ],
 )
 async def delete_app(
-    id: str, service: ChoisesAppRepisitory = Depends(get_app_instanse)
+    app_id: str, 
+    service: ChoisesAppRepisitory = Depends(get_app_instanse)
 ):
     try:
-        result = await service.get_app_by_id(id)
+        result = await service.get_app_by_id(id=app_id)
         if not result:
             return JSONResponse(
                 status_code=status.HTTP_404_NOT_FOUND,
                 content={"details": "Entity not found"},
             )
         else:
-            await service.delete_app(id=id)
+            await service.delete_app(app_id)
             return JSONResponse(
                 content=[{"details": "sucsessfully deleted"}],
                 status_code=status.HTTP_200_OK,
@@ -138,7 +182,7 @@ async def delete_app(
 
 @router.get(
     "/{app_id}/check_list/",
-    response_model=List[ItemCheckListSchema],
+    response_model=ChListResponse,
     tags=[
         "Checklists",
     ],
@@ -153,7 +197,7 @@ async def get_check_lists(
     service: ItemsCheckListRepository = Depends(get_check_list_instanse),
 ):
     try:
-        check_lists = await service.get_check_lists(
+        check_lists, total = await service.get_check_lists(
             app_id=app_id, offset=offset, limit=limit
         )
         if not check_lists:
@@ -161,17 +205,66 @@ async def get_check_lists(
                 status_code=status.HTTP_404_NOT_FOUND,
                 content={"details": "Entity not found"},
             )
+        
+        response_content = {
+            "limit": limit,
+            "offset": offset,
+            "total": total,
+            "data": [item for item in check_lists],
+        }
 
-        return [item for item in check_lists]
+        return response_content
     except Exception as e:
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail={e}
         )
 
+
+
+@router.put(
+    "/{app_id}/check_list/{ch_list_id}",
+    response_model=ItemCheckListSchema,
+    tags=[
+        "Checklists",
+          ],
+)
+async def update_check_list_data(
+    app_id: str,
+    ch_list_id: str,
+    update_data: AppAndChListRequest,
+    service_check_list: ItemsCheckListRepository = Depends(get_check_list_instanse),
+    service_steps: StepsRepository = Depends(get_steps_instanse),
+    ):
+    try:
+        result_of_app_and_ch_lst = await service_steps.get_data(app_id=app_id,ch_list_id=ch_list_id)
+        if not result_of_app_and_ch_lst:
+            return JSONResponse(
+                status_code=status.HTTP_404_NOT_FOUND,
+                content={"details": "Entity not found"},
+            )
+        result_of_ch_list_update = await service_check_list.update_check_list(
+            app_id=app_id,
+            ch_list_id=ch_list_id,
+            name=update_data.name,
+            description=update_data.description
+            )
+        
+        return result_of_ch_list_update
+    
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail={e}
+        )
+        
+
+
+
+
+
 # TODO start hard-code получение итогово списка вещей, нужен рефакторинг
 class Thing(BaseModel):
     name: str
-    is_checked:bool
+    is_checked: bool
 
 
 class Category(BaseModel):
@@ -180,7 +273,7 @@ class Category(BaseModel):
 
 
 @router.get(
-    "/{app_id}/check_list/{id}/result_check_list",
+    "/{app_id}/check_list/{ch_list_id}/result_check_list",
     response_model=List[Category],
     tags=[
         "Checklists",
@@ -188,28 +281,35 @@ class Category(BaseModel):
 )
 async def get_result_check_list(
     app_id: str,
-    id:str,
+    ch_list_id: str,
     limit: int = Query(10, ge=0, le=100),
     offset: int = Query(
         0,
         ge=0,
     ),
-#     service: ItemsCheckListRepository = Depends(get_check_list_instanse),
+    #     service: ItemsCheckListRepository = Depends(get_check_list_instanse),
 ):
     final_check_list = []
     for i in range(limit):
-        final_check_list.append(Category(category="Вещи", list=[
-        Thing(name='Носки',is_checked=False),
-        Thing(name='Куртка',is_checked=False),
-        Thing(name='Трусы',is_checked=False),
-        Thing(name='Штаны',is_checked=False),
-        Thing(name='Футболка',is_checked=False)
-        ]))
+        final_check_list.append(
+            Category(
+                category="Вещи",
+                list=[
+                    Thing(name="Носки", is_checked=False),
+                    Thing(name="Куртка", is_checked=False),
+                    Thing(name="Трусы", is_checked=False),
+                    Thing(name="Штаны", is_checked=False),
+                    Thing(name="Футболка", is_checked=False),
+                ],
+            )
+        )
 
     # Возвращаем ограниченный список пользователей
     return final_check_list[offset:]
 
+
 # TODO end hard-code получение итогово списка вещей, нужен рефакторинг
+
 
 @router.post(
     "/{app_id}/check_list/create",
@@ -218,14 +318,14 @@ async def get_result_check_list(
     ],
 )
 async def create_check_list(
-    id: str,
+    app_id: str,
     name: str,
     description: str,
     service: ItemsCheckListRepository = Depends(get_check_list_instanse),
     app: ChoisesAppRepisitory = Depends(get_app_instanse),
 ):
     try:
-        app_check = await app.get_app_by_id(id=id)
+        app_check = await app.get_app_by_id(id=app_id)
         if not app_check:
 
             return JSONResponse(
@@ -233,7 +333,7 @@ async def create_check_list(
                 content={"details": "Entity not found"},
             )
 
-        await service.create_check_list(name=name, description=description, id=id)
+        await service.create_check_list(name=name, description=description, id=app_id)
         return JSONResponse(
             content=[
                 {"details": "sucseccfully created"},
@@ -247,18 +347,18 @@ async def create_check_list(
 
 
 @router.delete(
-    "/{app_id}/check_list/{id}/delete",
+    "/{app_id}/check_list/{ch_list_id}/delete",
     tags=[
         "Checklists",
     ],
 )
 async def delete_check_list(
     app_id: str,
-    id: str,
+    ch_list_id: str,
     service: ItemsCheckListRepository = Depends(get_check_list_instanse),
 ):
     try:
-        await service.delete_check_list(app_id=app_id, id=id)
+        await service.delete_check_list(app_id=app_id, id=ch_list_id)
 
         return JSONResponse(
             content=[
@@ -273,21 +373,33 @@ async def delete_check_list(
 
 
 @router.get(
-    "/{app_id}/check_list/{id}/",
+    "/{app_id}/check_list/{ch_list_id}/",
     response_model=Choice,
     tags=[
         "Steps",
     ],
 )
 async def get_steps(
-    app_id: str, id: str, service: StepsRepository = Depends(get_steps_instanse)
+    app_id: str,
+    ch_list_id: str,
+    steps: StepsRepository = Depends(get_steps_instanse),
 ):
-    result = await service.get_data(app_id=app_id, ch_list_id=id)
-    return result
+    try:
+        result = await steps.get_data(app_id=app_id, ch_list_id=ch_list_id)
+        if not result:
+            return JSONResponse(
+                status_code=status.HTTP_404_NOT_FOUND,
+                content={"details": "Entity not found"},
+            )
+        return result
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail={e}
+        )
 
 
 @router.patch(
-    "/{app_id}/check_list/{id}/{step}/",
+    "/{app_id}/check_list/{ch_list_id}/{step}/",
     tags=[
         "Steps",
     ],
@@ -295,17 +407,17 @@ async def get_steps(
 )
 async def update_step_data(
     app_id: str,
-    id: str,
+    ch_list_id: str,
     step: str,
     update_data: Union[str, int],
     service: StepsRepository = Depends(get_steps_instanse),
 ):
     steps_check = {
-        "sex":["Мужчина","Женщина"],
-        "days":["3", "7", "14"],
-        "destination":["По стране","За границей"],
-        "weather":["Теплая","Холодная"],
-        "trip":["Горные лыжи","Пляж","Коммандировка","Поход с палатками"]
+        "sex": ["Мужчина", "Женщина"],
+        "days": ["3", "7", "14"],
+        "destination": ["По стране", "За границей"],
+        "weather": ["Теплая", "Холодная"],
+        "trip": ["Горные лыжи", "Пляж", "Коммандировка", "Поход с палатками"],
     }
 
     try:
@@ -314,16 +426,12 @@ async def update_step_data(
                 status_code=status.HTTP_404_NOT_FOUND,
                 content={"details": "Bad request"},
             )
-        result = await service.update_data(app_id=app_id,ch_list_id=id,step=step,update_data=update_data)
+        result = await service.update_data(
+            app_id=app_id, ch_list_id=ch_list_id, step=step, update_data=update_data
+        )
         return result
-    
+
     except Exception as e:
-            raise HTTPException(
+        raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail={e}
         )
-
-    
-    
-
-
-
