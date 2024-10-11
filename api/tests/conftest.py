@@ -1,21 +1,28 @@
 import pytest
-from os import getenv
-from dotenv import load_dotenv
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
+from tests.testlib.dataclasses import TestData
 
-load_dotenv()
+
 DATABASE_URI = "sqlite:////home/dmitry/Projects/my_pet/travel/api/app/database.db"
-# DATABASE_URI = getenv("PRIMARY_DATABASE_URI")
 
 
 @pytest.fixture(scope="function")
-def get_db():
-    engine = create_engine(DATABASE_URI,echo=True)
+def get_test_db():
+    engine = create_engine(DATABASE_URI, echo=True)
     session_local = sessionmaker(bind=engine)
     session = session_local()
     try:
         yield session
+    except:
+        session.rollback()
+
     finally:
         session.close()
 
+
+@pytest.fixture(scope="function")
+def test_data():
+    return TestData(
+        test_id="test_id", test_name="test_name", test_description="test_description"
+    )
