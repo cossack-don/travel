@@ -262,24 +262,39 @@ async def update_check_list_data(
 
 
 # TODO start hard-code получение итогово списка вещей, нужен рефакторинг
+
 class Thing(BaseModel):
     name: str
     is_checked: bool
+    type:str
 
+class Step(BaseModel):
+    sex: bool
+    days: bool
+    destination: bool
+    weather: bool
+    trip_type: bool
 
 class Category(BaseModel):
+    id:int
     category: str
     list: list[Thing]
 
+class CheckList(BaseModel):
+    id: str
+    name: str
+    description: str
+    steps: list[Step]
+    result_ch_list: list[Category]
 
 @router.get(
-    "/{app_id}/check_list/{ch_list_id}/result_check_list",
-    response_model=List[Category],
+    "/{app_id}/check_list/{ch_list_id}",
+#     response_model=List[CheckList],
     tags=[
         "Checklists",
     ],
 )
-async def get_result_check_list(
+async def get_check_list_by_id(
     app_id: str,
     ch_list_id: str,
     limit: int = Query(10, ge=0, le=100),
@@ -289,23 +304,65 @@ async def get_result_check_list(
     ),
     #     service: ItemsCheckListRepository = Depends(get_check_list_instanse),
 ):
-    final_check_list = []
+#     final_check_list = []
+#     for i in range(limit):
+#         final_check_list.append(
+#             Category(
+#                 category="Вещи",
+#                 list=[
+#                     Thing(name="Носки", is_checked=False),
+#                     Thing(name="Куртка", is_checked=False),
+#                     Thing(name="Трусы", is_checked=False),
+#                     Thing(name="Штаны", is_checked=False),
+#                     Thing(name="Футболка", is_checked=False),
+#                 ],
+#             )
+#         )
+
+    result = []
     for i in range(limit):
-        final_check_list.append(
-            Category(
-                category="Вещи",
-                list=[
-                    Thing(name="Носки", is_checked=False),
-                    Thing(name="Куртка", is_checked=False),
-                    Thing(name="Трусы", is_checked=False),
-                    Thing(name="Штаны", is_checked=False),
-                    Thing(name="Футболка", is_checked=False),
+        result.append(
+            CheckList(
+                id="33b1e4af2d2148dab03682640178d02f",
+                name="Name",
+                description="Описание",
+                steps=[
+                    Step(
+                     sex=False,
+                     days=False,
+                     destination=False,
+                     weather=False,
+                     trip_type=False,
+                    )
                 ],
+                result_ch_list=[
+                   Category(
+                           id=1,
+                           category="Вещи",
+                           list=[
+                               Thing(name="Носки", type='custom', is_checked=False),
+                               Thing(name="Куртка", type='default', is_checked=False),
+                               Thing(name="Трусы", type='default', is_checked=False),
+                               Thing(name="Штаны", type='default', is_checked=False),
+                               Thing(name="Футболка", type='default', is_checked=False),
+                           ],
+                       ),
+                       Category(
+                          id=2,
+                          category="Аптечка",
+                          list=[
+                              Thing(name="Маска медицинская", type='custom', is_checked=False),
+                              Thing(name="Бинты", type='default', is_checked=False),
+                              Thing(name="Жгут", type='default', is_checked=False),
+                              Thing(name="Лейкопластырь", type='default', is_checked=False),
+                              Thing(name="Инструкция по оказанию первой помощи", type='default', is_checked=False),
+                          ],
+                      )
+                ]
             )
         )
-
     # Возвращаем ограниченный список пользователей
-    return final_check_list[offset:]
+    return result[offset:]
 
 
 # TODO end hard-code получение итогово списка вещей, нужен рефакторинг
