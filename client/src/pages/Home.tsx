@@ -16,7 +16,7 @@ import { RootState } from "@/app/providers/store/store.ts"
 
 const Home = () => {
 	//TODO для теста бекенда что работает
-	const dataCards = useSelector<RootState>(state => state.sexSelect)
+	const dataCards = useSelector<RootState>(state => state.sex)
 
 	const usePickActiveCardRadio = (defaultValue: string) => {
 		const [value, setValue] = useState(defaultValue)

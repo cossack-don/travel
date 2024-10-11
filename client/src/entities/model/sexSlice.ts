@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
+import { userModel } from "@/entities/model/userSlice.ts"
 
 interface SexType {
 	id: number
@@ -6,13 +7,7 @@ interface SexType {
 	text: string
 }
 
-interface UserState {
-	selectedSex: SexType | null
-}
-
-type Sex = SexType[]
-
-const initialState: Sex = [
+const initialState: SexType[] = [
 	{ id: 1, value: "man", text: "Мужчина" },
 	{ id: 2, value: "woman", text: "Женщина" }
 ]
@@ -21,11 +16,16 @@ const SexSlice = createSlice({
 	name: "sex",
 	initialState,
 	reducers: {
-		selectSex: (state, action: PayloadAction<UserState>) => {
-			state.selectedSex = action.payload
+		selectSex: (state, action: PayloadAction<SexType[]>) => {
+			state = action.payload
 		}
+	},
+	extraReducers: builder => {
+		builder.addCase(userModel, (state, action) => {
+			console.log({ state })
+		})
 	}
 })
 
-export const { selectSexAction } = SexSlice.actions
+export const { selectSex } = SexSlice.actions
 export const sexSlice = SexSlice.reducer

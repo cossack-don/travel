@@ -4,7 +4,7 @@ import { UICardRadioButton, UILink, UIWrapperCardRadioButtons } from "@/shared/U
 import { useAppSelector } from "@/shared/hooks/hooks.ts"
 
 const StepSex = () => {
-	const dataCards = useAppSelector(state => state.sex)
+	const dataCards = useAppSelector(state => state.sex.selectedSex)
 	const usePickActiveCardRadio = (defaultValue: string) => {
 		const [value, setValue] = useState(defaultValue)
 

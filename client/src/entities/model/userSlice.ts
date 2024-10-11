@@ -22,7 +22,7 @@ const slice = createSlice({
 	name: "user",
 	initialState,
 	reducers: {
-		userModel: (state, action: PayloadAction<UserType>) => {
+		userModel: (state, action: PayloadAction<StateType>) => {
 			state.SelectedUser = action.payload
 		}
 	}
