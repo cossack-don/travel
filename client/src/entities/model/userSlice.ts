@@ -1,13 +1,13 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 
 interface StateType {
-	id: number
-	name: string
-	sex: string
-	days: number
-	place: string
-	season: string
-	typeOfTrip: string
+	id?: number
+	name?: string
+	sex?: string | null
+	days?: number
+	place?: string
+	season?: string
+	typeOfTrip?: string
 }
 
 interface UserType {
@@ -15,7 +15,7 @@ interface UserType {
 }
 
 const initialState: UserType = {
-	SelectedUser: null
+	SelectedUser: {}
 }
 
 const slice = createSlice({
@@ -24,6 +24,7 @@ const slice = createSlice({
 	reducers: {
 		userModel: (state, action: PayloadAction<StateType>) => {
 			state.SelectedUser = action.payload
+			console.log(state.SelectedUser)
 		}
 	}
 })

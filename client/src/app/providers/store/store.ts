@@ -4,6 +4,7 @@ import { stepOfDaysSlice } from "@/entities/model/stepNumbersOfDaysSlice.ts"
 import { placeSlice } from "@/entities/model/placeSlice.ts"
 import { stepOfSeasons } from "@/entities/model/seasonsSlice.ts"
 import { stepOfTrip } from "@/entities/model/tripSlice.ts"
+import { userSlice } from "@/entities/model/userSlice.ts"
 
 export const store = configureStore({
 	reducer: {
@@ -11,7 +12,8 @@ export const store = configureStore({
 		stepOfDays: stepOfDaysSlice,
 		place: placeSlice,
 		season: stepOfSeasons,
-		trip: stepOfTrip
+		trip: stepOfTrip,
+		user: userSlice
 	}
 })
 
@@ -19,3 +21,5 @@ export const store = configureStore({
 export type RootState = ReturnType<typeof store.getState>
 // Inferred type: {posts: PostsState, comments: CommentsState, users: UsersState}
 export type AppDispatch = typeof store.dispatch
+
+console.log(store.getState())

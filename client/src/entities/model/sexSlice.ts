@@ -1,7 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
-import { userModel } from "@/entities/model/userSlice.ts"
 
-interface SexType {
+export interface SexType {
 	id: number
 	value: string
 	text: string
@@ -16,14 +15,9 @@ const SexSlice = createSlice({
 	name: "sex",
 	initialState,
 	reducers: {
-		selectSex: (state, action: PayloadAction<SexType[]>) => {
-			state = action.payload
+		selectSex: (state, action: PayloadAction<SexType>) => {
+			state[action.payload.id] = action.payload
 		}
-	},
-	extraReducers: builder => {
-		builder.addCase(userModel, (state, action) => {
-			console.log({ state })
-		})
 	}
 })
 
