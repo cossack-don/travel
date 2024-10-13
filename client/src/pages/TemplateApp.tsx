@@ -1,18 +1,10 @@
 import { useNavigate, useParams } from "react-router-dom"
 import { useEffect, useState } from "react"
 import { mockApp } from "@/shared/mockData/mockApp"
-import {
-	UIButton,
-	UINavigation,
-	UICol,
-	UIContainer,
-	UIHeadingTypography,
-	UIParagraphTypography,
-	UICard
-} from "@/shared/UI"
+import { UIButton, UINavigation, UICol, UIContainer, UIHeadingTypography } from "@/shared/UI"
 import { serviceApp, serviceCheckList } from "@/shared/api/transport"
 import { listNavigation } from "@/shared/UI/UINavigation/listNavigation"
-import {ListCheckLists} from "../entities/CheckList/ui";
+import { ListCheckLists } from "../entities/CheckList/ui"
 
 const TemplateApp = () => {
 	const params = useParams()
@@ -40,9 +32,8 @@ const TemplateApp = () => {
 		apiGetAllCheckLists(params.id)
 	}, [])
 
-
 	return (
-		<UIContainer listClasses={'row'}>
+		<UIContainer listClasses={"row"}>
 			<UICol listClasses={"col-sm-3"}>
 				<div>
 					<UINavigation listNavigation={listNavigation} />
