@@ -34,13 +34,7 @@ const TemplateApp = () => {
 
 	return (
 		<UIContainer listClasses={"row"}>
-			<UICol listClasses={"col-sm-3"}>
-				<div>
-					<UINavigation listNavigation={listNavigation} />
-				</div>
-			</UICol>
-
-			<UICol listClasses={"col-sm-9"}>
+			<UICol listClasses={"col-sm-12"}>
 				<UIContainer listClasses={"row"}>
 					<UICol listClasses={"col-lg-12 col-md-12"}>
 						<div>
