@@ -76,7 +76,7 @@ export const router = createBrowserRouter([
 	{
 		path: "/dashboard/app/:id",
 		element: (
-			<WrapperTypeLayout name="dashboard">
+			<WrapperTypeLayout name="app">
 				<TemplateApp />
 			</WrapperTypeLayout>
 		)
