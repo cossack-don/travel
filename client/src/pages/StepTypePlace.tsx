@@ -1,13 +1,14 @@
 import { Link } from "react-router-dom"
 import { UICardRadioButton, UIWrapperCardRadioButtons } from "@/shared/UI"
-import { useEffect, useState } from "react"
+import { ChangeEvent, useEffect, useState } from "react"
 import { useAppSelector } from "@/shared/hooks/hooks.ts"
+import { Place } from "@/entities/model/placeSlice.ts"
 
 const StepTypePlace = () => {
 	const usePickActiveCardRadio = (defaultValue: string) => {
 		const [value, setValue] = useState(defaultValue)
 
-		const onChangeRadio = e => {
+		const onChangeRadio = (e: ChangeEvent<HTMLInputElement>) => {
 			setValue(e.target.value)
 		}
 		return [value, onChangeRadio]
@@ -15,7 +16,6 @@ const StepTypePlace = () => {
 	const [isActiveValue, setActiveValue] = useState("country")
 	const dataCards = useAppSelector(state => state.place)
 
-	console.log({ dataCards })
 	// const dataCards = [
 	// 	{
 	// 		id: 1,
@@ -28,7 +28,6 @@ const StepTypePlace = () => {
 	// 		text: "За граница"
 	// 	}
 	// ]
-
 	const ListCards = ({ listData, defaultValue, setActiveValue }: any) => {
 		const [value, onChangeRadio] = usePickActiveCardRadio(defaultValue)
 
@@ -36,7 +35,7 @@ const StepTypePlace = () => {
 			setActiveValue(value)
 		}, [value])
 
-		const cards = listData.map(item => {
+		const cards = listData.map((item: Place) => {
 			return (
 				<UICardRadioButton key={item.id} onChange={onChangeRadio} defaultValue={item.value} isActive={value}>
 					{item.text}

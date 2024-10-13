@@ -1,13 +1,9 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 
-interface Place {
+export interface Place {
 	id: number
 	value: string
 	text: string
-}
-
-interface StepOfPlace {
-	stepOfPlace: Place | null
 }
 
 const initialState: Place[] = [
@@ -27,8 +23,8 @@ const slice = createSlice({
 	name: "place",
 	initialState,
 	reducers: {
-		stepOfPlace: (state, action: PayloadAction<StepOfPlace>) => {
-			state = action.payload
+		stepOfPlace: (state, action: PayloadAction<Place>) => {
+			state[action.payload.id] = action.payload
 		}
 	}
 })

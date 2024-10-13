@@ -1,7 +1,6 @@
 import { useAppSelector } from "@/shared/hooks/hooks.ts"
 
 const StepListOfThings = () => {
-
 	const user = useAppSelector(state => state.user)
 	console.log(user)
 	return (

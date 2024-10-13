@@ -3,7 +3,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 interface StateType {
 	id?: number
 	name?: string
-	sex?: string | null
+	sex?: string
 	days?: number
 	place?: string
 	season?: string
@@ -11,20 +11,23 @@ interface StateType {
 }
 
 interface UserType {
-	SelectedUser: StateType | null
+	selectedUser: StateType | null
 }
 
 const initialState: UserType = {
-	SelectedUser: {}
+	selectedUser: {}
 }
 
 const slice = createSlice({
 	name: "user",
 	initialState,
 	reducers: {
-		userModel: (state, action: PayloadAction<StateType>) => {
-			state.SelectedUser = action.payload
-			console.log(state.SelectedUser)
+		userModel: (state, action: PayloadAction<Partial<StateType>>) => {
+			state.selectedUser = {
+				...state.selectedUser,
+				...action.payload
+			}
+			console.log(state.selectedUser)
 		}
 	}
 })

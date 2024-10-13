@@ -1,21 +1,26 @@
 import { Link } from "react-router-dom"
 import { ChangeEvent, useEffect, useState } from "react"
 import { UICardRadioButton, UIWrapperCardRadioButtons } from "@/shared/UI"
-import { RootState } from "@/app/providers/store/store.ts"
-import { StepOfDaysType } from "@/entities/model/stepNumbersOfDaysSlice.ts"
-import { useAppSelector } from "@/shared/hooks/hooks.ts"
+import { StepOfDaysType } from "@/entities/model/numbersOfDaysSlice.ts"
+import { useAppDispatch, useAppSelector } from "@/shared/hooks/hooks.ts"
+import { userModel } from "@/entities/model/userSlice.ts"
 
 const StepNumberOfDays = () => {
+	const dispatch = useAppDispatch()
+	const dataCards = useAppSelector(state => state.stepOfDays)
+
+	const [selectedDays, setSelectedDays] = useState<number>(1)
+
 	const usePickActiveCardRadio = (defaultValue: string) => {
 		const [value, setValue] = useState(defaultValue)
 
 		const onChangeRadio = (e: ChangeEvent<HTMLInputElement>) => {
 			setValue(e.target.value)
+			setSelectedDays(+value)
 		}
 		return [value, onChangeRadio]
 	}
-	const [isActiveValue, setActiveValue] = useState("1")
-	const dataCards = useAppSelector<RootState>(state => state.stepOfDays)
+	const [isActiveValue, setActiveValue] = useState(1)
 	// const dataCards = [
 	// 	{
 	// 		id: 1,
@@ -58,13 +63,17 @@ const StepNumberOfDays = () => {
 				</UICardRadioButton>
 			)
 		})
-
 		return (
 			<UIWrapperCardRadioButtons style={{ background: "#fff", padding: "35px" }}>
 				{cards}
 			</UIWrapperCardRadioButtons>
 		)
 	}
+
+	const setUserDaysHandler = () => {
+		dispatch(userModel({ days: selectedDays }))
+	}
+
 	return (
 		<div>
 			<p>StepNumberOfDays</p>
@@ -74,6 +83,7 @@ const StepNumberOfDays = () => {
 			<Link
 				to="/dashboard/app/8743b52063cd84097a65d1633f5c74f5/check-list/:id/step-type-place"
 				style={{ width: "200px", height: "200px", marginRight: "15px" }}
+				onClick={setUserDaysHandler}
 			>
 				к 3-му шагу
 			</Link>
