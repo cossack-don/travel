@@ -7,7 +7,7 @@ interface Props {
 	isButtonDelete?: boolean
 	appId: number | string
 }
-const ListCheckLists = ({ list, isBadRequest, onDeleteCardById, isButtonDelete = false,appId }: Props) => {
+const ListCheckLists = ({ list, isBadRequest, onDeleteCardById, isButtonDelete = false, appId }: Props) => {
 	return (
 		<UIContainer listClasses="row between-xs">
 			{isBadRequest && <div>Бекенд упал - заглушка</div>}
