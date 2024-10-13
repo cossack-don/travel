@@ -12,7 +12,7 @@ const RenderListApps = () => {
 			setBadRequest(false)
 			const { data } = await serviceApp.getAll()
 
-			setApps(data)
+			setApps(data.data)
 		} catch {
 			setBadRequest(true)
 		}
