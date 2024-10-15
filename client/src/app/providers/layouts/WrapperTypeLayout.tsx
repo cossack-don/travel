@@ -1,9 +1,11 @@
 import DefaultLayout from "@/app/providers/layouts/DefaultLayout"
 import MainDashboardLayout from "@/app/providers/layouts/MainDashboardLayout"
+import AppLayout from "@/app/providers/layouts/AppLayout"
 
 const listLayouts = {
 	default: "default",
-	dashboard: "dashboard"
+	dashboard: "dashboard",
+	app: "app"
 }
 
 const WrapperTypeLayout = ({ children, name }: any) => {
@@ -11,6 +13,7 @@ const WrapperTypeLayout = ({ children, name }: any) => {
 		<>
 			{name === listLayouts.default && <DefaultLayout>{children}</DefaultLayout>}
 			{name === listLayouts.dashboard && <MainDashboardLayout>{children}</MainDashboardLayout>}
+			{name === listLayouts.app && <AppLayout>{children}</AppLayout>}
 		</>
 	)
 }

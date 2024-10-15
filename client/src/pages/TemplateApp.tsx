@@ -1,75 +1,65 @@
-import { Link, useNavigate, useParams } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import { useEffect, useState } from "react"
 import { mockApp } from "@/shared/mockData/mockApp"
 import { UIButton, UINavigation, UICol, UIContainer, UIHeadingTypography } from "@/shared/UI"
-import { serviceApp } from "@/shared/api/transport"
+import { serviceApp, serviceCheckList } from "@/shared/api/transport"
 import { listNavigation } from "@/shared/UI/UINavigation/listNavigation"
+import { ListCheckLists } from "../entities/CheckList/ui"
 
 const TemplateApp = () => {
 	const params = useParams()
 	const navigate = useNavigate()
 
-	const [app, setApp] = useState([])
+	const [, setApp] = useState([])
 	const apiGetByIdApp = async () => {
 		const { data } = await serviceApp.getById(params.id)
-
-		data["arrCheckList"] = [
-			{
-				id: 1,
-				name: "Cписок вещей 1",
-				descr: "descr"
-			},
-			{
-				id: 2,
-				name: "Cписок вещей 2",
-				descr: "descr"
-			},
-			{
-				id: 3,
-				name: "Cписок вещей 3",
-				descr: "descr"
-			}
-		]
-		console.log(data, 3)
 		setApp(data)
 	}
 
+	const [idCurrentCheckList, setIdCurrentCheckList] = useState(null)
+	const [, setIdCurrentApp] = useState(null)
+
+	const [checkLists, setCheckLists] = useState([])
+	const apiGetAllCheckLists = async id => {
+		const { data } = await serviceCheckList.getAll(id)
+		setCheckLists(data.data)
+	}
+
 	useEffect(() => {
-		console.log(params)
+		setIdCurrentCheckList(params.id)
+		setIdCurrentApp(params.id)
 		apiGetByIdApp()
+		apiGetAllCheckLists(params.id)
 	}, [])
 
-	const Test = () => {
-		return app?.arrCheckList?.map(item => {
-			return (
-				<div key={item.id} style={{ border: "solid 2px green", marginBottom: "15px" }}>
-					<p>{item.name}</p>
-					<p> {item.descr}</p>
-
-					<Link to="/dashboard/app/8743b52063cd84097a65d1633f5c74f5/check-list/:id/step-list-of-things">
-						Перейти
-					</Link>
-				</div>
-			)
-		})
-	}
 	return (
-		<UIContainer>
-			<UICol listClasses={"col-sm-3"}>
-				<div>
-					<UINavigation listNavigation={listNavigation} />
-				</div>
-			</UICol>
+		<UIContainer listClasses={"row"}>
+			<UICol listClasses={"col-sm-12"}>
+				<UIContainer listClasses={"row"}>
+					<UICol listClasses={"col-lg-12 col-md-12"}>
+						<div>
+							<UIHeadingTypography as="h2">Обзор</UIHeadingTypography>
+						</div>
+					</UICol>
+				</UIContainer>
 
-			<UICol listClasses={"col-sm-9"}>
-				<div>
-					<UIHeadingTypography as="h2">Обзор</UIHeadingTypography>
-					<Test />
+				<UIContainer listClasses={"row"}>
+					<UICol listClasses={"col-lg-12 col-md-12"}>
+						<div>
+							<ListCheckLists list={checkLists} appId={idCurrentCheckList} />
+						</div>
+					</UICol>
+				</UIContainer>
 
-					<UIButton onClick={() => navigate(`/dashboard/app/${mockApp.hashApp}/check-list/:id/create`)}>
-						Создать новый список вещей
-					</UIButton>
-				</div>
+				<UIContainer listClasses={"row center-md"}>
+					<UICol listClasses={"col-lg-12 col-md-12"}>
+						<div>
+							<UIButton onClick={() => navigate(`/dashboard/app/${mockApp.hashApp}/check-list/:id/create`)}>
+								Создать новый список вещей
+							</UIButton>
+						</div>
+					</UICol>
+				</UIContainer>
 			</UICol>
 		</UIContainer>
 	)

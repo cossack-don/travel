@@ -34,7 +34,21 @@ export default [
 			"react/react-in-jsx-scope": "off",
 			"react/prop-types": "off",
 			"no-unused-vars": "off",
-			"@typescript-eslint/no-unused-vars": ["error", { argsIgnorePattern: "^_" }]
+			"@typescript-eslint/no-unused-vars": [
+				"warn",
+				{
+					args: "all",
+					argsIgnorePattern: "^_",
+					caughtErrors: "all",
+					caughtErrorsIgnorePattern: "^_",
+					destructuredArrayIgnorePattern: "^_",
+					varsIgnorePattern: "^_",
+					ignoreRestSiblings: true
+				}
+			],
+			"@typescript-eslint/no-explicit-any": "warn",
+			"@typescript-eslint/explicit-module-boundary-types": "warn", // Для явных типов модулей
+			"@typescript-eslint/ban-ts-comment": "warn" // Для комментариев ts
 		}
 	},
 	{

@@ -7,7 +7,8 @@ const NUMBER_PORT = 5000
 export default defineConfig({
 	plugins: [react()],
 	server: {
-		port: NUMBER_PORT
+		port: NUMBER_PORT,
+		open: true
 	},
 	resolve: {
 		alias: [
