@@ -5,7 +5,7 @@ import AppLayout from "@/app/providers/layouts/AppLayout"
 const listLayouts = {
 	default: "default",
 	dashboard: "dashboard",
-	app:'app'
+	app: "app"
 }
 
 const WrapperTypeLayout = ({ children, name }: any) => {

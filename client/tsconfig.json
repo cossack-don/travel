@@ -1,4 +1,8 @@
 {
+	"compilerOptions": {
+		/* Bundler mode */
+		"composite": true // to optimize work with ts-modules in references
+	},
 	"files": [],
-	"references": [{ "path": "./tsconfig.app.json" }, { "path": "./tsconfig.node.json" }]
+	"references": [{ "path": "./tsconfig.spec.json" }, { "path": "./tsconfig.app.json" }]
 }
