@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 
-interface StateType {
+export interface User {
 	id?: number
 	name?: string
 	sex?: string
@@ -11,7 +11,7 @@ interface StateType {
 }
 
 interface UserType {
-	selectedUser: StateType | null
+	selectedUser: User | null
 }
 
 const initialState: UserType = {
@@ -22,7 +22,7 @@ const slice = createSlice({
 	name: "user",
 	initialState,
 	reducers: {
-		userModel: (state, action: PayloadAction<Partial<StateType>>) => {
+		userModel: (state, action: PayloadAction<Partial<User>>) => {
 			state.selectedUser = {
 				...state.selectedUser,
 				...action.payload

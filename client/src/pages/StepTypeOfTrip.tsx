@@ -1,19 +1,22 @@
 import { Link } from "react-router-dom"
-import { useEffect, useState } from "react"
+import { ChangeEvent, useEffect, useState } from "react"
 import { UICardRadioButton, UIWrapperCardRadioButtons } from "@/shared/UI"
-import { useAppSelector } from "@/shared/hooks/hooks.ts"
+import { useAppDispatch, useAppSelector } from "@/shared/hooks/hooks.ts"
+import { userModel } from "@/entities/model/userSlice.ts"
+import { Trip } from "@/entities/model/tripSlice.ts"
 
 const StepTypeOfTrip = () => {
 	const usePickActiveCardRadio = (defaultValue: string) => {
 		const [value, setValue] = useState(defaultValue)
 
-		const onChangeRadio = e => {
+		const onChangeRadio = (e: ChangeEvent<HTMLInputElement>) => {
 			setValue(e.target.value)
 		}
 		return [value, onChangeRadio]
 	}
 	const [isActiveValue, setActiveValue] = useState("alpineSkiing")
 	const dataCards = useAppSelector(state => state.trip)
+	const dispatch = useAppDispatch()
 	// const dataCards = [
 	// 	{
 	// 		id: 1,
@@ -49,7 +52,7 @@ const StepTypeOfTrip = () => {
 			setActiveValue(value)
 		}, [value])
 
-		const cards = listData.map(item => {
+		const cards = listData.map((item: Trip) => {
 			return (
 				<UICardRadioButton key={item.id} onChange={onChangeRadio} defaultValue={item.value} isActive={value}>
 					{item.text}
@@ -64,6 +67,10 @@ const StepTypeOfTrip = () => {
 		)
 	}
 
+	const selectTripHandler = () => {
+		dispatch(userModel({ typeOfTrip: isActiveValue }))
+	}
+
 	return (
 		<div>
 			<p>StepTypeOfTrip</p>
@@ -73,6 +80,7 @@ const StepTypeOfTrip = () => {
 			<Link
 				to="/dashboard/app/8743b52063cd84097a65d1633f5c74f5/check-list/:id/step-list-of-things"
 				style={{ width: "200px", height: "200px", marginRight: "15px" }}
+				onClick={selectTripHandler}
 			>
 				к готовому списку
 			</Link>

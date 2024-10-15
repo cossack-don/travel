@@ -9,14 +9,11 @@ const StepNumberOfDays = () => {
 	const dispatch = useAppDispatch()
 	const dataCards = useAppSelector(state => state.stepOfDays)
 
-	const [selectedDays, setSelectedDays] = useState<number>(1)
-
 	const usePickActiveCardRadio = (defaultValue: string) => {
 		const [value, setValue] = useState(defaultValue)
 
 		const onChangeRadio = (e: ChangeEvent<HTMLInputElement>) => {
 			setValue(e.target.value)
-			setSelectedDays(+value)
 		}
 		return [value, onChangeRadio]
 	}
@@ -71,7 +68,7 @@ const StepNumberOfDays = () => {
 	}
 
 	const setUserDaysHandler = () => {
-		dispatch(userModel({ days: selectedDays }))
+		dispatch(userModel({ days: isActiveValue }))
 	}
 
 	return (

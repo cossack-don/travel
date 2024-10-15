@@ -1,13 +1,9 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 
-interface Season {
+export interface Season {
 	id: number
 	value: string
 	text: string
-}
-
-interface StepOfSeason {
-	stepOfSeason: Season[] | null
 }
 
 const initialState: Season[] = [
@@ -27,11 +23,11 @@ const slice = createSlice({
 	name: "step of Seasons",
 	initialState,
 	reducers: {
-		stepOfSeasons: (state, action: PayloadAction<StepOfSeason>) => {
-			state = action.payload
+		stepOfSeasons: (state, action: PayloadAction<Season>) => {
+			state[action.payload.id] = action.payload
 		}
 	}
 })
 
-export const { stepOfSeasonAction } = slice.actions
+// export const { stepOfSeasonAction } = slice.actions
 export const stepOfSeasons = slice.reducer

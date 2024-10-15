@@ -1,13 +1,16 @@
 import { Link } from "react-router-dom"
-import { useEffect, useState } from "react"
+import { ChangeEvent, useEffect, useState } from "react"
 import { UICardRadioButton, UIWrapperCardRadioButtons } from "@/shared/UI"
-import { useAppSelector } from "@/shared/hooks/hooks.ts"
+import { useAppDispatch, useAppSelector } from "@/shared/hooks/hooks.ts"
+import { Season } from "@/entities/model/seasonsSlice.ts"
+import { userModel } from "@/entities/model/userSlice.ts"
 
 const StepTypeSeasons = () => {
+	const dispatch = useAppDispatch()
 	const usePickActiveCardRadio = (defaultValue: string) => {
 		const [value, setValue] = useState(defaultValue)
 
-		const onChangeRadio = e => {
+		const onChangeRadio = (e: ChangeEvent<HTMLInputElement>) => {
 			setValue(e.target.value)
 		}
 		return [value, onChangeRadio]
@@ -34,7 +37,7 @@ const StepTypeSeasons = () => {
 			setActiveValue(value)
 		}, [value])
 
-		const cards = listData.map(item => {
+		const cards = listData.map((item: Season) => {
 			return (
 				<UICardRadioButton key={item.id} onChange={onChangeRadio} defaultValue={item.value} isActive={value}>
 					{item.text}
@@ -49,6 +52,10 @@ const StepTypeSeasons = () => {
 		)
 	}
 
+	const onSelectSeasonHandler = () => {
+		dispatch(userModel({ season: isActiveValue }))
+	}
+
 	return (
 		<div>
 			<p>StepTypeSeasons</p>
@@ -58,6 +65,7 @@ const StepTypeSeasons = () => {
 			<Link
 				to="/dashboard/app/8743b52063cd84097a65d1633f5c74f5/check-list/:id/step-type-of-trip"
 				style={{ width: "200px", height: "200px", marginRight: "15px" }}
+				onClick={onSelectSeasonHandler}
 			>
 				к шагу 5
 			</Link>

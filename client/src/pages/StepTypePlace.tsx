@@ -1,8 +1,9 @@
 import { Link } from "react-router-dom"
 import { UICardRadioButton, UIWrapperCardRadioButtons } from "@/shared/UI"
 import { ChangeEvent, useEffect, useState } from "react"
-import { useAppSelector } from "@/shared/hooks/hooks.ts"
+import { useAppDispatch, useAppSelector } from "@/shared/hooks/hooks.ts"
 import { Place } from "@/entities/model/placeSlice.ts"
+import { userModel } from "@/entities/model/userSlice.ts"
 
 const StepTypePlace = () => {
 	const usePickActiveCardRadio = (defaultValue: string) => {
@@ -15,6 +16,11 @@ const StepTypePlace = () => {
 	}
 	const [isActiveValue, setActiveValue] = useState("country")
 	const dataCards = useAppSelector(state => state.place)
+	const dispatch = useAppDispatch()
+
+	const selectPlaceHandler = () => {
+		dispatch(userModel({ place: isActiveValue }))
+	}
 
 	// const dataCards = [
 	// 	{
@@ -59,6 +65,7 @@ const StepTypePlace = () => {
 			<Link
 				to="/dashboard/app/8743b52063cd84097a65d1633f5c74f5/check-list/:id/step-type-seasons"
 				style={{ width: "200px", height: "200px", marginRight: "15px" }}
+				onClick={selectPlaceHandler}
 			>
 				к 4-му шагу
 			</Link>
