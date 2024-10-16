@@ -1,13 +1,13 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 
 export interface User {
-	id?: number
-	name?: string
-	sex?: string
-	days?: number
-	place?: string
-	season?: string
-	typeOfTrip?: string
+	id?: number | null
+	name?: string | null
+	sex?: string | null
+	days?: number | null
+	place?: string | null
+	season?: string | null
+	typeOfTrip?: string | null
 }
 
 interface UserType {
@@ -15,7 +15,15 @@ interface UserType {
 }
 
 const initialState: UserType = {
-	selectedUser: {}
+	selectedUser: {
+		id: null,
+		name: null,
+		sex: null,
+		days: null,
+		place: null,
+		season: null,
+		typeOfTrip: null
+	}
 }
 
 const slice = createSlice({
@@ -28,6 +36,17 @@ const slice = createSlice({
 				...action.payload
 			}
 			console.log(state.selectedUser)
+		},
+		resetUserModel: (state, action: PayloadAction<Partial<User>>) => {
+			state[action.payload.id].selectedUser = {
+				id: null,
+				name: null,
+				sex: null,
+				days: null,
+				place: null,
+				season: null,
+				typeOfTrip: null
+			}
 		}
 	}
 })
