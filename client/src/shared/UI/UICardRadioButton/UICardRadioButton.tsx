@@ -1,4 +1,3 @@
-import * as React from "react"
 import style from "./UICardRadioButton.module.scss"
 
 interface Props {

@@ -3,17 +3,20 @@ import {
 	UIButton,
 	UICard,
 	UICardRadioButton,
+	UICheckBox,
 	UIInput,
-	UISpinner,
-	UIWrapperCardRadioButtons,
 	UILink,
-	UICheckBox
+	UISpinner,
+	UIWrapperCardRadioButtons
 } from "@/shared/UI"
 import UIHeadingTypography from "../shared/UI/UIHeadingTypography/UIHeadingTypography"
 import UIParagraphTypography from "../shared/UI/UIParagraphTypography/UIParagraphTypography"
+import { useSelector } from "react-redux"
+import { RootState } from "@/app/providers/store/store.ts"
 
 const Home = () => {
 	//TODO для теста бекенда что работает
+	const dataCards = useSelector<RootState>(state => state.sex)
 
 	const usePickActiveCardRadio = (defaultValue: string) => {
 		const [value, setValue] = useState(defaultValue)
@@ -24,18 +27,7 @@ const Home = () => {
 		return [value, onChangeRadio]
 	}
 	const [isActiveValue, setActiveValue] = useState("man")
-	const dataCards = [
-		{
-			id: 1,
-			value: "man",
-			text: "Мужчина"
-		},
-		{
-			id: 2,
-			value: "woman",
-			text: "Женщина"
-		}
-	]
+
 	const ListCards = ({ listData, defaultValue, setActiveValue }: any) => {
 		const [value, onChangeRadio] = usePickActiveCardRadio(defaultValue)
 
