@@ -1,9 +1,0 @@
-:root[data-theme="light"] {
-    --text: black;
-    --background: white;
-}
-
-:root[data-theme="dark"] {
-    --text: white;
-    --background: black;
-}

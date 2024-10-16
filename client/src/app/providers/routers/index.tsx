@@ -1,34 +1,168 @@
-import * as React from 'react';
+import * as React from "react"
 
-import { Routes, Route } from 'react-router-dom';
-import { BrowserRouter } from 'react-router-dom';
+import { createBrowserRouter } from "react-router-dom"
+import WrapperTypeLayout from "@/app/providers/layouts/WrapperTypeLayout"
 
-import Start from '@/pages/Start.tsx';
-import Gender from '@/pages/Gender.tsx';
-import Periods from '@/pages/Periods.tsx';
+import {
+	CreateApp,
+	Dashboard,
+	Home,
+	NotFoundPage,
+	StepListOfThings,
+	StepNumberOfDays,
+	StepSex,
+	StepTypeOfTrip,
+	StepTypePlace,
+	StepTypeSeasons,
+	TemplateApp,
+	StepCreateCheckList,
+	Apps,
+	Auth,
+	Registration,
+	SettingApp,
+	ResetPassword,
+	Features
+} from "@/pages"
 
-import Seasons from "@/pages/Seasons.tsx";
-import NotFoundPage from "@/pages/NotFoundPage.tsx";
-import TypeTrip from "@/pages/TypeTrip.tsx";
-import Result from "@/pages/Result.tsx";
-
-const Routers = () => {
-    return (
-        <div>
-            <Routes>
-                <Route path="/" element={<Start />} />
-                <Route path="/gender" element={<Gender />} />
-                <Route path="/periods" element={<Periods />} />
-                <Route path="/seasons" element={<Seasons />} />
-                <Route path="/type-trip" element={<TypeTrip />} />
-                <Route path="/result" element={<Result />} />
-
-                <Route path="*" element={<NotFoundPage />} />
-            </Routes>
-        </div>
-);
-}
-
-const Router = ()=> <BrowserRouter><Routers/></BrowserRouter>
-
-export default Router
+export const router = createBrowserRouter([
+	{
+		path: "/",
+		element: (
+			<WrapperTypeLayout name="default">
+				<Home />
+			</WrapperTypeLayout>
+		)
+	},
+	{
+		path: "/auth",
+		element: (
+			// <WrapperTypeLayout name="default">
+			<Auth />
+			// </WrapperTypeLayout>
+		)
+	},
+	{
+		path: "/registration",
+		element: (
+			// <WrapperTypeLayout name="default">
+			<Registration />
+			// </WrapperTypeLayout>
+		)
+	},
+	{
+		path: "/reset-password",
+		element: (
+			// <WrapperTypeLayout name="default">
+			<ResetPassword />
+			// </WrapperTypeLayout>
+		)
+	},
+	{
+		path: "/dashboard",
+		element: (
+			<WrapperTypeLayout name="dashboard">
+				<Dashboard />
+			</WrapperTypeLayout>
+		)
+	},
+	{
+		path: "/dashboard/create-app",
+		element: (
+			<WrapperTypeLayout name="dashboard">
+				<CreateApp />
+			</WrapperTypeLayout>
+		)
+	},
+	{
+		path: "/dashboard/app/:id",
+		element: (
+			<WrapperTypeLayout name="app">
+				<TemplateApp />
+			</WrapperTypeLayout>
+		)
+	},
+	{
+		path: "/dashboard/app/:id/features",
+		element: (
+			<WrapperTypeLayout name="dashboard">
+				<Features />
+			</WrapperTypeLayout>
+		)
+	},
+	{
+		path: "/dashboard/app/:id/settings",
+		element: (
+			<WrapperTypeLayout name="dashboard">
+				<SettingApp />
+			</WrapperTypeLayout>
+		)
+	},
+	{
+		path: "/dashboard/apps",
+		element: (
+			<WrapperTypeLayout name="dashboard">
+				<Apps />
+			</WrapperTypeLayout>
+		)
+	},
+	{
+		path: "/dashboard/app/:id/check-list/:id/create",
+		element: (
+			<WrapperTypeLayout name="dashboard">
+				<StepCreateCheckList />
+			</WrapperTypeLayout>
+		)
+	},
+	{
+		path: "/dashboard/app/:id/check-list/:id/step-sex",
+		element: (
+			<WrapperTypeLayout name="dashboard">
+				<StepSex />
+			</WrapperTypeLayout>
+		)
+	},
+	{
+		path: "/dashboard/app/:id/check-list/:id/step-number-of-days",
+		element: (
+			<WrapperTypeLayout name="dashboard">
+				<StepNumberOfDays />
+			</WrapperTypeLayout>
+		)
+	},
+	{
+		path: "/dashboard/app/:id/check-list/:id/step-type-place",
+		element: (
+			<WrapperTypeLayout name="dashboard">
+				<StepTypePlace />
+			</WrapperTypeLayout>
+		)
+	},
+	{
+		path: "/dashboard/app/:id/check-list/:id/step-type-seasons",
+		element: (
+			<WrapperTypeLayout name="dashboard">
+				<StepTypeSeasons />
+			</WrapperTypeLayout>
+		)
+	},
+	{
+		path: "/dashboard/app/:id/check-list/:id/step-type-of-trip",
+		element: (
+			<WrapperTypeLayout name="dashboard">
+				<StepTypeOfTrip />
+			</WrapperTypeLayout>
+		)
+	},
+	{
+		path: "/dashboard/app/:id/check-list/:id/step-list-of-things",
+		element: (
+			<WrapperTypeLayout name="dashboard">
+				<StepListOfThings />
+			</WrapperTypeLayout>
+		)
+	},
+	{
+		path: "*",
+		element: <NotFoundPage />
+	}
+])

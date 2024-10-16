@@ -1,0 +1,22 @@
+/*[data-theme="light"]*/
+:root {
+	--white: #ffffff;
+	--black: #000;
+	--blue: #0887cd;
+	--gray: #f2f4f7;
+	--green: #3aba61;
+	--green-hover: #25ad4e;
+	--red: #fe6b6b;
+	--red-hover: #fb5770;
+
+	--transition-0-5: 0.5s;
+
+	--border-radius-16: 16px;
+	--border-radius-8: 8px;
+	--border-color-green: #3aba61;
+
+	--box-shadow: 4px 4px 10px 4px rgba(34, 60, 80, 0.2);
+}
+
+:root[data-theme="dark"] {
+}

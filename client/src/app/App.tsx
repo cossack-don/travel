@@ -1,19 +1,24 @@
-import '@/app//style/reset.css'
-import '@/app/style/palette.css'
-import '@/app/style/index.css'
+import "flexboxgrid/dist/flexboxgrid.min.css"
+import "react-toastify/dist/ReactToastify.css"
 
-import StoreProvider from '@/app/providers/store'
-import Router from "@/app/providers/routers";
-import DefaultLayout from "@/app/providers/layouts/DefaultLayout";
+import "@/app//style/reset.scss"
+import "@/app/style/palette.scss"
+import "@/app/style/flex.scss"
+import "@/app/style/helpers.scss"
+import "@/app/style/index.scss"
+
+import StoreProvider from "@/app/providers/store"
+import { router } from "@/app/providers/routers"
+import { RouterProvider } from "react-router-dom"
+import { ToastContainer } from "react-toastify"
 
 const App = () => {
-  return (
-        <StoreProvider>
-            <DefaultLayout>
-                <Router/>
-            </DefaultLayout>
-        </StoreProvider>
-  )
+	return (
+		<StoreProvider>
+			<RouterProvider router={router} />
+			<ToastContainer />
+		</StoreProvider>
+	)
 }
 
 export default App
