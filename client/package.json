@@ -12,7 +12,7 @@
 		"dev": "vite",
 		"build": "tsc -b && vite build",
 		"preview": "vite preview",
-		"prepare": "cd .. && husky client/.husky",
+		"prepare": "cd .. && husky install client/.husky",
 		"lint": "eslint .",
 		"format": "prettier --write ."
 	},
