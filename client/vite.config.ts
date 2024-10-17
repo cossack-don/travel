@@ -23,7 +23,12 @@ export default defineConfig({
 			scopeBehaviour: "local",
 			generateScopedName: "[name]__[local]___[hash:base64:5]",
 			localsConvention: "camelCaseOnly"
-		}
+		},
+		preprocessorOptions: {
+      scss: {
+        api: 'modern-compiler',
+      },
+    },
 	}
 })
 
