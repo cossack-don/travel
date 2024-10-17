@@ -219,7 +219,35 @@ async def get_check_lists(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail={e}
         )
 
+@router.get(
+    "/{app_id}/check_list/{ch_list_id}",
+    # response_model=ItemCheckListSchema,
+    tags=[
+        "Checklists",
+    ],
+)
 
+async def get_check_list_by_id(
+    app_id: str,
+    ch_list_id: str,
+    service: ItemsCheckListRepository = Depends(get_check_list_instanse),   
+):
+    try:
+        ch_list,clothes_list  = await service.get_check_list_by_id(app_id=app_id,ch_list_id=ch_list_id)
+        # if not response:
+        #         return JSONResponse(
+        #         status_code=status.HTTP_404_NOT_FOUND,
+        #         content={"details": "Entity not found"},
+        #     )
+        response = {
+            "ch_list":ch_list,
+            "cl_list":clothes_list
+        }
+        return response
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail={e}
+        )
 
 @router.put(
     "/{app_id}/check_list/{ch_list_id}",
@@ -288,13 +316,13 @@ class CheckList(BaseModel):
     result_ch_list: list[Category]
 
 @router.get(
-    "/{app_id}/check_list/{ch_list_id}",
+    "/{app_id}/check_list/{ch_list_id}/hardcode",
 #     response_model=List[CheckList],
     tags=[
         "Checklists",
     ],
 )
-async def get_check_list_by_id(
+async def get_check_list_by_id_hard_code(
     app_id: str,
     ch_list_id: str,
     limit: int = Query(10, ge=0, le=100),
@@ -429,31 +457,6 @@ async def delete_check_list(
         )
 
 
-@router.get(
-    "/{app_id}/check_list/{ch_list_id}/",
-    response_model=Choice,
-    tags=[
-        "Steps",
-    ],
-)
-async def get_steps(
-    app_id: str,
-    ch_list_id: str,
-    steps: StepsRepository = Depends(get_steps_instanse),
-):
-    try:
-        result = await steps.get_data(app_id=app_id, ch_list_id=ch_list_id)
-        if not result:
-            return JSONResponse(
-                status_code=status.HTTP_404_NOT_FOUND,
-                content={"details": "Entity not found"},
-            )
-        return result
-    except Exception as e:
-        raise HTTPException(
-            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail={e}
-        )
-
 
 @router.patch(
     "/{app_id}/check_list/{ch_list_id}/{step}/",
@@ -471,7 +474,7 @@ async def update_step_data(
 ):
     steps_check = {
         "sex": ["Мужчина", "Женщина"],
-        "days": ["3", "7", "14"],
+        "days": ["1","3", "7", "14"],
         "destination": ["По стране", "За границей"],
         "weather": ["Теплая", "Холодная"],
         "trip": ["Горные лыжи", "Пляж", "Коммандировка", "Поход с палатками"],

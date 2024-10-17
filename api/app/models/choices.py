@@ -1,5 +1,5 @@
 import uuid
-from sqlalchemy import Column, Integer, String, ForeignKey
+from sqlalchemy import Column, Integer, String, ForeignKey, Boolean
 from sqlalchemy.orm import relationship
 from sqlalchemy.orm import declarative_base
 
@@ -33,7 +33,7 @@ class ItemsCheckListEntity(Base):
     )
     name = Column(String, nullable=True, default="Название списка вещей")
     description = Column(String, nullable=True, default="Описание")
-    app_id = Column(Integer, ForeignKey("apps.id"))
+    app_id = Column(String, ForeignKey("apps.id"))
     app = relationship("App", back_populates="items_check_list")
     steps = relationship("Steps", back_populates="items", cascade="all,delete-orphan")
 
@@ -60,3 +60,55 @@ class Steps(Base):
             "weather": self.weather,
             "trip_type": self.trip_type,
         }
+
+
+class ClothesCategory(Base):
+    __tablename__= "clothes_category"
+
+    id = Column(Integer,primary_key=True, autoincrement=True)
+    name = Column(String,nullable=False)
+    clothes = relationship("Clothes",back_populates="category")
+
+
+# class TypesOfClothing(Base):
+#     __tablename__ = "clothes_types"
+
+#     id = Column(Integer,primary_key=True,autoincrement=True)
+#     name = Column(String,nullable=False)
+#     sex_flag = Column(String,nullable=False)
+#     days_flag = Column(String,nullable=False)
+#     destination_flag = Column(String,nullable=False)
+#     weather_flag = Column(String,nullable=False)
+#     trip_type_flag = Column(String,nullable=False)
+#     is_default = Column(Boolean)
+#     id_category = Column(Integer,ForeignKey("clothes_category.id"))
+#     category = relationship("ClothesCategory", back_populates="types_of_clothing")
+
+
+
+class Clothes(Base):
+    __tablename__ = 'clothes'
+
+    id = Column(Integer, primary_key=True, index=True,autoincrement=True)
+    name = Column(String, nullable=False)
+    description = Column(String, nullable=True)
+    is_male = Column(Boolean, default=False)
+    is_female = Column(Boolean, default=False)
+    is_3_days = Column(Boolean, default=False)
+    is_7_days = Column(Boolean, default=False)
+    is_14_days = Column(Boolean, default=False)
+    is_domestic = Column(Boolean, default=False)
+    is_international = Column(Boolean, default=False)
+    is_warm_weather = Column(Boolean, default=False)
+    is_cold_weather = Column(Boolean, default=False)
+    is_skiing = Column(Boolean, default=False)
+    is_beach = Column(Boolean, default=False)
+    is_business_trip = Column(Boolean, default=False)
+    is_camping = Column(Boolean, default=False)
+    id_category = Column(Integer,ForeignKey("clothes_category.id"))
+    category = relationship("ClothesCategory", back_populates="clothes")
+
+
+
+
+

@@ -103,6 +103,40 @@ class ItemsCheckListRepository:
             total = result_total.scalar_one()
             return ch_lists, total
         
+    async def get_check_list_by_id(self,app_id: str, ch_list_id: str):
+        async with self.db_session as s:
+
+            stmt = (
+                select(ItemsCheckListEntity)
+                .where(ItemsCheckListEntity.app_id == app_id, ItemsCheckListEntity.id == ch_list_id)
+                .options(selectinload(ItemsCheckListEntity.steps))
+            )
+
+            ch_result = await s.execute(stmt)
+
+            await s.commit()
+
+        check_list_result = ch_result.scalar_one_or_none()
+
+        steps = check_list_result.steps[0]
+        print(steps.sex)
+
+        async with self.db_session as s:
+
+            stmt = (select(TypesOfClothing).where(TypesOfClothing.sex_flag==steps.sex).options(selectinload(TypesOfClothing.category)))
+            
+            cl_result = await s.execute(stmt)
+
+            await s.commit()
+
+        clothes_result = cl_result.scalar_one_or_none()
+
+        return check_list_result, clothes_result
+
+
+
+        # return check_list_result
+        
     async def update_check_list(self, app_id: str, ch_list_id: str, name: str, description: str):
         async with self.db_session as s:
             stmt = (

@@ -30,6 +30,7 @@ class ItemCheckListSchema(Base):
 class ChListResponse(ExtraToResponse):
     data: List[ItemCheckListSchema]
 
+
 class AppAndChListRequest(Base):
     name: Optional[str] = Field(default=None, example="Название приложения")
     description: Optional[str] = Field(default=None, example="Описание")
@@ -43,6 +44,12 @@ class AppResponse(Base):
 
 class AppResponseExtended(AppResponse):
     items_check_list: List[ItemCheckListSchema] = Field(default=None)
+
+
+
+class ClothesCategoreShema(Base):
+    id: int
+    name: str
 
 
 
