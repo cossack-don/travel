@@ -10,9 +10,79 @@
 		href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
 		rel="stylesheet">
 	<title>Чек лист вещей в дорогу</title>
+
+	<link
+		class="wrapper-landing-style"
+		href="./landing/style/style.css"
+		rel="stylesheet">
 </head>
 <body>
+
+<div class="landing-wrapper">
+	<header class="landing-header">
+		<nav>
+			<ul class="landing-list-navigation">
+				<li>
+					<a href="/">Travel Kit</a>
+				</li>
+
+				<li>
+					<a class="link landing-button-link" href="/auth">Войти</a>
+				</li>
+			</ul>
+		</nav>
+	</header>
+
+	<main class="landing-main">
+		<section>
+			<div class="landing-banner">
+			</div>
+		</section>
+
+
+		<section>
+			<h2 class="landing-services-title"> Начните с составления списка всех необходимых предметов. Это поможет вам не забыть ничего важного.</h2>
+
+			<div class="landing-services">
+			<div class="landing-services-item">
+				Пляж
+			</div>
+			<div class="landing-services-item">
+				Горные лыжи
+			</div>
+			<div class="landing-services-item">
+				Командировки
+			</div>
+			<div class="landing-services-item">
+				Выбор климата
+			</div>
+			<div class="landing-services-item">
+				Подбор дней
+			</div>
+			<div class="landing-services-item">
+				За границу
+			</div>
+			<div class="landing-services-item">
+			 По стране
+			</div>
+			<div class="landing-services-item">
+				С семьей
+			</div>
+			<div class="landing-services-item">
+				Поход <br/>
+				с палатками
+			</div>
+			</div>
+		</section>
+	</main>
+	<footer class="landing-footer">
+		© <script>document.write(new Date().getFullYear())</script> Travel Kit
+	</footer>
+</div>
+
 <div id="root"></div>
+
+<script type="module" src="./landing/js/renderLanding.js"></script>
 <script type="module" src="/src/main.tsx"></script>
 </body>
 </html>

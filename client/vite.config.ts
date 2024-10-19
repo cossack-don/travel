@@ -25,10 +25,10 @@ export default defineConfig({
 			localsConvention: "camelCaseOnly"
 		},
 		preprocessorOptions: {
-      scss: {
-        api: 'modern-compiler',
-      },
-    },
+			scss: {
+				api: "modern-compiler"
+			}
+		}
 	}
 })
 
