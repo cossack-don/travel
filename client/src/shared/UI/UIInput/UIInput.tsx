@@ -20,6 +20,7 @@ interface Props {
 	name?: string
 	placeholder?: string
 	style?: any
+	validation?: any
 }
 
 const UIInput = ({
@@ -38,7 +39,8 @@ const UIInput = ({
 	listClasses,
 	placeholder = "Placeholder",
 	name,
-	style
+	style,
+	validation
 }: Props) => {
 	return (
 		<div className={styles.wrapper} style={style}>
@@ -55,6 +57,7 @@ const UIInput = ({
 				onChange={onChange}
 				className={`${styles.input} ${fullWidth ? styles.fullWidth : ""} ${listClasses} ${isError ? styles.errorInput : ""}`}
 				type={type}
+				{...validation}
 			/>
 			<span className={styles.errorText}>{isError ? errorText : ""}</span>
 		</div>
