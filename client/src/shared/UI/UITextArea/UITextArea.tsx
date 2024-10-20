@@ -1,4 +1,3 @@
-import * as React from "react"
 import styles from "./UITextArea.module.scss"
 
 interface Props {
@@ -12,6 +11,7 @@ interface Props {
 	style?: any
 	isError?: boolean
 	placeholder?: string
+	validation?: any
 }
 const UITextArea = ({
 	label = "Label",
@@ -23,7 +23,8 @@ const UITextArea = ({
 	rows,
 	style,
 	isError,
-	placeholder
+	placeholder,
+	validation
 }: Props) => {
 	return (
 		<div className={styles.wrapper} style={style}>
@@ -37,6 +38,7 @@ const UITextArea = ({
 				className={`${styles.textarea}`}
 				cols={cols}
 				rows={rows}
+				{...validation}
 			/>
 
 			{isError && <span className={styles.errorText}>{textError}</span>}

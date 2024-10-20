@@ -3,6 +3,9 @@ import { mockApp } from "@/shared/mockData/mockApp"
 import { UIButton, UIInput, UICol, UIContainer } from "@/shared/UI"
 import { useEffect, useState } from "react"
 import style from "./CreateApp.module.scss"
+import { z } from "zod"
+import { useForm } from "react-hook-form"
+import { zodResolver } from "@hookform/resolvers/zod"
 
 const StepCreateCheckList = () => {
 	const [name, setName] = useState("")
@@ -21,14 +24,14 @@ const StepCreateCheckList = () => {
 		}
 	}
 
-	const handlerUpdateInputName = e => setName(e.target.value)
-	const handlerUpdateInputDescription = e => setDescription(e.target.value)
+	const handlerUpdateInputName = (e: any) => setName(e.target.value)
+	const handlerUpdateInputDescription = (e: any) => setDescription(e.target.value)
 
-	const handlerSubmitForm = async () => {
+	const handlerSubmitForm = async (data: any) => {
 		try {
 			//api fetch
 			navigate(`/dashboard/app/${mockApp.hashApp}/check-list/:id/step-sex`)
-			console.log("FORM", name, description, isError)
+			console.log("FORM", data.name, data.description, isError)
 			// if (!isError) {
 			// 	await navigate(`/dashboard/app/${mockApp.hashApp}/step-sex`)
 			// }
@@ -43,24 +46,45 @@ const StepCreateCheckList = () => {
 		else setError(false)
 	}, [name, description])
 
+	const schema = z.object({
+		name: z.string().min(1, "Название приложения обязательно! Минимум 1 символ"),
+		description: z.string().min(5, "Описание обязательно! Минимум 5 символов")
+	})
+
+	const {
+		register,
+		handleSubmit,
+		formState: { errors }
+	} = useForm({
+		resolver: zodResolver(schema)
+	})
+
 	return (
 		<>
 			<UIContainer listClasses={`center-xs middle-xs`}>
 				<p>Создание Чек листа</p>
 				<UICol listClasses={`col-sm-4 ${style.wrapperForm}`}>
-					<UIInput
-						errorText={infoFields.name.textError}
-						isError={isError}
-						label={infoFields.name.label}
-						value={name}
-						onInput={handlerUpdateInputName}
-					/>
-					<UIInput
-						label={infoFields.description.label}
-						value={description}
-						onInput={handlerUpdateInputDescription}
-					/>
-					<UIButton onClick={handlerSubmitForm}>Создать приложение</UIButton>
+					<form onSubmit={handleSubmit(handlerSubmitForm)}>
+						<UIInput
+							// errorText={infoFields.name.textError}
+							// isError={isError}
+							label={infoFields.name.label}
+							value={name}
+							onInput={handlerUpdateInputName}
+							validation={register("name", { minLength: 1 })}
+						/>
+						{errors.name ? <p style={{ color: "red" }}>{errors.name.message as string}</p> : null}
+						<UIInput
+							label={infoFields.description.label}
+							value={description}
+							onInput={handlerUpdateInputDescription}
+							validation={register("description", { minLength: 5 })}
+						/>
+						{errors.description ? (
+							<p style={{ color: "red" }}>{errors.description.message as string}</p>
+						) : null}
+						<UIButton type="submit">Создать приложение</UIButton>
+					</form>
 				</UICol>
 			</UIContainer>
 		</>
