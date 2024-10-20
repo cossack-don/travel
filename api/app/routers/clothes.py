@@ -2,7 +2,7 @@ from typing import Union
 from fastapi import APIRouter, Depends, HTTPException, Query
 from fastapi import status
 from fastapi.responses import JSONResponse
-from app.schemas.choices import *
+from app.schemas.clothes import *
 from app.database.session import get_db
 from app.services.choice_services import *
 from app.services.clothes_services import *
@@ -24,106 +24,234 @@ async def get_clothes_instanse(db: AsyncSession = Depends(get_db)):
 
 @router.get(
     "/categories",
-    response_model= None,
     tags=[
-        "Clothes",
+        "Clothes_categories",
     ],
 )
 async def get_all_categories(
-    category_service: ClothesCategoryEntity = Depends(get_category_instanse)
+    category_service: ClothesCategoryEntity = Depends(get_category_instanse),
 ):
-    result = await category_service.get_all_clothes_categories()
-    return [item for item in result]
-    
+    try:
+        result = await category_service.get_all_clothes_categories()
+        if not result:
+            return JSONResponse(
+                status_code=status.HTTP_404_NOT_FOUND,
+                content={"details": "Entity not found"},
+            )
+        return [CategoryBase.model_validate(item).model_dump() for item in result]
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail={e}
+        )
+
 
 @router.get(
-    "/categories/{id}",
-    response_model= None,
+    "/categories/{category_name}",
     tags=[
-        "Clothes",
+        "Clothes_categories",
     ],
+    response_model=CategoryExtended,
 )
-async def get_cat_by_id(
-    id: int,
-    category_service: ClothesCategoryEntity = Depends(get_category_instanse)
+async def get_cat_by_name(
+    category_name: str,
+    category_service: ClothesCategoryEntity = Depends(get_category_instanse),
 ):
-    result = await category_service.get_clothes_category_by_id(cat_id=id)
-    return result
+    try:
+        result = await category_service.get_clothes_category_by_name(
+            cat_name=category_name
+        )
+        if not result:
+            return JSONResponse(
+                status_code=status.HTTP_404_NOT_FOUND,
+                content={"details": "Entity not found"},
+            )
+        return result
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail={e}
+        )
 
 
 @router.post(
     "/categories",
-    response_model= None,
+    response_model=CategoryBase,
     tags=[
-        "Clothes",
+        "Clothes_categories",
     ],
 )
 async def create_category(
     category_name: str,
-    category_service: ClothesCategoryEntity = Depends(get_category_instanse)
+    category_service: ClothesCategoryEntity = Depends(get_category_instanse),
 ):
-    result = await category_service.create_clothes_category(category_name=category_name)
+    try:
 
-    return result
+        result = await category_service.create_clothes_category(
+            category_name=category_name
+        )
+        if not result:
+            return JSONResponse(
+                status_code=status.HTTP_404_NOT_FOUND,
+                content={"details": "Entity not found"},
+            )
+        return result
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail={e}
+        )
+
+
+@router.put(
+    "/categories",
+    tags=[
+        "Clothes_categories",
+    ],
+    response_model=CategoryBase,
+)
+async def update_category(
+    cat_id_to_update: int,
+    update_data: str,
+    category_service: ClothesCategoryEntity = Depends(get_category_instanse),
+):
+    try:
+        result = await category_service.update_clothes_category(
+            cat_id=cat_id_to_update, category_name=update_data
+        )
+        if not result:
+            return JSONResponse(
+                status_code=status.HTTP_404_NOT_FOUND,
+                content={"details": "Entity not found"},
+            )
+
+        return result
+
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(e)
+        )
+
+
+@router.delete(
+    "/categories",
+    tags=[
+        "Clothes_categories",
+    ],
+)
+async def delete_category(
+    cat_name_to_delete: str,
+    category_service: ClothesCategoryEntity = Depends(get_category_instanse),
+):
+    try:
+        result = category_service.get_clothes_category_by_name(
+            cat_name=cat_name_to_delete
+        )
+        if not result:
+            return JSONResponse(
+                status_code=status.HTTP_404_NOT_FOUND,
+                content={"details": "Entity not found"},
+            )
+        await category_service.delete_clothes_category(cat_name=cat_name_to_delete)
+        return JSONResponse(
+            status_code=status.HTTP_200_OK,
+            content={"details": "Sucessfully deleted"},
+        )
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail={e}
+        )
+
 
 @router.get(
     "/types_of_clothes",
-    response_model= None,
     tags=[
-        "Clothes",
+        "Clothes_items",
     ],
 )
-async def get_all_categories(
-    category_service: ClothesTypeEntity = Depends(get_clothes_instanse)
+async def get_all_clothes_items(
+    category_service: ClothesTypeEntity = Depends(get_clothes_instanse),
 ):
-    result = await category_service.get_all_clothes_type()
-    return [item for item in result]
-    
+    try:
+        result = await category_service.get_all_clothes_type()
+        if not result:
+            return JSONResponse(
+                status_code=status.HTTP_404_NOT_FOUND,
+                content={"details": "Entity not found"},
+            )
+        return [ClothesBase.model_validate(item).model_dump() for item in result]
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(e)
+        )
+
+
+@router.get(
+    "/types_of_clothes/{clothes_name}",
+    response_model=ClothesExtended,
+    tags=[
+        "Clothes_items",
+    ],
+)
+async def get_clothes_item_by_name(
+    clothes_name: str,
+    clothes_service: ClothesTypeEntity = Depends(get_clothes_instanse),
+):
+    try:
+        result = await clothes_service.get_clothes_type_by_name(clothes_name=clothes_name)
+        if not result:
+
+            return JSONResponse(
+                status_code=status.HTTP_404_NOT_FOUND,
+                content={"details": "Entity not found"},
+            )
+
+        return result
+
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(e)
+        )
+
 
 @router.post(
     "/types_of_clothes",
-    response_model= None,
     tags=[
-        "Clothes",
+        "Clothes_items",
     ],
+    response_model=ClothesExtended,
 )
-async def create_category(
-        name: str,
-        description: str,
-        is_male: bool,
-        is_female: bool,
-        is_3_days: bool,
-        is_7_days: bool,
-        is_14_days: bool,
-        is_domestic: bool,
-        is_international: bool,
-        is_warm_weather: bool,
-        is_cold_weather: bool,
-        is_skiing: bool,
-        is_beach: bool,
-        is_business_trip: bool,
-        is_camping: bool,
-        id_category: int,
-    category_service: ClothesTypeEntity = Depends(get_clothes_instanse)
+async def create_clothes_item(
+    clothes: ClothesCreate,
+    clothes_service: ClothesTypeEntity = Depends(get_clothes_instanse),
 ):
-    result = await category_service.create_new_type_of_clothes(
-            name,
-            description,
-            is_male,
-            is_female,
-            is_3_days,
-            is_7_days,
-            is_14_days,
-            is_domestic,
-            is_international,
-            is_warm_weather,
-            is_cold_weather,
-            is_skiing,
-            is_beach,
-            is_business_trip,
-            is_camping,
-            id_category,
-    )
+    result = await clothes_service.create_new_type_of_clothes(clothes=clothes)
 
     return result
 
+
+@router.delete(
+    "/types_of_clothes",
+    tags=[
+        "Clothes_items",
+    ],
+)
+async def delete_category(
+    clothes_name_to_delete: str,
+    clothes_service: ClothesTypeEntity = Depends(get_clothes_instanse),
+):
+    try:
+        result = await clothes_service.get_clothes_type_by_name(
+            clothes_name=clothes_name_to_delete
+        )
+        if not result:
+            return JSONResponse(
+                status_code=status.HTTP_404_NOT_FOUND,
+                content={"details": "Entity not found"},
+            )
+        await clothes_service.delete_clothes_item(clothes_name=clothes_name_to_delete)
+        return JSONResponse(
+            status_code=status.HTTP_200_OK,
+            content={"details": "Sucessfully deleted"},
+        )
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail={e}
+        )

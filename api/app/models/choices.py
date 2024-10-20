@@ -63,11 +63,11 @@ class Steps(Base):
 
 
 class ClothesCategory(Base):
-    __tablename__= "clothes_category"
+    __tablename__ = "clothes_category"
 
-    id = Column(Integer,primary_key=True, autoincrement=True)
-    name = Column(String,nullable=False)
-    clothes = relationship("Clothes",back_populates="category")
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    name = Column(String, nullable=False)
+    clothes = relationship("Clothes", back_populates="category")
 
 
 # class TypesOfClothing(Base):
@@ -85,11 +85,10 @@ class ClothesCategory(Base):
 #     category = relationship("ClothesCategory", back_populates="types_of_clothing")
 
 
-
 class Clothes(Base):
-    __tablename__ = 'clothes'
+    __tablename__ = "clothes"
 
-    id = Column(Integer, primary_key=True, index=True,autoincrement=True)
+    id = Column(Integer, primary_key=True, index=True, autoincrement=True)
     name = Column(String, nullable=False)
     description = Column(String, nullable=True)
     is_male = Column(Boolean, default=False)
@@ -105,10 +104,5 @@ class Clothes(Base):
     is_beach = Column(Boolean, default=False)
     is_business_trip = Column(Boolean, default=False)
     is_camping = Column(Boolean, default=False)
-    id_category = Column(Integer,ForeignKey("clothes_category.id"))
+    id_category = Column(Integer, ForeignKey("clothes_category.id"))
     category = relationship("ClothesCategory", back_populates="clothes")
-
-
-
-
-

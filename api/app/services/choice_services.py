@@ -1,7 +1,8 @@
 from sqlalchemy.ext.asyncio import AsyncSession
 from app.models.choices import *
 from sqlalchemy import select, delete, func, update
-from sqlalchemy.orm import joinedload, selectinload
+from sqlalchemy.orm import selectinload, contains_eager
+from sqlalchemy import and_
 
 
 class ChoisesAppRepisitory:
@@ -96,19 +97,24 @@ class ItemsCheckListRepository:
                 .offset(offset)
             )
             result_ch_lists = await s.execute(stmt_ch_lists)
-            stmt_total = select(func.count(ItemsCheckListEntity.id)).filter(ItemsCheckListEntity.app_id == app_id)
+            stmt_total = select(func.count(ItemsCheckListEntity.id)).filter(
+                ItemsCheckListEntity.app_id == app_id
+            )
             result_total = await s.execute(stmt_total)
             await s.commit()
             ch_lists = result_ch_lists.scalars().all()
             total = result_total.scalar_one()
             return ch_lists, total
-        
-    async def get_check_list_by_id(self,app_id: str, ch_list_id: str):
+
+    async def get_check_list_by_id(self, app_id: str, ch_list_id: str):
         async with self.db_session as s:
 
             stmt = (
                 select(ItemsCheckListEntity)
-                .where(ItemsCheckListEntity.app_id == app_id, ItemsCheckListEntity.id == ch_list_id)
+                .where(
+                    ItemsCheckListEntity.app_id == app_id,
+                    ItemsCheckListEntity.id == ch_list_id,
+                )
                 .options(selectinload(ItemsCheckListEntity.steps))
             )
 
@@ -118,39 +124,69 @@ class ItemsCheckListRepository:
 
         check_list_result = ch_result.scalar_one_or_none()
 
-        steps = check_list_result.steps[0]
-        print(steps.sex)
+        step = check_list_result.steps[0]
+
+        filters = {
+            "is_male": step.sex == "male",
+            "is_female": step.sex == "female",
+            "is_3_days": step.days == 3,
+            "is_7_days": step.days == 7,
+            "is_14_days": step.days == 14,
+            "is_domestic": step.destination == "domestic",
+            "is_international": step.destination == "interational",
+            "is_warm_weather": step.weather == "warm",
+            "is_cold_weather": step.weather == "cold",
+            "is_skiing": step.trip_type == "skiing",
+            "is_beach": step.trip_type == "beach",
+            "is_business_trip": step.trip_type == "buisness",
+            "is_camping": step.trip_type == "camping",
+        }
+
+        filters = {k: v for k, v in filters.items() if v is not False}
 
         async with self.db_session as s:
 
-            stmt = (select(TypesOfClothing).where(TypesOfClothing.sex_flag==steps.sex).options(selectinload(TypesOfClothing.category)))
-            
+            stmt = (
+                select(ClothesCategory)
+                .join(ClothesCategory.clothes)
+                .options(contains_eager(ClothesCategory.clothes))
+                .filter(
+                    and_(
+                        *[
+                            getattr(Clothes, key) == value
+                            for key, value in filters.items()
+                        ]
+                    )
+                )
+            )
+
             cl_result = await s.execute(stmt)
 
             await s.commit()
 
-        clothes_result = cl_result.scalar_one_or_none()
+        clothes_result = cl_result.unique().scalars().all()
 
         return check_list_result, clothes_result
 
-
-
-        # return check_list_result
-        
-    async def update_check_list(self, app_id: str, ch_list_id: str, name: str, description: str):
+    async def update_check_list(
+        self, app_id: str, ch_list_id: str, name: str, description: str
+    ):
         async with self.db_session as s:
             stmt = (
                 update(ItemsCheckListEntity)
-                .where(ItemsCheckListEntity.app_id == app_id, 
-                       ItemsCheckListEntity.id == ch_list_id,)
-                       .values(name=name,description=description)).returning(ItemsCheckListEntity)
+                .where(
+                    ItemsCheckListEntity.app_id == app_id,
+                    ItemsCheckListEntity.id == ch_list_id,
+                )
+                .values(name=name, description=description)
+            ).returning(ItemsCheckListEntity)
             result = await s.execute(stmt)
             await s.commit()
-            
+
             updated_ch_list = result.scalar_one()
-        
-            await s.refresh(updated_ch_list, attribute_names=['steps'])
-            
+
+            await s.refresh(updated_ch_list, attribute_names=["steps"])
+
         return updated_ch_list
 
     async def delete_check_list(self, app_id: str, id: str):
