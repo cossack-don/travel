@@ -10,25 +10,15 @@ class ExtraToResponse(Base):
     limit: int
     offset: int
     total: int
-    
+
 
 class Choice(Base):
-    sex: Optional[str] = Field(default=None, example="Женщина")
+    sex: Optional[str] = Field(default=None, example="female")
     days: Optional[int] = Field(default=None, example=3)
-    destination: Optional[str] = Field(default=None, example="За городом")
-    weather: Optional[str] = Field(default=None, example="Теплая")
-    trip_type: Optional[str] = Field(default=None, example="Коммандировка")
+    destination: Optional[str] = Field(default=None, example="internanional")
+    weather: Optional[str] = Field(default=None, example="warm")
+    trip_type: Optional[str] = Field(default=None, example="buisness")
 
-
-
-class ItemCheckListSchema(Base):
-    id: AnyStr
-    name: Optional[str] = Field(default="Название списка вещей")
-    description: Optional[str] = Field(default="Описание")
-    steps: List[Choice] = Field(default=None)
-
-class ChListResponse(ExtraToResponse):
-    data: List[ItemCheckListSchema]
 
 class AppAndChListRequest(Base):
     name: Optional[str] = Field(default=None, example="Название приложения")
@@ -41,12 +31,32 @@ class AppResponse(Base):
     description: Optional[str] = Field(default=None, example="Описание")
 
 
+class ClothesResponseForChecList(Base):
+    name: str
+
+
+class ClothesCategoryShema(Base):
+    id: int
+    name: str 
+    clothes: List[ClothesResponseForChecList]
+
+
+
+
+class ItemCheckListSchema(Base):
+    id: AnyStr
+    name: Optional[str] = Field(default="Название списка вещей")
+    description: Optional[str] = Field(default="Описание")
+    steps: List[Choice] = Field(default=None)
+
+
+class CheckListByIdtResponse(ItemCheckListSchema):
+    cl_list: List[ClothesCategoryShema] = Field(default=None)
+
+
+class ChListResponse(ExtraToResponse):
+    data: List[ItemCheckListSchema]
+
+
 class AppResponseExtended(AppResponse):
     items_check_list: List[ItemCheckListSchema] = Field(default=None)
-
-
-
-
-
-
-
