@@ -27,6 +27,8 @@ async def get_clothes_instanse(db: AsyncSession = Depends(get_db)):
     tags=[
         "Clothes_categories",
     ],
+     summary="Получаем все категории",
+     description="Получаем все категории, которые могут быть в сгенерированном итоговом чек-листе"
 )
 async def get_all_categories(
     category_service: ClothesCategoryEntity = Depends(get_category_instanse),
@@ -51,6 +53,8 @@ async def get_all_categories(
         "Clothes_categories",
     ],
     response_model=CategoryExtended,
+     summary="Получаем всю информацию по конкретной категории",
+     description="Передаем название категории и получаем, какие вещи к этой категории приклеплены"
 )
 async def get_cat_by_name(
     category_name: str,
@@ -78,6 +82,8 @@ async def get_cat_by_name(
     tags=[
         "Clothes_categories",
     ],
+     summary="Создаем новую категорию",
+     description="Передаем название новой категории для создания"
 )
 async def create_category(
     category_name: str,
@@ -106,6 +112,8 @@ async def create_category(
         "Clothes_categories",
     ],
     response_model=CategoryBase,
+    summary="Обновляем категорию по id",
+    description="Передаем id категории и новое имя категории которое должно быть"
 )
 async def update_category(
     cat_id_to_update: int,
@@ -135,6 +143,8 @@ async def update_category(
     tags=[
         "Clothes_categories",
     ],
+    summary="Удаляем категорию по названию",
+    description="Передаем name категории чтобы удалить"
 )
 async def delete_category(
     cat_name_to_delete: str,
@@ -165,6 +175,8 @@ async def delete_category(
     tags=[
         "Clothes_items",
     ],
+    summary="Получаем список всех элементов, которые могут быть в категории",
+    description="-"
 )
 async def get_all_clothes_items(
     category_service: ClothesTypeEntity = Depends(get_clothes_instanse),
@@ -189,6 +201,8 @@ async def get_all_clothes_items(
     tags=[
         "Clothes_items",
     ],
+    summary="Не очень понял, что и для чего, нужно объяснение мне =)",
+    description="-"
 )
 async def get_clothes_item_by_name(
     clothes_name: str,
@@ -217,6 +231,8 @@ async def get_clothes_item_by_name(
         "Clothes_items",
     ],
     response_model=ClothesExtended,
+    summary="Не очень понял, что и для чего, нужно объяснение мне =)",
+    description="-"
 )
 async def create_clothes_item(
     clothes: ClothesCreate,
@@ -232,6 +248,8 @@ async def create_clothes_item(
     tags=[
         "Clothes_items",
     ],
+    summary="Удаляем по названию элемент, который мог бы быть в категории",
+    description="-"
 )
 async def delete_category(
     clothes_name_to_delete: str,
