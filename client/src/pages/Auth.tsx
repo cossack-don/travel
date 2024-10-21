@@ -1,12 +1,28 @@
 import { UILink, UIInput, UIButton, UIContainer, UICol, UIHeadingTypography } from "@/shared/UI"
 import { useNavigate } from "react-router-dom"
 import styles from "./Auth.module.scss"
+import { z } from "zod"
+import { useForm } from "react-hook-form"
+import { zodResolver } from "@hookform/resolvers/zod"
 
 const Auth = () => {
 	const navigate = useNavigate()
 
-	const onSubmit = e => {
-		e.preventDefault()
+	const schema = z.object({
+		login: z.string().min(3, "Логин обязателен! Минимум 3 символа"),
+		password: z.string().min(6, "Пароль должен содержать минимум 6 символов")
+	})
+
+	const {
+		register,
+		handleSubmit,
+		formState: { errors }
+	} = useForm({
+		resolver: zodResolver(schema)
+	})
+
+	const onSubmit = (data: any) => {
+		console.log("Данные для регистрации:", data)
 
 		navigate("/dashboard")
 	}
@@ -20,10 +36,12 @@ const Auth = () => {
 
 			<UICol listClasses={"col-sm-4"}>
 				<div>
-					<form onSubmit={onSubmit}>
-						<UIInput placeholder="Логин" />
-						<UIInput placeholder="Пароль" />
-						<UIButton>Вход</UIButton>
+					<form onSubmit={handleSubmit(onSubmit)}>
+						<UIInput placeholder="Логин" validation={register("login", { minLength: 3 })} />
+						{errors.login ? <p style={{ color: "red" }}>{errors.login.message as string}</p> : null}
+						<UIInput type="password" placeholder="Пароль" validation={register("password")} />
+						{errors.password ? <p style={{ color: "red" }}>{errors.password.message as string}</p> : null}
+						<UIButton type="submit">Вход</UIButton>
 					</form>
 				</div>
 			</UICol>
