@@ -517,19 +517,18 @@ async def get_elements_step_trip():
     return data
 
 @router.patch(
-    "/{app_id}/check_list/{ch_list_id}/{step}/",
+    "/{app_id}/check_list/{ch_list_id}/",
     tags=[
         "Steps",
     ],
     response_model=Choice,
-    summary="Обновляем конкретный шаг",
-    description="Передаем конкретный шаг, который выбрал пользователь и обновляем"
+    summary="Обновляем конкретные шаги",
+    description="Передаем конкретные шаги, который выбрал пользователь и обновляем"
 )
 async def update_step_data(
     app_id: str,
     ch_list_id: str,
-    step: str,
-    update_data: Union[str, int],
+    update_data: Choice,
     service: StepsRepository = Depends(get_steps_instanse),
 ):
     steps_check = {
@@ -540,14 +539,19 @@ async def update_step_data(
         "trip": ["skiing", "beach", "buisness", "campimg"],
     }
 
+    upd_data = {k: v for k, v in update_data.model_dump().items() if v is not None}
+
     try:
-        if not (step in steps_check.keys() and update_data in steps_check[step]):
-            return JSONResponse(
-                status_code=status.HTTP_404_NOT_FOUND,
-                content={"details": "Bad request"},
-            )
+
+        for k, v in upd_data.items():
+            if not (k in steps_check.keys() and str(v) in steps_check[k]):
+                return JSONResponse(
+                    status_code=status.HTTP_404_NOT_FOUND,
+                    content={"details": "Bad request"},
+                )
+        
         result = await service.update_data(
-            app_id=app_id, ch_list_id=ch_list_id, step=step, update_data=update_data
+            app_id=app_id, ch_list_id=ch_list_id,update_data=upd_data
         )
         return result
 

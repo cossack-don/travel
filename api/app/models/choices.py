@@ -70,21 +70,6 @@ class ClothesCategory(Base):
     clothes = relationship("Clothes", back_populates="category")
 
 
-# class TypesOfClothing(Base):
-#     __tablename__ = "clothes_types"
-
-#     id = Column(Integer,primary_key=True,autoincrement=True)
-#     name = Column(String,nullable=False)
-#     sex_flag = Column(String,nullable=False)
-#     days_flag = Column(String,nullable=False)
-#     destination_flag = Column(String,nullable=False)
-#     weather_flag = Column(String,nullable=False)
-#     trip_type_flag = Column(String,nullable=False)
-#     is_default = Column(Boolean)
-#     id_category = Column(Integer,ForeignKey("clothes_category.id"))
-#     category = relationship("ClothesCategory", back_populates="types_of_clothing")
-
-
 class Clothes(Base):
     __tablename__ = "clothes"
 
