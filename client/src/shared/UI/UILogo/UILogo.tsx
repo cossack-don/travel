@@ -6,10 +6,12 @@ interface Props {
 	style?: any
 }
 
-export default function UILogo({ children, style }: Props) {
+ const UILogo = ({ children, style }: Props)=> {
 	return (
 		<UILink style={style} to="/dashboard">
 			{children}
 		</UILink>
 	)
 }
+
+export default UILogo
