@@ -1,7 +1,7 @@
 from fastapi import HTTPException, status
 from sqlalchemy.ext.asyncio import AsyncSession
 from app.models.choices import *
-from sqlalchemy import select, delete, func, update
+from sqlalchemy import and_, select, delete, func, update
 from sqlalchemy.orm import joinedload, selectinload
 
 
@@ -98,6 +98,23 @@ class ClothesTypeEntity:
             )
             await s.commit()
         return result.scalar_one_or_none()
+
+    async def update_clothes_item(self, cl_name: str, upd_data):
+
+        async with self.db_session as s:
+
+            upd_data = {k: v for k, v in upd_data.model_dump().items() if v is not None}
+            if not upd_data:
+                return None
+            stmt = (
+                update(Clothes).where(Clothes.name == cl_name).values(**upd_data)
+            ).returning(Clothes)
+
+            result = await s.execute(stmt)
+            await s.commit()
+            updated_clothes = result.scalar_one_or_none()
+            await s.refresh(updated_clothes)
+            return updated_clothes
 
     async def delete_clothes_item(self, clothes_name: str):
         async with self.db_session as s:

@@ -14,7 +14,7 @@ class ExtraToResponse(Base):
 
 class Choice(Base):
     sex: Optional[str] = Field(default=None, example="female")
-    days: Optional[int] = Field(default=None, example=3)
+    days: Optional[int] = Field(default=None, example="3")
     destination: Optional[str] = Field(default=None, example="internanional")
     weather: Optional[str] = Field(default=None, example="warm")
     trip_type: Optional[str] = Field(default=None, example="buisness")
@@ -37,10 +37,8 @@ class ClothesResponseForChecList(Base):
 
 class ClothesCategoryShema(Base):
     id: int
-    name: str 
+    name: str
     clothes: List[ClothesResponseForChecList]
-
-
 
 
 class ItemCheckListSchema(Base):
