@@ -1,5 +1,5 @@
 import { ReactNode, useState } from "react"
-import { UIHeader, UILogo, UIFooter, UILink, UIDrawer, UIAvatar } from "@/shared/UI"
+import { UILogo, UIHeader, UIFooter, UILink, UIDrawer, UIAvatar } from "@/shared/UI"
 import style from "./MainDashBoardLayout.module.scss"
 
 type Props = {
