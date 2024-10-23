@@ -1,3 +1,3 @@
 export const otherFunction = () => {
-	console.log('Another Function');
+	console.log("Another Function")
 }

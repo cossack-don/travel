@@ -6,7 +6,7 @@ interface Props {
 	style?: any
 }
 
- const TLogo = ({ children, style }: Props)=> {
+const TLogo = ({ children, style }: Props) => {
 	return (
 		<div style={style}>
 			{/*{children}*/}

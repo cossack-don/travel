@@ -6,7 +6,7 @@ interface Props {
 	style?: any
 }
 
- const UILogo = ({ children, style }: Props)=> {
+const UILogo = ({ children, style }: Props) => {
 	return (
 		<UILink style={style} to="/dashboard">
 			{children}
