@@ -1,9 +1,7 @@
-from pydantic import BaseModel, ConfigDict, Field
+from pydantic import Field
 from typing import Optional, List, AnyStr
+from app.schemas.base import Base
 
-
-class Base(BaseModel):
-    model_config = ConfigDict(from_attributes=True)
 
 
 class ExtraToResponse(Base):

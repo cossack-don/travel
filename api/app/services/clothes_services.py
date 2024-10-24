@@ -1,8 +1,7 @@
-from fastapi import HTTPException, status
 from sqlalchemy.ext.asyncio import AsyncSession
 from app.models.choices import *
-from sqlalchemy import and_, select, delete, func, update
-from sqlalchemy.orm import joinedload, selectinload
+from sqlalchemy import select, delete, update
+from sqlalchemy.orm import  selectinload
 
 
 class ClothesCategoryEntity:

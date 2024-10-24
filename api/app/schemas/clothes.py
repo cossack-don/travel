@@ -1,10 +1,6 @@
-from pydantic import BaseModel, ConfigDict, Field
+from pydantic import Field
 from typing import Optional, List, AnyStr
-
-
-class Base(BaseModel):
-    model_config = ConfigDict(from_attributes=True)
-
+from app.schemas.base import Base
 
 class CategoryBase(Base):
     id: int
