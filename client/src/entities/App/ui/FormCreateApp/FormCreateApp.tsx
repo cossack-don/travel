@@ -18,10 +18,10 @@ const FormCreateApp = ({ handlerSubmitForm }: Props) => {
 		name: {
 			MAX_LENGTH: 2,
 			textError: "Минимум 3 символа",
-			label: "Название приложения"
+			label: "Название события"
 		},
 		description: {
-			label: "Описание"
+			label: "Описание события"
 		}
 	}
 
@@ -35,7 +35,7 @@ const FormCreateApp = ({ handlerSubmitForm }: Props) => {
 	}, [name, description])
 
 	const schema = z.object({
-		name: z.string().min(1, "Название приложения обязательно!"),
+		name: z.string().min(1, "Название события обязательно!"),
 		description: z.string().min(5, "Минимум 5 символов")
 	})
 
@@ -63,7 +63,7 @@ const FormCreateApp = ({ handlerSubmitForm }: Props) => {
 					<UICol listClasses={`col-sm-12`}>
 						<div className={style.wrapperForm}>
 							<UIInput
-								placeholder={"Название приложения"}
+								placeholder={"Название события"}
 								label={infoFields.name.label}
 								value={name}
 								style={{ width: "80%" }}
@@ -74,7 +74,7 @@ const FormCreateApp = ({ handlerSubmitForm }: Props) => {
 								<p style={{ color: "red", marginBottom: "15px" }}>{errors.name.message as string}</p>
 							) : null}
 							<UITextArea
-								placeholder={"Для чего используется приложение"}
+								placeholder={"Описание события"}
 								style={{ width: "80%" }}
 								rows={2}
 								label={infoFields.description.label}
@@ -91,7 +91,7 @@ const FormCreateApp = ({ handlerSubmitForm }: Props) => {
 					<UICol listClasses={"col-md-12"}>
 						<div className="d-flex justify-content-center">
 							<UIButton className={style.button} type="submit">
-								Создать приложение
+								Создать событие
 							</UIButton>
 						</div>
 					</UICol>

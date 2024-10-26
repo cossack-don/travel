@@ -109,11 +109,12 @@ async def create_app(
     app: AppAndChListRequest, service: ChoisesAppRepisitory = Depends(get_app_instanse)
 ):
     try:
-        await service.create_app(app.name, app.description)
+        new_app = await service.create_app(app.name, app.description)
         return JSONResponse(
-            content=[
-                {"details": "sucseccfully created"},
-            ],
+            content={
+                "status": "sucseccfully created",
+                "id_app": new_app.id
+            },
             status_code=status.HTTP_201_CREATED,
         )
     except Exception as e:
@@ -210,8 +211,8 @@ async def get_check_lists(
         )
         if not check_lists:
             return JSONResponse(
-                status_code=status.HTTP_404_NOT_FOUND,
-                content={"details": "Entity not found"},
+                status_code=status.HTTP_200_OK,
+                    content={"data": []},
             )
 
         response_content = {
