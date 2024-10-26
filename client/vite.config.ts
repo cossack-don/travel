@@ -15,7 +15,8 @@ export default defineConfig({
 			/* eslint-disable */
 			{ find: "@", replacement: path.resolve(__dirname, "src") },
 			{ find: "@api", replacement: path.resolve(__dirname, "src/api/") },
-			{ find: "@helpers", replacement: path.resolve(__dirname, "src/helpers/") }
+			{ find: "@helpers", replacement: path.resolve(__dirname, "src/helpers/") },
+			{ find: "*", replacement: path.resolve(__dirname, "packages") } //example import in component import { testFn } from "*/helpers"
 		]
 	},
 	css: {

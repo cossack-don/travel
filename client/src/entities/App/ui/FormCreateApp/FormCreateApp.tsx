@@ -56,7 +56,7 @@ const FormCreateApp = ({ handlerSubmitForm }: Props) => {
 			<UIContainer listClasses={`row`}>
 				<UICol listClasses={" cols-sm-12 col-md-12"}>
 					<UIHeadingTypography as={"h2"} bold="medium">
-						Новое приложение
+						Новое событие
 					</UIHeadingTypography>
 				</UICol>
 				<form onSubmit={handleSubmit(onSubmitFormHandler)} style={{ width: "100%" }}>
