@@ -96,7 +96,7 @@ async def create_post(
         )
 
 
-@router.put(
+@router.patch(
     "/{post_id}",
     response_model=PostResponse,
     summary="Обновляем пост по id",
@@ -115,7 +115,8 @@ async def update_post_data(
                 content={"details": "Entity not found"},
             )
 
-        updated_post = await service.update_post(post_id, title=update_data.title, body=update_data.body)
+        data = update_data.model_dump(exclude_unset=True)
+        updated_post = await service.update_post(post_id, data)
         return updated_post
 
     except Exception as e:

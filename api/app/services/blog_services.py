@@ -31,12 +31,12 @@ class BlogRepository:
             await s.refresh(new_post)
             return new_post
 
-    async def update_post(self, post_id: int, title: str, body: str):
+    async def update_post(self, post_id: int, kwargs):
         async with self.db_session as s:
             stmt = (
                 update(Post)
                 .where(Post.id == post_id)
-                .values(title=title, body=body)
+                .values(**kwargs)
                 .returning(Post)
             )
             result = await s.execute(stmt)
