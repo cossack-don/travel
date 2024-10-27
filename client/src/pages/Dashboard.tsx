@@ -27,7 +27,7 @@ const Dashboard = () => {
 			<UICol listClasses={"col-lg-12 col-md-12"}>
 				<UIContainer listClasses={"row"}>
 					<UICol listClasses={"col-lg-12 col-md-12 col-sm-12"}>
-						<UIButton onClick={() => navigate("/dashboard/create-app")}>Создать App</UIButton>
+						<UIButton onClick={() => navigate("/dashboard/create-app")}>Создать событие</UIButton>
 					</UICol>
 				</UIContainer>
 			</UICol>
