@@ -164,8 +164,7 @@ class ItemsCheckListRepository:
 
             await s.commit()
 
-        clothes_result = cl_result.unique().scalars().all()
-
+        clothes_result = cl_result.unique().scalar()
         return check_list_result, clothes_result
 
     async def update_check_list(

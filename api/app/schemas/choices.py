@@ -1,9 +1,8 @@
-from pydantic import BaseModel, ConfigDict, Field
+from pydantic import Field
 from typing import Optional, List, AnyStr
+from app.schemas.base import Base
+from app.schemas.ticks import TicksSchema
 
-
-class Base(BaseModel):
-    model_config = ConfigDict(from_attributes=True)
 
 
 class ExtraToResponse(Base):
@@ -32,7 +31,9 @@ class AppResponse(Base):
 
 
 class ClothesResponseForChecList(Base):
+    id: int
     name: str
+    is_checked: bool = Field(default=False)
 
 
 class ClothesCategoryShema(Base):
