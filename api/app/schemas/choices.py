@@ -1,6 +1,7 @@
 from pydantic import Field
 from typing import Optional, List, AnyStr
 from app.schemas.base import Base
+from app.schemas.ticks import TicksSchema
 
 
 
@@ -30,7 +31,9 @@ class AppResponse(Base):
 
 
 class ClothesResponseForChecList(Base):
+    id: int
     name: str
+    is_checked: bool = Field(default=False)
 
 
 class ClothesCategoryShema(Base):

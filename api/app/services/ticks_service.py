@@ -16,11 +16,11 @@ class TicksEntity:
             result = await s.execute(select(Ticks))
             return result.scalars().all()
         
-    async def get_tick_by_id(self, tick:TicksSchema):
+    async def get_tick_by_id(self, clothes_id, check_list_id):
         async with self.db_session as s:
             result = await s.execute(select(Ticks)
-                                     .where(Ticks.clothes_id== tick.clothes_id,
-                                            Ticks.check_list_id==tick.check_list_id))
+                                     .where(Ticks.clothes_id== clothes_id,
+                                            Ticks.check_list_id==check_list_id))
             return result.scalar_one_or_none()
             
     async def create_tick(self,tick:TicksSchema):

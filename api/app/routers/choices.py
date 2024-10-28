@@ -6,6 +6,8 @@ from app.schemas.choices import *
 from app.database.session import get_db
 from app.services.choice_services import *
 from sqlalchemy.ext.asyncio import AsyncSession
+from app.routers.ticks import get_tick_instanse
+from app.services.ticks_service import TicksEntity
 
 
 router = APIRouter(
@@ -243,6 +245,7 @@ async def get_check_list_by_id(
     app_id: str,
     ch_list_id: str,
     service: ItemsCheckListRepository = Depends(get_check_list_instanse),
+    tick_service: TicksEntity = Depends(get_tick_instanse)
 ):
     try:
         ch_list, cl_list = await service.get_check_list_by_id(
@@ -253,6 +256,12 @@ async def get_check_list_by_id(
                 status_code=status.HTTP_404_NOT_FOUND,
                 content={"details": "Entity not found"},
             )
+        pre_cl_list =  ClothesCategoryShema.model_validate(cl_list).model_dump()
+    
+        for i in pre_cl_list["clothes"]:
+            i["is_checked"] = True if await tick_service.get_tick_by_id(check_list_id=ch_list_id,clothes_id=i["id"]) else False
+            
+        updated_cl_list = ClothesCategoryShema(**pre_cl_list)
 
         response = {
             "id": ch_list.id,
@@ -261,10 +270,8 @@ async def get_check_list_by_id(
             "steps": [
                 Choice.model_validate(item).model_dump() for item in ch_list.steps
             ],
-            "items": [
-                ClothesCategoryShema.model_validate(item).model_dump()
-                for item in cl_list
-            ],
+            "items": 
+                ClothesCategoryShema.model_validate(updated_cl_list).model_dump(),
         }
 
         return response

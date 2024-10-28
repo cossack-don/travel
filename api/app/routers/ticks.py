@@ -44,15 +44,16 @@ async def get_all_ticks(
         )
 
 @router.post(
-    "/",
-    response_model=TicksSchema
+    "/create",
+    response_model=TicksSchema,
+    summary="Заносим информацию об отметке в бд"
 )
 async def create_tick(
     tick: TicksSchema,
     ticks_service: TicksEntity = Depends(get_tick_instanse)
 ):
     try:
-        check_result = await ticks_service.get_tick_by_id(tick=tick)
+        check_result = await ticks_service.get_tick_by_id(clothes_id=tick.clothes_id,check_list_id=tick.check_list_id)
         if check_result:
             return JSONResponse(
                     status_code=status.HTTP_400_BAD_REQUEST,
@@ -66,7 +67,8 @@ async def create_tick(
         )
 
 @router.delete(
-    "/",
+    "/delete",
+    summary="Удаляем информацию об отметке в бд"
 )
 async def delete_tick(
     tick: TicksSchema,
