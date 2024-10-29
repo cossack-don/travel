@@ -1,5 +1,5 @@
 from pydantic import BaseModel, ConfigDict, Field
-from typing import Optional
+from typing import Optional, List
 
 
 class Base(BaseModel):
@@ -9,6 +9,10 @@ class Base(BaseModel):
 class PostRequest(Base):
     title: Optional[str] = Field(None, examples=["Заголовок поста"])
     body: Optional[str] = Field(None, examples=["Описание"])
+
+
+class PostDeleteRequest(Base):
+    ids: Optional[List[int]] = Field(None, examples=[[1, 2, 3]])
 
 
 class PostResponse(Base):

@@ -43,7 +43,7 @@ async def get_post_by_id(
 
 
 @router.get(
-    "/get-posts/",
+    "/list-posts/",
     response_model=PostResponse,
     summary="Получаем список постов",
     description="Получаем список постов с определенными limit & offset"
@@ -126,22 +126,29 @@ async def update_post_data(
 
 
 @router.delete(
-    "/{post_id}",
-    summary="Удаляем пост по id"
+    "/delete-post",
+    summary="Удаляем посты по списку id"
 )
 async def delete_post(
-    post_id: int,
+    delete_data: PostDeleteRequest,
     service: BlogRepository = Depends(get_blog_instance)
 ):
     try:
-        result = await service.get_post_by_id(post_id)
-        if not result:
+        if not delete_data.ids:
             return JSONResponse(
-                status_code=status.HTTP_404_NOT_FOUND,
-                content={"details": "Entity not found"},
+                status_code=status.HTTP_400_BAD_REQUEST,
+                content={"details": "Empty Post Id list"},
             )
 
-        await service.delete_post(post_id)
+        diff = await service.check_post_exists(delete_data.ids)
+        if diff:
+            return JSONResponse(
+                status_code=status.HTTP_404_NOT_FOUND,
+                content={"details": "Post ids not found",
+                         "ids": list(diff)},
+            )
+
+        await service.delete_post(post_id_list=delete_data.ids)
         return JSONResponse(
             content=[{"details": "successfully deleted"}],
             status_code=status.HTTP_200_OK,
