@@ -21,11 +21,10 @@ async def get_blog_instance(db: AsyncSession = Depends(get_db)):
 @router.get(
     "/{post_id}",
     response_model=PostResponse,
-    summary="Получаем конкретный пост из блога по ID"
+    summary="Получаем конкретный пост из блога по ID",
 )
 async def get_post_by_id(
-    post_id: int,
-    service: BlogRepository = Depends(get_blog_instance)
+    post_id: int, service: BlogRepository = Depends(get_blog_instance)
 ):
     try:
         result = await service.get_post_by_id(post_id)
@@ -46,12 +45,12 @@ async def get_post_by_id(
     "/list-posts/",
     response_model=PostResponse,
     summary="Получаем список постов",
-    description="Получаем список постов с определенными limit & offset"
+    description="Получаем список постов с определенными limit & offset",
 )
 async def get_posts(
     limit: int = Query(5, ge=0, le=10),
     offset: int = Query(0, ge=0),
-    service: BlogRepository = Depends(get_blog_instance)
+    service: BlogRepository = Depends(get_blog_instance),
 ):
     try:
         result = await service.get_posts(limit=limit, offset=offset)
@@ -75,11 +74,10 @@ async def get_posts(
     "/create-post",
     response_model=PostResponse,
     summary="Создаем новый пост для блога",
-    description="Отправляем заголовок и тело поста для создания"
+    description="Отправляем заголовок и тело поста для создания",
 )
 async def create_post(
-        post: PostRequest,
-        service: BlogRepository = Depends(get_blog_instance)
+    post: PostRequest, service: BlogRepository = Depends(get_blog_instance)
 ):
     try:
         await service.create_post(title=post.title, body=post.body)
@@ -100,12 +98,12 @@ async def create_post(
     "/{post_id}",
     response_model=PostResponse,
     summary="Обновляем пост по id",
-    description="Отправляем заголовок и тело поста для обновления"
+    description="Отправляем заголовок и тело поста для обновления",
 )
 async def update_post_data(
     post_id: int,
     update_data: PostRequest,
-    service: BlogRepository = Depends(get_blog_instance)
+    service: BlogRepository = Depends(get_blog_instance),
 ):
     try:
         result = await service.get_post_by_id(post_id)
@@ -125,13 +123,9 @@ async def update_post_data(
         )
 
 
-@router.delete(
-    "/delete-post",
-    summary="Удаляем посты по списку id"
-)
+@router.delete("/delete-post", summary="Удаляем посты по списку id")
 async def delete_post(
-    delete_data: PostDeleteRequest,
-    service: BlogRepository = Depends(get_blog_instance)
+    delete_data: PostDeleteRequest, service: BlogRepository = Depends(get_blog_instance)
 ):
     try:
         if not delete_data.ids:
@@ -144,8 +138,7 @@ async def delete_post(
         if diff:
             return JSONResponse(
                 status_code=status.HTTP_404_NOT_FOUND,
-                content={"details": "Post ids not found",
-                         "ids": list(diff)},
+                content={"details": "Post ids not found", "ids": list(diff)},
             )
 
         await service.delete_post(post_id_list=delete_data.ids)

@@ -2,6 +2,7 @@ from pydantic import Field
 from typing import Optional, List, AnyStr
 from app.schemas.base import Base
 
+
 class CategoryBase(Base):
     id: int
     name: str
