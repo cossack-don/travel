@@ -219,7 +219,7 @@ class StepsRepository:
     async def update_data(self, app_id: str, ch_list_id: str, update_data: dict):
 
         async with self.db_session as s:
-            
+
             stmt = (
                 select(Steps)
                 .join(ItemsCheckListEntity)
@@ -238,5 +238,3 @@ class StepsRepository:
                 await s.refresh(steps)
                 return steps
             return None
-
-        

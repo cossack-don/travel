@@ -44,10 +44,7 @@ class BlogRepository:
     async def update_post(self, post_id: int, kwargs: Dict[str, Any]) -> Post:
         async with self.db_session as s:
             stmt = (
-                update(Post)
-                .where(Post.id == post_id)
-                .values(**kwargs)
-                .returning(Post)
+                update(Post).where(Post.id == post_id).values(**kwargs).returning(Post)
             )
             result = await s.execute(stmt)
             await s.commit()

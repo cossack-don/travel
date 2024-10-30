@@ -4,7 +4,6 @@ from app.schemas.base import Base
 from app.schemas.ticks import TicksSchema
 
 
-
 class ExtraToResponse(Base):
     limit: int
     offset: int

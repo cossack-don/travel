@@ -1,7 +1,7 @@
 from sqlalchemy.ext.asyncio import AsyncSession
 from app.models.choices import *
 from sqlalchemy import select, delete, update
-from sqlalchemy.orm import  selectinload
+from sqlalchemy.orm import selectinload
 
 
 class ClothesCategoryEntity:

@@ -1,9 +1,7 @@
 import uuid
 from sqlalchemy import Column, Integer, String, ForeignKey, Boolean
 from sqlalchemy.orm import relationship
-from sqlalchemy.orm import declarative_base
-
-Base = declarative_base()
+from app.models.base import Base
 
 
 class App(Base):
@@ -36,7 +34,7 @@ class ItemsCheckListEntity(Base):
     app_id = Column(String, ForeignKey("apps.id"))
     app = relationship("App", back_populates="items_check_list")
     steps = relationship("Steps", back_populates="items", cascade="all,delete-orphan")
-    ticks = relationship("Ticks",back_populates="items")
+    ticks = relationship("Ticks", back_populates="items")
 
 
 class Steps(Base):
@@ -91,13 +89,13 @@ class Clothes(Base):
     is_camping = Column(Boolean, default=False)
     id_category = Column(Integer, ForeignKey("clothes_category.id"))
     category = relationship("ClothesCategory", back_populates="clothes")
-    ticks = relationship("Ticks",back_populates="clothes")
+    ticks = relationship("Ticks", back_populates="clothes")
 
 
 class Ticks(Base):
     __tablename__ = "ticks"
     id = Column(Integer, primary_key=True, index=True, autoincrement=True)
-    check_list_id = Column(String,ForeignKey("items.id"))
-    clothes_id = Column(Integer,ForeignKey("clothes.id"))
-    items = relationship("ItemsCheckListEntity",back_populates="ticks")
-    clothes = relationship("Clothes",back_populates="ticks")
+    check_list_id = Column(String, ForeignKey("items.id"))
+    clothes_id = Column(Integer, ForeignKey("clothes.id"))
+    items = relationship("ItemsCheckListEntity", back_populates="ticks")
+    clothes = relationship("Clothes", back_populates="ticks")
