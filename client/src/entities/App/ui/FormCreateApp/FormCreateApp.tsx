@@ -4,6 +4,7 @@ import style from "./FormCreateApp.module.scss"
 import { z } from "zod"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
+import { getChecklist } from "@/shared/api/axios/api.ts"
 
 interface Props {
 	handlerSubmitForm: any
@@ -50,7 +51,6 @@ const FormCreateApp = ({ handlerSubmitForm }: Props) => {
 	const onSubmitFormHandler = (data: any) => {
 		handlerSubmitForm(data.name, data.description, isError)
 	}
-
 	return (
 		<>
 			<UIContainer listClasses={`row`}>
