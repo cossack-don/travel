@@ -27,8 +27,8 @@ async def get_clothes_instanse(db: AsyncSession = Depends(get_db)):
     tags=[
         "Clothes_categories",
     ],
-     summary="Получаем все категории",
-     description="Получаем все категории, которые могут быть в сгенерированном итоговом чек-листе"
+    summary="Получаем все категории",
+    description="Получаем все категории, которые могут быть в сгенерированном итоговом чек-листе",
 )
 async def get_all_categories(
     category_service: ClothesCategoryEntity = Depends(get_category_instanse),
@@ -53,8 +53,8 @@ async def get_all_categories(
         "Clothes_categories",
     ],
     response_model=CategoryExtended,
-     summary="Получаем всю информацию по конкретной категории",
-     description="Передаем название категории и получаем, какие вещи к этой категории приклеплены"
+    summary="Получаем всю информацию по конкретной категории",
+    description="Передаем название категории и получаем, какие вещи к этой категории приклеплены",
 )
 async def get_cat_by_name(
     category_name: str,
@@ -82,8 +82,8 @@ async def get_cat_by_name(
     tags=[
         "Clothes_categories",
     ],
-     summary="Создаем новую категорию",
-     description="Передаем название новой категории для создания"
+    summary="Создаем новую категорию",
+    description="Передаем название новой категории для создания",
 )
 async def create_category(
     category_name: str,
@@ -113,7 +113,7 @@ async def create_category(
     ],
     response_model=CategoryBase,
     summary="Обновляем категорию по id",
-    description="Передаем id категории и новое имя категории которое должно быть"
+    description="Передаем id категории и новое имя категории которое должно быть",
 )
 async def update_category(
     cat_id_to_update: int,
@@ -144,7 +144,7 @@ async def update_category(
         "Clothes_categories",
     ],
     summary="Удаляем категорию по названию",
-    description="Передаем name категории чтобы удалить"
+    description="Передаем name категории чтобы удалить",
 )
 async def delete_category(
     cat_name_to_delete: str,
@@ -176,7 +176,7 @@ async def delete_category(
         "Clothes_items",
     ],
     summary="Получаем список всех элементов, которые могут быть в категории",
-    description="-"
+    description="-",
 )
 async def get_all_clothes_items(
     category_service: ClothesTypeEntity = Depends(get_clothes_instanse),
@@ -202,14 +202,16 @@ async def get_all_clothes_items(
         "Clothes_items",
     ],
     summary="Не очень понял, что и для чего, нужно объяснение мне =)",
-    description="-"
+    description="-",
 )
 async def get_clothes_item_by_name(
     clothes_name: str,
     clothes_service: ClothesTypeEntity = Depends(get_clothes_instanse),
 ):
     try:
-        result = await clothes_service.get_clothes_type_by_name(clothes_name=clothes_name)
+        result = await clothes_service.get_clothes_type_by_name(
+            clothes_name=clothes_name
+        )
         if not result:
 
             return JSONResponse(
@@ -232,15 +234,63 @@ async def get_clothes_item_by_name(
     ],
     response_model=ClothesExtended,
     summary="Не очень понял, что и для чего, нужно объяснение мне =)",
-    description="-"
+    description="-",
 )
 async def create_clothes_item(
     clothes: ClothesCreate,
     clothes_service: ClothesTypeEntity = Depends(get_clothes_instanse),
 ):
-    result = await clothes_service.create_new_type_of_clothes(clothes=clothes)
+    try:
+        result = await clothes_service.create_new_type_of_clothes(clothes=clothes)
 
-    return result
+        if not result:
+
+            return JSONResponse(
+                status_code=status.HTTP_404_NOT_FOUND,
+                content={"details": "Entity not found"},
+            )
+
+        return result
+
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(e)
+        )
+
+
+@router.patch(
+    "/types_of_clothes",
+    tags=[
+        "Clothes_items",
+    ],
+    response_model=ClothesExtended,
+    summary="Обновление предмета одежды",
+    description="-",
+)
+async def update_clothes_item(
+    clothes_name_to_update: str,
+    update_data: ClothesExtended,
+    clothes_service: ClothesTypeEntity = Depends(get_clothes_instanse),
+):
+
+    try:
+        result = await clothes_service.update_clothes_item(
+            cl_name=clothes_name_to_update, upd_data=update_data
+        )
+
+        if not result:
+
+            return JSONResponse(
+                status_code=status.HTTP_404_NOT_FOUND,
+                content={"details": "Entity not found"},
+            )
+
+        return result
+
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(e)
+        )
 
 
 @router.delete(
@@ -249,9 +299,9 @@ async def create_clothes_item(
         "Clothes_items",
     ],
     summary="Удаляем по названию элемент, который мог бы быть в категории",
-    description="-"
+    description="-",
 )
-async def delete_category(
+async def delete_clothes_item(
     clothes_name_to_delete: str,
     clothes_service: ClothesTypeEntity = Depends(get_clothes_instanse),
 ):

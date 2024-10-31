@@ -164,8 +164,7 @@ class ItemsCheckListRepository:
 
             await s.commit()
 
-        clothes_result = cl_result.unique().scalars().all()
-
+        clothes_result = cl_result.unique().scalar()
         return check_list_result, clothes_result
 
     async def update_check_list(
@@ -217,15 +216,10 @@ class StepsRepository:
             steps = result.scalar_one_or_none()
             return steps
 
-    @staticmethod
-    async def get_and_update_data(
-        app_id: str,
-        ch_list_id: str,
-        update_session: AsyncSession,
-        update_data,
-        data_to_update: str,
-    ):
-        async with update_session as s:
+    async def update_data(self, app_id: str, ch_list_id: str, update_data: dict):
+
+        async with self.db_session as s:
+
             stmt = (
                 select(Steps)
                 .join(ItemsCheckListEntity)
@@ -238,18 +232,9 @@ class StepsRepository:
 
             if steps:
                 if update_data:
-                    setattr(steps, data_to_update, update_data)
+                    for k, v in update_data.items():
+                        setattr(steps, k, v)
                 await s.commit()
                 await s.refresh(steps)
                 return steps
             return None
-
-    async def update_data(self, app_id: str, ch_list_id: str, step: str, update_data):
-        result = await self.get_and_update_data(
-            app_id=app_id,
-            update_session=self.db_session,
-            ch_list_id=ch_list_id,
-            data_to_update=step,
-            update_data=update_data,
-        )
-        return result

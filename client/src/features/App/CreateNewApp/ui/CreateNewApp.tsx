@@ -13,7 +13,7 @@ const CreateNewApp = () => {
 			}
 
 			const { data } = await serviceApp.create(payload)
-			await navigate(`/dashboard/app/${data[1].created_app.id}`)
+			await navigate(`/dashboard/app/${data?.id_app}`)
 		} catch (e: any) {
 			console.log(e)
 		}

@@ -26,10 +26,11 @@ const TemplateApp = () => {
 	}
 
 	useEffect(() => {
+		console.log(params?.id, 111)
 		setIdCurrentCheckList(params.id)
 		setIdCurrentApp(params.id)
 		apiGetByIdApp()
-		apiGetAllCheckLists(params.id)
+		apiGetAllCheckLists(params?.id)
 	}, [])
 
 	return (

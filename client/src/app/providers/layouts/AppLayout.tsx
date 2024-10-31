@@ -1,16 +1,17 @@
 import { ReactNode, useState } from "react"
 import {
 	UIHeader,
-	UILogo,
 	UIFooter,
 	UILink,
 	UIDrawer,
 	UIAvatar,
 	UICol,
 	UIContainer,
-	UINavigation
+	UINavigation,
+	UILogo
 } from "@/shared/UI"
 import style from "./MainDashBoardLayout.module.scss"
+
 import { listNavigation } from "@/shared/UI/UINavigation/listNavigation"
 
 type Props = {

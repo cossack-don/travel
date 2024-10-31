@@ -6,6 +6,8 @@ from app.schemas.choices import *
 from app.database.session import get_db
 from app.services.choice_services import *
 from sqlalchemy.ext.asyncio import AsyncSession
+from app.routers.ticks import get_tick_instanse
+from app.services.ticks_service import TicksEntity
 
 
 router = APIRouter(
@@ -32,7 +34,7 @@ async def get_steps_instanse(db: AsyncSession = Depends(get_db)):
         "Apps",
     ],
     summary="Получаем список приложений",
-    description="Получаем список приложений с определенными limit & offset"
+    description="Получаем список приложений с определенными limit & offset",
 )
 async def get_all_apps(
     limit: int = Query(10, ge=0, le=100),
@@ -75,7 +77,7 @@ async def get_all_apps(
         "Apps",
     ],
     summary="Получаем конкретное приложение по id",
-    description="-"
+    description="-",
 )
 async def get_app_by_id(
     app_id: str,
@@ -103,17 +105,15 @@ async def get_app_by_id(
         "Apps",
     ],
     summary="Создаем новое приложение",
-    description="Отправляем название и описание приложения для создания"
+    description="Отправляем название и описание приложения для создания",
 )
 async def create_app(
     app: AppAndChListRequest, service: ChoisesAppRepisitory = Depends(get_app_instanse)
 ):
     try:
-        await service.create_app(app.name, app.description)
+        new_app = await service.create_app(app.name, app.description)
         return JSONResponse(
-            content=[
-                {"details": "sucseccfully created"},
-            ],
+            content={"status": "sucseccfully created", "id_app": new_app.id},
             status_code=status.HTTP_201_CREATED,
         )
     except Exception as e:
@@ -128,8 +128,8 @@ async def create_app(
     tags=[
         "Apps",
     ],
-      summary="Обновляем приложение по id",
-      description="Отправляем название и описание приложения для обновления"
+    summary="Обновляем приложение по id",
+    description="Отправляем название и описание приложения для обновления",
 )
 async def update_app_data(
     app_id: str,
@@ -161,8 +161,8 @@ async def update_app_data(
     tags=[
         "Apps",
     ],
-     summary="Удаляем приложение по id",
-     description="-"
+    summary="Удаляем приложение по id",
+    description="-",
 )
 async def delete_app(
     app_id: str, service: ChoisesAppRepisitory = Depends(get_app_instanse)
@@ -193,7 +193,7 @@ async def delete_app(
         "Checklists",
     ],
     summary="Получаем список чек-листов в конкретном приложение",
-    description="Передаем id приложения"
+    description="Передаем id приложения",
 )
 async def get_check_lists(
     app_id: str,
@@ -210,8 +210,8 @@ async def get_check_lists(
         )
         if not check_lists:
             return JSONResponse(
-                status_code=status.HTTP_404_NOT_FOUND,
-                content={"details": "Entity not found"},
+                status_code=status.HTTP_200_OK,
+                content={"data": []},
             )
 
         response_content = {
@@ -237,12 +237,13 @@ async def get_check_lists(
         "Checklists",
     ],
     summary="Получаем чек-лист по id",
-    description="Передаем id приложения и id чек-листа"
+    description="Передаем id приложения и id чек-листа",
 )
 async def get_check_list_by_id(
     app_id: str,
     ch_list_id: str,
     service: ItemsCheckListRepository = Depends(get_check_list_instanse),
+    tick_service: TicksEntity = Depends(get_tick_instanse),
 ):
     try:
         ch_list, cl_list = await service.get_check_list_by_id(
@@ -253,6 +254,18 @@ async def get_check_list_by_id(
                 status_code=status.HTTP_404_NOT_FOUND,
                 content={"details": "Entity not found"},
             )
+        pre_cl_list = ClothesCategoryShema.model_validate(cl_list).model_dump()
+
+        for i in pre_cl_list["clothes"]:
+            i["is_checked"] = (
+                True
+                if await tick_service.get_tick_by_id(
+                    check_list_id=ch_list_id, clothes_id=i["id"]
+                )
+                else False
+            )
+
+        updated_cl_list = ClothesCategoryShema(**pre_cl_list)
 
         response = {
             "id": ch_list.id,
@@ -261,10 +274,7 @@ async def get_check_list_by_id(
             "steps": [
                 Choice.model_validate(item).model_dump() for item in ch_list.steps
             ],
-            "items": [
-                ClothesCategoryShema.model_validate(item).model_dump()
-                for item in cl_list
-            ],
+            "items": ClothesCategoryShema.model_validate(updated_cl_list).model_dump(),
         }
 
         return response
@@ -282,7 +292,7 @@ async def get_check_list_by_id(
         "Checklists",
     ],
     summary="Обновляем название и описание чек-листа по id",
-    description="-"
+    description="-",
 )
 async def update_check_list_data(
     app_id: str,
@@ -321,7 +331,7 @@ async def update_check_list_data(
         "Checklists",
     ],
     summary="Создаем новый чек-лист в области конкретного приложения",
-    description="Передаем id приложения для создания нового чек-листа"
+    description="Передаем id приложения для создания нового чек-листа",
 )
 async def create_check_list(
     app_id: str,
@@ -357,8 +367,8 @@ async def create_check_list(
     tags=[
         "Checklists",
     ],
-     summary="Удаляем чек-лист по id из области приложения",
-     description="Передаем id приложения и id чек-листа чтобы удалить"
+    summary="Удаляем чек-лист по id из области приложения",
+    description="Передаем id приложения и id чек-листа чтобы удалить",
 )
 async def delete_check_list(
     app_id: str,
@@ -386,23 +396,18 @@ async def delete_check_list(
         "Steps",
     ],
     summary="Получаем список с элементами для шага пол",
-    description="Получаю список с name, key по мужчине и женщине"
+    description="Получаю список с name, key по мужчине и женщине",
 )
 async def get_elements_step_sex():
     data = {
         "elements_step": [
-            {
-                "name": "Мужчина",
-                "key":'man'
-            },
-            {
-                "name": "Женщина",
-                "key":'woman'
-            }
+            {"name": "Мужчина", "key": "man"},
+            {"name": "Женщина", "key": "woman"},
         ]
     }
 
     return data
+
 
 @router.get(
     "/current/check_list/current/step-days",
@@ -410,31 +415,20 @@ async def get_elements_step_sex():
         "Steps",
     ],
     summary="Получаем список с элементами для шага дни",
-    description="Получаю список с name, key по дням"
+    description="Получаю список с name, key по дням",
 )
 async def get_elements_step_days():
     data = {
         "elements_step": [
-            {
-                "name": "1 день",
-                "key":'1'
-            },
-            {
-                "name": "3 дня",
-                "key":'3'
-            },
-            {
-                "name": "7 дней",
-                "key":'7'
-            },
-            {
-                "name": "14 дней",
-                "key":'14'
-            }
+            {"name": "1 день", "key": "1"},
+            {"name": "3 дня", "key": "3"},
+            {"name": "7 дней", "key": "7"},
+            {"name": "14 дней", "key": "14"},
         ]
     }
 
     return data
+
 
 @router.get(
     "/current/check_list/current/step-destination",
@@ -442,23 +436,18 @@ async def get_elements_step_days():
         "Steps",
     ],
     summary="Получаем список с элементами для шага местности",
-    description="Получаю список с name, key по загранице и по стране"
+    description="Получаю список с name, key по загранице и по стране",
 )
 async def get_elements_step_destination():
     data = {
         "elements_step": [
-            {
-                "name": "По стране",
-                "key":'domestic'
-            },
-            {
-                "name": "За границу",
-                "key":'international'
-            },
+            {"name": "По стране", "key": "domestic"},
+            {"name": "За границу", "key": "international"},
         ]
     }
 
     return data
+
 
 @router.get(
     "/current/check_list/current/step-weather",
@@ -466,23 +455,18 @@ async def get_elements_step_destination():
         "Steps",
     ],
     summary="Получаем список с элементами для шага погода",
-    description="Получаю список с name, key для холодно и жарко"
+    description="Получаю список с name, key для холодно и жарко",
 )
 async def get_elements_step_weather():
     data = {
         "elements_step": [
-            {
-                "name": "Холодно",
-                "key":'cold'
-            },
-            {
-                "name": "Жарко",
-                "key":'warm'
-            },
+            {"name": "Холодно", "key": "cold"},
+            {"name": "Жарко", "key": "warm"},
         ]
     }
 
     return data
+
 
 @router.get(
     "/current/check_list/current/step-trip",
@@ -490,46 +474,34 @@ async def get_elements_step_weather():
         "Steps",
     ],
     summary="Получаем список с элементами для шага варианта активности",
-    description="Получаю список с name, key для горные лыжи, пляж, бизнес, поход с палатками"
+    description="Получаю список с name, key для горные лыжи, пляж, бизнес, поход с палатками",
 )
 async def get_elements_step_trip():
     data = {
         "elements_step": [
-            {
-                "name": "Горные лыжи",
-                "key":'skiing'
-            },
-            {
-                "name": "Пляж",
-                "key":'beach'
-            },
-            {
-                "name": "Бизнес",
-                "key":'buisness'
-            },
-            {
-                "name": "Поход с палатками",
-                "key":'campimg'
-            },
+            {"name": "Горные лыжи", "key": "skiing"},
+            {"name": "Пляж", "key": "beach"},
+            {"name": "Бизнес", "key": "buisness"},
+            {"name": "Поход с палатками", "key": "campimg"},
         ]
     }
 
     return data
 
+
 @router.patch(
-    "/{app_id}/check_list/{ch_list_id}/{step}/",
+    "/{app_id}/check_list/{ch_list_id}/",
     tags=[
         "Steps",
     ],
     response_model=Choice,
-    summary="Обновляем конкретный шаг",
-    description="Передаем конкретный шаг, который выбрал пользователь и обновляем"
+    summary="Обновляем конкретные шаги",
+    description="Передаем конкретные шаги, который выбрал пользователь и обновляем",
 )
 async def update_step_data(
     app_id: str,
     ch_list_id: str,
-    step: str,
-    update_data: Union[str, int],
+    update_data: Choice,
     service: StepsRepository = Depends(get_steps_instanse),
 ):
     steps_check = {
@@ -540,14 +512,19 @@ async def update_step_data(
         "trip": ["skiing", "beach", "buisness", "campimg"],
     }
 
+    upd_data = {k: v for k, v in update_data.model_dump().items() if v is not None}
+
     try:
-        if not (step in steps_check.keys() and update_data in steps_check[step]):
-            return JSONResponse(
-                status_code=status.HTTP_404_NOT_FOUND,
-                content={"details": "Bad request"},
-            )
+
+        for k, v in upd_data.items():
+            if not (k in steps_check.keys() and str(v) in steps_check[k]):
+                return JSONResponse(
+                    status_code=status.HTTP_404_NOT_FOUND,
+                    content={"details": "Bad request"},
+                )
+
         result = await service.update_data(
-            app_id=app_id, ch_list_id=ch_list_id, step=step, update_data=update_data
+            app_id=app_id, ch_list_id=ch_list_id, update_data=upd_data
         )
         return result
 

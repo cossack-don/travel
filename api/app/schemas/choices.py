@@ -1,9 +1,7 @@
-from pydantic import BaseModel, ConfigDict, Field
+from pydantic import Field
 from typing import Optional, List, AnyStr
-
-
-class Base(BaseModel):
-    model_config = ConfigDict(from_attributes=True)
+from app.schemas.base import Base
+from app.schemas.ticks import TicksSchema
 
 
 class ExtraToResponse(Base):
@@ -14,7 +12,7 @@ class ExtraToResponse(Base):
 
 class Choice(Base):
     sex: Optional[str] = Field(default=None, example="female")
-    days: Optional[int] = Field(default=None, example=3)
+    days: Optional[int] = Field(default=None, example="3")
     destination: Optional[str] = Field(default=None, example="internanional")
     weather: Optional[str] = Field(default=None, example="warm")
     trip_type: Optional[str] = Field(default=None, example="buisness")
@@ -32,15 +30,15 @@ class AppResponse(Base):
 
 
 class ClothesResponseForChecList(Base):
+    id: int
     name: str
+    is_checked: bool = Field(default=False)
 
 
 class ClothesCategoryShema(Base):
     id: int
-    name: str 
+    name: str
     clothes: List[ClothesResponseForChecList]
-
-
 
 
 class ItemCheckListSchema(Base):
