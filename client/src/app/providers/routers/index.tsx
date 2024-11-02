@@ -84,7 +84,7 @@ export const router = createBrowserRouter([
 	{
 		path: "/dashboard/app/:id/features",
 		element: (
-			<WrapperTypeLayout name="dashboard">
+			<WrapperTypeLayout name="app">
 				<Features />
 			</WrapperTypeLayout>
 		)
@@ -92,7 +92,7 @@ export const router = createBrowserRouter([
 	{
 		path: "/dashboard/app/:id/settings",
 		element: (
-			<WrapperTypeLayout name="dashboard">
+			<WrapperTypeLayout name="app">
 				<SettingApp />
 			</WrapperTypeLayout>
 		)
