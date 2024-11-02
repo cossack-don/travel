@@ -10,12 +10,6 @@ const TemplateApp = () => {
 	const params = useParams()
 	const navigate = useNavigate()
 
-	const [, setApp] = useState([])
-	const apiGetByIdApp = async () => {
-		const { data } = await serviceApp.getById(params.id)
-		setApp(data)
-	}
-
 	const [idCurrentCheckList, setIdCurrentCheckList] = useState(null)
 	const [, setIdCurrentApp] = useState(null)
 
@@ -25,12 +19,14 @@ const TemplateApp = () => {
 		setCheckLists(data.data)
 	}
 
+	const listApi = async () => {
+		await setIdCurrentCheckList(params.id)
+		await setIdCurrentApp(params.id)
+		await apiGetAllCheckLists(params?.id)
+	}
+
 	useEffect(() => {
-		console.log(params?.id, 111)
-		setIdCurrentCheckList(params.id)
-		setIdCurrentApp(params.id)
-		apiGetByIdApp()
-		apiGetAllCheckLists(params?.id)
+		listApi()
 	}, [])
 
 	return (

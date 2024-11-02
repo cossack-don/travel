@@ -67,7 +67,6 @@ const MainDashboardLayout = ({ children }: Props) => {
 
 			<main className={style.wrapper}>{children}</main>
 			<UIFooter>Footer</UIFooter>
-
 			<UIDrawer isActive={showModal} onClose={setShowModal} />
 		</>
 	)

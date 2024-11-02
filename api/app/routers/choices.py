@@ -169,6 +169,7 @@ async def delete_app(
     app_id: str, service: ChoisesAppRepisitory = Depends(get_app_instanse)
 ):
     try:
+
         result = await service.get_app_by_id(id=app_id)
         if not result:
             return JSONResponse(
