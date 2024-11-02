@@ -54,11 +54,12 @@ async def get_all_apps(
             "data": [AppResponse.model_validate(item).model_dump() for item in result],
         }
 
-        if not result:
-            return JSONResponse(
-                status_code=status.HTTP_404_NOT_FOUND,
-                content={"details": "Entity not found"},
-            )
+#         if not result:
+#             return JSONResponse(
+#                 status_code=status.HTTP_404_NOT_FOUND,
+#                 content={"details": "Entity not found"},
+#             )
+# TODO в списке, если нет записей возвращаем [] вместо ошибки 404
         return JSONResponse(
             content=response_content,
             status_code=status.HTTP_200_OK,
