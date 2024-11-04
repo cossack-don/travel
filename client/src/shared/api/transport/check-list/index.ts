@@ -40,5 +40,11 @@ export const serviceCheckList = {
 			method: Methods.PUT
 			// data or params pauload = {name:name,description:description}
 		})
+	},
+	getAppId: (app_id: string) => {
+		return ADAPTER_API_REQUEST({
+			url: getBaseURL(`/apps/${app_id}`),
+			method: Methods.GET
+		})
 	}
 }

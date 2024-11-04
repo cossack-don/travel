@@ -11,15 +11,12 @@ import {
 	UILogo
 } from "@/shared/UI"
 import style from "./MainDashBoardLayout.module.scss"
-
-import { listNavigation } from "@/shared/UI/UINavigation/listNavigation"
 import { serviceApp } from "@/shared/api/transport"
 import { useParams } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux"
-import { infoEventSlice, updateStateInfoEvent } from "@/features/infoEvent/infoEventSlice.ts"
+import { updateStateInfoEvent } from "@/features/infoEvent/infoEventSlice.ts"
 import { RootState } from "@/app/providers/store/store.ts"
-import { increment } from "@/features/counter/counterSlice.ts"
-import Layout from "@/app/providers/layouts/Layout.tsx"
+import { listNavigation } from "@/shared/UI/UINavigation/listNavigation"
 
 type Props = {
 	children: ReactNode
@@ -46,9 +43,9 @@ const ListLinks = () => {
 		</ul>
 	)
 }
-
 const AppLayout = ({ children }: Props) => {
 	const [showModal, setShowModal] = useState(false)
+
 	const params = useParams()
 
 	const infoEvent = useSelector((state: RootState) => state.infoEvent.data)
@@ -76,7 +73,6 @@ const AppLayout = ({ children }: Props) => {
 				rightElement={<UIAvatar onClick={() => setShowModal(!showModal)} />}
 			/>
 			<UIAfterHeader />
-
 			<main className={style.wrapper}>
 				<UIContainer listClasses={"row"}>
 					<UICol listClasses={"col-sm-3"}>
