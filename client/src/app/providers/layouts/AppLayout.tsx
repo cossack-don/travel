@@ -1,15 +1,5 @@
 import { ReactNode, useState } from "react"
-import {
-	UIHeader,
-	UIFooter,
-	UILink,
-	UIDrawer,
-	UIAvatar,
-	UICol,
-	UIContainer,
-	UINavigation,
-	UILogo
-} from "@/shared/UI"
+import { UIAvatar, UICol, UIContainer, UIDrawer, UIHeader, UILink, UILogo, UINavigation } from "@/shared/UI"
 import style from "./MainDashBoardLayout.module.scss"
 
 import { listNavigation } from "@/shared/UI/UINavigation/listNavigation"

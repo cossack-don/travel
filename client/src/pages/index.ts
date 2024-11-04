@@ -1,11 +1,11 @@
 //Stepper
-import StepCreateCheckList from "@/pages/StepCreateCheckList"
-import StepListOfThings from "@/pages/StepListOfThings"
-import StepTypeOfTrip from "@/pages/StepTypeOfTrip"
-import StepTypePlace from "@/pages/StepTypePlace"
-import StepSex from "@/pages/StepSex"
-import StepTypeSeasons from "@/pages/StepTypeSeasons"
-import StepNumberOfDays from "@/pages/StepNumberOfDays"
+import StepCreateCheckList from "@/features/steps/ui/StepCreateCheckList/StepCreateCheckList.tsx"
+import StepListOfThings from "@/features/steps/ui/StepListOfThings/StepListOfThings.tsx"
+import StepTypeOfTrip from "@/features/steps/ui/StepTypeOfTrip/StepTypeOfTrip.tsx"
+import StepTypePlace from "@/features/steps/ui/StepTypePlace/StepTypePlace.tsx"
+import StepSex from "@/features/steps/ui/StepSex/StepSex.tsx"
+import StepTypeSeasons from "@/features/steps/ui/StepTypeSeasons/StepTypeSeasons.tsx"
+import StepNumberOfDays from "@/features/steps/ui/StepNumberOfDays/StepNumberOfDays.tsx"
 
 //App
 import SettingApp from "@/pages/SettingApp"

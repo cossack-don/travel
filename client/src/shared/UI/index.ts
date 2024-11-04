@@ -17,6 +17,7 @@ import UIHeadingTypography from "@/shared/UI/UIHeadingTypography/UIHeadingTypogr
 import UIDrawer from "@/shared/UI/UIDrawer/UIDrawer"
 import UIAvatar from "@/shared/UI/UIAvatar/UIAvatar"
 import UILogo from "@/shared/UI/UILogo/UILogo"
+import ListCards from "@/shared/UI/UIStepsListCard/UIStepsListCard"
 
 export {
 	UILogo,
@@ -37,5 +38,6 @@ export {
 	UIParagraphTypography,
 	UIHeadingTypography,
 	UIDrawer,
-	UIAvatar
+	UIAvatar,
+	ListCards
 }
