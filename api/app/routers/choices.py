@@ -350,13 +350,10 @@ async def create_check_list(
                 status_code=status.HTTP_404_NOT_FOUND,
                 content={"details": "Entity not found"},
             )
-
-        await service.create_check_list(name=name, description=description, id=app_id)
+        new_check_list = await service.create_check_list(name=name, description=description, id=app_id)
         return JSONResponse(
-            content=[
-                {"details": "sucseccfully created"},
-            ],
-            status_code=status.HTTP_201_CREATED,
+                content={"status": "sucseccfully created", "check_list_id": new_check_list.id},
+                status_code=status.HTTP_201_CREATED,
         )
     except Exception as e:
         raise HTTPException(
@@ -403,8 +400,8 @@ async def delete_check_list(
 async def get_elements_step_sex():
     data = {
         "elements_step": [
-            {"name": "Мужчина", "key": "man"},
-            {"name": "Женщина", "key": "woman"},
+            {"name": "Мужчина", "key": "male"},
+            {"name": "Женщина", "key": "female"},
         ]
     }
 

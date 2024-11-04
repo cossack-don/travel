@@ -13,21 +13,20 @@ export const serviceCheckList = {
 			method: Methods.DELETE
 		})
 	},
-	create: (
-		idApp: number | string
-		// payload: any
-	) => {
+	create: (idApp: number | string, payload: any) => {
 		return ADAPTER_API_REQUEST({
 			url: getBaseURL(`/apps/${idApp}/check_list/create`),
-			method: Methods.POST
-			// data or params pauload = {name:name,description:description}
+			method: Methods.POST,
+			params: {
+				name: payload?.name,
+				description: payload?.description
+			}
 		})
 	},
 	getById: (idApp: number | string, idCheckList: number | string) => {
 		return ADAPTER_API_REQUEST({
 			url: getBaseURL(`/apps/${idApp}/check_list/${idCheckList}`),
 			method: Methods.GET
-			// data or params pauload = {name:name,description:description}
 		})
 	},
 	changeFieldsEntity: (
@@ -41,10 +40,17 @@ export const serviceCheckList = {
 			// data or params pauload = {name:name,description:description}
 		})
 	},
-	getAppId: (app_id: string) => {
+	updateCurrentStep: (idApp: number | string, idCheckList: number | string, payload: any) => {
 		return ADAPTER_API_REQUEST({
-			url: getBaseURL(`/apps/${app_id}`),
-			method: Methods.GET
+			url: getBaseURL(`/apps/${idApp}/check_list/${idCheckList}/`),
+			method: Methods.PATCH,
+			data: {
+				sex: payload.sex,
+				days: payload.days,
+				destination: payload.destination,
+				weather: payload.weather,
+				trip_type: payload.trip_type
+			}
 		})
 	}
 }
