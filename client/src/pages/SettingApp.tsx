@@ -30,7 +30,7 @@ const SettingApp = () => {
 					</UICol>
 
 					<UICol listClasses={"col-md-12"}>
-						<UIButton isLoading={isLoading} type="danger" onClick={() => onDeleteAppById(params.id)}>
+						<UIButton isLoading={isLoading} type="danger" onClick={() => onDeleteAppById(params.idApp)}>
 							Удалить приложение
 						</UIButton>
 					</UICol>

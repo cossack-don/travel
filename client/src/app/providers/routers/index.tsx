@@ -74,7 +74,7 @@ export const router = createBrowserRouter([
 		)
 	},
 	{
-		path: "/dashboard/app/:id",
+		path: "/dashboard/app/:idApp",
 		element: (
 			<WrapperTypeLayout name="app">
 				<TemplateApp />
@@ -82,7 +82,7 @@ export const router = createBrowserRouter([
 		)
 	},
 	{
-		path: "/dashboard/app/:id/features",
+		path: "/dashboard/app/:idApp/features",
 		element: (
 			<WrapperTypeLayout name="app">
 				<Features />
@@ -90,7 +90,7 @@ export const router = createBrowserRouter([
 		)
 	},
 	{
-		path: "/dashboard/app/:id/settings",
+		path: "/dashboard/app/:idApp/settings",
 		element: (
 			<WrapperTypeLayout name="app">
 				<SettingApp />
@@ -106,7 +106,7 @@ export const router = createBrowserRouter([
 		)
 	},
 	{
-		path: "/dashboard/app/:id/check-list/:id/create",
+		path: "/dashboard/app/:idApp/check-list/create",
 		element: (
 			<WrapperTypeLayout name="dashboard">
 				<StepCreateCheckList />
@@ -114,7 +114,7 @@ export const router = createBrowserRouter([
 		)
 	},
 	{
-		path: "/dashboard/app/:id/check-list/:id/step-sex",
+		path: "/dashboard/app/:idApp/check-list/:idCheckList/step-sex",
 		element: (
 			<WrapperTypeLayout name="dashboard">
 				<StepSex />
@@ -122,7 +122,7 @@ export const router = createBrowserRouter([
 		)
 	},
 	{
-		path: "/dashboard/app/:id/check-list/:id/step-number-of-days",
+		path: "/dashboard/app/:idApp/check-list/:idCheckList/step-number-of-days",
 		element: (
 			<WrapperTypeLayout name="dashboard">
 				<StepNumberOfDays />
@@ -130,7 +130,7 @@ export const router = createBrowserRouter([
 		)
 	},
 	{
-		path: "/dashboard/app/:id/check-list/:id/step-type-place",
+		path: "/dashboard/app/:idApp/check-list/:idCheckList/step-type-place",
 		element: (
 			<WrapperTypeLayout name="dashboard">
 				<StepTypePlace />
@@ -138,7 +138,7 @@ export const router = createBrowserRouter([
 		)
 	},
 	{
-		path: "/dashboard/app/:id/check-list/:id/step-type-seasons",
+		path: "/dashboard/app/:idApp/check-list/:idCheckList/step-type-seasons",
 		element: (
 			<WrapperTypeLayout name="dashboard">
 				<StepTypeSeasons />
@@ -146,7 +146,7 @@ export const router = createBrowserRouter([
 		)
 	},
 	{
-		path: "/dashboard/app/:id/check-list/:id/step-type-of-trip",
+		path: "/dashboard/app/:idApp/check-list/:idCheckList/step-type-of-trip",
 		element: (
 			<WrapperTypeLayout name="dashboard">
 				<StepTypeOfTrip />
@@ -154,7 +154,7 @@ export const router = createBrowserRouter([
 		)
 	},
 	{
-		path: "/dashboard/app/:id/check-list/:id/step-list-of-things",
+		path: "/dashboard/app/:idApp/check-list/:idCheckList/step-list-of-things",
 		element: (
 			<WrapperTypeLayout name="dashboard">
 				<StepListOfThings />

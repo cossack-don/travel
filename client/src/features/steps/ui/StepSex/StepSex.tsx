@@ -1,15 +1,25 @@
-import { Link } from "react-router-dom"
+import { Link, useParams, useLocation } from "react-router-dom"
 import { ChangeEvent, useEffect, useState } from "react"
 import { ListCards, UILink } from "@/shared/UI"
 import { useAppDispatch, useAppSelector } from "@/shared/hooks/hooks.ts"
 import { fetchStepsElement } from "@/features/steps/model/steps.reducer.ts"
 import { userModel } from "@/entities/model/userSlice.ts"
+import { serviceCheckList } from "@/shared/api/transport"
 
 const StepSex = () => {
 	const dispatch = useAppDispatch()
+	const params = useParams()
+	const [currentCheckList, setCurrentCheckList] = useState(null)
+
+	const getInfoCurrentCheckList = async () => {
+		const { data } = await serviceCheckList.getById(params?.idApp, params.idCheckList)
+		setCurrentCheckList(data)
+		console.log(currentCheckList, "test")
+	}
 
 	useEffect(() => {
 		dispatch(fetchStepsElement({ link: "step-sex" }))
+		getInfoCurrentCheckList()
 	}, [])
 
 	const dataCards = useAppSelector(state => state.stepper)
@@ -24,8 +34,25 @@ const StepSex = () => {
 	}
 	const [isActiveValue, setActiveValue] = useState()
 
-	const setUserSexValueHandler = () => {
-		dispatch(userModel({ sex: isActiveValue }))
+	const setUserSexValueHandler = async () => {
+		// Как будет приходить с бекенда
+		// steps_check = {
+		// 	"sex": ["male", "female"],
+		// 	"days": ["1", "3", "7", "14"],
+		// 	"destination": ["domestic", "international"],
+		// 	"weather": ["warm", "cold"],
+		// 	"trip": ["skiing", "beach", "buisness", "campimg"],
+		// }
+		const payload = {
+			sex: "female",
+			days: undefined,
+			destination: undefined,
+			weather: undefined,
+			trip_type: undefined
+		}
+
+		await serviceCheckList.updateCurrentStep(params?.idApp, params?.idCheckList, payload)
+		await dispatch(userModel({ sex: isActiveValue }))
 	}
 
 	return (

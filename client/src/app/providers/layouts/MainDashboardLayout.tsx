@@ -1,6 +1,7 @@
-import { ReactNode, useState } from "react"
+import { ReactNode, useEffect, useState } from "react"
 import { UILogo, UIHeader, UIFooter, UILink, UIDrawer, UIAvatar } from "@/shared/UI"
 import style from "./MainDashBoardLayout.module.scss"
+import { useParams } from "react-router-dom"
 
 type Props = {
 	children: ReactNode

@@ -16,7 +16,7 @@ const ListCheckLists = ({ list, isBadRequest, onDeleteCardById, isButtonDelete =
 				return (
 					<UICol key={item.id} listClasses="col-xs-6">
 						<UICard
-							to={`/dashboard/app/${appId}/check-list/${item.id}/step-list-of-things`}
+							to={`/dashboard/app/${appId}/check-list/${item.id}/step-sex`}
 							header={`Check List: ${item.name}`}
 							footer={
 								<div style={{ display: "flex", justifyContent: "space-between" }}>

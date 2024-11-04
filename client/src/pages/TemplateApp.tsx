@@ -1,8 +1,7 @@
 import { useNavigate, useParams } from "react-router-dom"
 import { useEffect, useState } from "react"
-import { mockApp } from "@/shared/mockData/mockApp"
 import { UIButton, UICol, UIContainer, UIHeadingTypography } from "@/shared/UI"
-import { serviceApp, serviceCheckList } from "@/shared/api/transport"
+import { serviceCheckList } from "@/shared/api/transport"
 import { ListCheckLists } from "../entities/CheckList/ui"
 
 const TemplateApp = () => {
@@ -19,12 +18,13 @@ const TemplateApp = () => {
 	}
 
 	const listApi = async () => {
-		await setIdCurrentCheckList(params.id)
-		await setIdCurrentApp(params.id)
-		await apiGetAllCheckLists(params?.id)
+		await setIdCurrentCheckList(params.idCheckListF)
+		await setIdCurrentApp(params.idApp)
+		await apiGetAllCheckLists(params?.idApp)
 	}
 
 	useEffect(() => {
+		console.log(params)
 		listApi()
 	}, [])
 
@@ -50,7 +50,7 @@ const TemplateApp = () => {
 				<UIContainer listClasses={"row center-md"}>
 					<UICol listClasses={"col-lg-12 col-md-12"}>
 						<div>
-							<UIButton onClick={() => navigate(`/dashboard/app/${mockApp.hashApp}/check-list/:id/create`)}>
+							<UIButton onClick={() => navigate(`/dashboard/app/${params.idApp}/check-list/create`)}>
 								Создать новый список вещей
 							</UIButton>
 						</div>
