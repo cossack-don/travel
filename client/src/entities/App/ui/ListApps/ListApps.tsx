@@ -8,7 +8,7 @@ interface Props {
 }
 const ListApps = ({ apps, isBadRequest, onDeleteCardById, isButtonDelete = false }: Props) => {
 	return (
-		<UIContainer listClasses="row between-xs">
+		<UIContainer listClasses="row">
 			{isBadRequest && <div>Бекенд упал - заглушка</div>}
 
 			{apps.map((item: any) => {

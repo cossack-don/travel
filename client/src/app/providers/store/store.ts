@@ -5,6 +5,7 @@ import { stepOfSeasons } from "@/entities/model/seasonsSlice.ts"
 import { stepOfTrip } from "@/entities/model/tripSlice.ts"
 import { userSlice } from "@/entities/model/userSlice.ts"
 import { stepperReducer } from "@/features/steps/model/steps.reducer.ts"
+import { infoEvent } from "@/features/infoEvent/infoEventSlice.ts"
 
 export const store = configureStore({
 	reducer: {
@@ -13,7 +14,8 @@ export const store = configureStore({
 		season: stepOfSeasons,
 		trip: stepOfTrip,
 		user: userSlice,
-		stepper: stepperReducer
+		stepper: stepperReducer,
+		infoEvent: infoEvent
 	}
 })
 

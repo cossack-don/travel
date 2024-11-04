@@ -7,11 +7,10 @@ export const serviceApp = {
 			method: Methods.GET
 		})
 	},
-	deleteById: (id: string) => {
+	deleteById: (id: string | number) => {
 		return ADAPTER_API_REQUEST({
-			url: getBaseURL("/apps/delete"),
-			method: Methods.DELETE,
-			params: { id }
+			url: getBaseURL(`/apps/${id}/delete`),
+			method: Methods.DELETE
 		})
 	},
 	getById: (id: string) => {
