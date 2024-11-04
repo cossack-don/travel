@@ -30,9 +30,3 @@ export const serviceApp = {
 		})
 	}
 }
-
-const res = serviceApp.getAll().then(res => {
-	console.log(res)
-})
-
-console.log(res)
