@@ -16,7 +16,9 @@ class App(Base):
     )
     name = Column(String, nullable=True, default="Название приложения")
     description = Column(String, nullable=True, default="Описание")
-    items_check_list = relationship("ItemsCheckListEntity", back_populates="app")
+    items_check_list = relationship(
+        "ItemsCheckListEntity", back_populates="app", cascade="all,delete"
+    )
 
 
 class ItemsCheckListEntity(Base):
@@ -31,10 +33,10 @@ class ItemsCheckListEntity(Base):
     )
     name = Column(String, nullable=True, default="Название списка вещей")
     description = Column(String, nullable=True, default="Описание")
-    app_id = Column(String, ForeignKey("apps.id"))
+    app_id = Column(String, ForeignKey("apps.id", ondelete="CASCADE"))
     app = relationship("App", back_populates="items_check_list")
-    steps = relationship("Steps", back_populates="items", cascade="all,delete-orphan")
-    ticks = relationship("Ticks", back_populates="items")
+    steps = relationship("Steps", back_populates="items", cascade="all,delete")
+    ticks = relationship("Ticks", back_populates="items", cascade="all,delete")
 
 
 class Steps(Base):
@@ -46,7 +48,7 @@ class Steps(Base):
     destination = Column(String, nullable=True, default=None)
     weather = Column(String, nullable=True, default=None)
     trip_type = Column(String, nullable=True, default=None)
-    check_list_entity_id = Column(String, ForeignKey("items.id"))
+    check_list_entity_id = Column(String, ForeignKey("items.id", ondelete="CASCADE"))
     items = relationship("ItemsCheckListEntity", back_populates="steps")
 
     def to_dict(self):
@@ -95,7 +97,7 @@ class Clothes(Base):
 class Ticks(Base):
     __tablename__ = "ticks"
     id = Column(Integer, primary_key=True, index=True, autoincrement=True)
-    check_list_id = Column(String, ForeignKey("items.id"))
-    clothes_id = Column(Integer, ForeignKey("clothes.id"))
+    check_list_id = Column(String, ForeignKey("items.id", ondelete="CASCADE"))
+    clothes_id = Column(Integer, ForeignKey("clothes.id", ondelete="CASCADE"))
     items = relationship("ItemsCheckListEntity", back_populates="ticks")
     clothes = relationship("Clothes", back_populates="ticks")
