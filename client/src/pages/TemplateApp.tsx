@@ -42,7 +42,7 @@ const TemplateApp = () => {
 				<UIContainer listClasses={"row"}>
 					<UICol listClasses={"col-lg-12 col-md-12"}>
 						<div>
-							<ListCheckLists list={checkLists} appId={idCurrentCheckList} />
+							<ListCheckLists list={checkLists} appId={params.idApp} />
 						</div>
 					</UICol>
 				</UIContainer>
