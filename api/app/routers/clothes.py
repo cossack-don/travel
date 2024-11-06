@@ -177,6 +177,7 @@ async def delete_category(
     ],
     summary="Получаем список всех элементов, которые могут быть в категории",
     description="-",
+    response_model=List[ClothesBase],
 )
 async def get_all_clothes_items(
     category_service: ClothesTypeEntity = Depends(get_clothes_instanse),

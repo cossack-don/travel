@@ -125,6 +125,10 @@ class ItemsCheckListRepository:
         check_list_result = ch_result.scalar_one_or_none()
 
         step = check_list_result.steps[0]
+        for key, value in step.__dict__.items():
+            if value is None:
+                clothes_result = None
+                return check_list_result, clothes_result
 
         filters = {
             "is_male": step.sex == "male",
@@ -143,6 +147,10 @@ class ItemsCheckListRepository:
         }
 
         filters = {k: v for k, v in filters.items() if v is not False}
+
+        if not filters:
+            clothes_result = None
+            return check_list_result, clothes_result
 
         async with self.db_session as s:
 

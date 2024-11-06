@@ -256,18 +256,23 @@ async def get_check_list_by_id(
                 status_code=status.HTTP_404_NOT_FOUND,
                 content={"details": "Entity not found"},
             )
-        pre_cl_list = ClothesCategoryShema.model_validate(cl_list).model_dump()
-
-        for i in pre_cl_list["clothes"]:
-            i["is_checked"] = (
-                True
-                if await tick_service.get_tick_by_id(
-                    check_list_id=ch_list_id, clothes_id=i["id"]
+        if cl_list:
+            pre_cl_list = ClothesCategoryShema.model_validate(cl_list).model_dump()
+            for i in pre_cl_list["clothes"]:
+                i["is_checked"] = (
+                    True
+                    if await tick_service.get_tick_by_id(
+                        check_list_id=ch_list_id, clothes_id=i["id"]
+                    )
+                    else False
                 )
-                else False
-            )
 
-        updated_cl_list = ClothesCategoryShema(**pre_cl_list)
+            updated_cl_list_model = ClothesCategoryShema(**pre_cl_list)
+            updated_cl_list = ClothesCategoryShema.model_validate(
+                updated_cl_list_model
+            ).model_dump()
+        else:
+            updated_cl_list = []
 
         response = {
             "id": ch_list.id,
@@ -276,7 +281,7 @@ async def get_check_list_by_id(
             "steps": [
                 Choice.model_validate(item).model_dump() for item in ch_list.steps
             ],
-            "items": ClothesCategoryShema.model_validate(updated_cl_list).model_dump(),
+            "items": updated_cl_list,
         }
 
         return response
@@ -513,15 +518,17 @@ async def update_step_data(
         "days": ["1", "3", "7", "14"],
         "destination": ["domestic", "international"],
         "weather": ["warm", "cold"],
-        "trip": ["skiing", "beach", "buisness", "campimg"],
+        "trip_type": ["skiing", "beach", "buisness", "campimg"],
     }
 
     upd_data = {k: v for k, v in update_data.model_dump().items() if v is not None}
+    print(upd_data)
 
     try:
 
         for k, v in upd_data.items():
             if not (k in steps_check.keys() and str(v) in steps_check[k]):
+                print(k, v)
                 return JSONResponse(
                     status_code=status.HTTP_404_NOT_FOUND,
                     content={"details": "Bad request"},
