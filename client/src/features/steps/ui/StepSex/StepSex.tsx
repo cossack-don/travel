@@ -10,22 +10,13 @@ const StepSex = () => {
 	const dispatch = useAppDispatch()
 	const params = useParams()
 	const [currentCheckList, setCurrentCheckList] = useState(null)
+	const { data, activeValue } = useAppSelector(state => state.stepper)
+	const listData = data.elements_step
 
 	useEffect(() => {
 		dispatch(fetchStepsElement({ link: "step-sex" }))
 		getInfoCurrentCheckList()
 	}, [])
-
-	const dataCards = useAppSelector(state => state.stepper)
-	const [isActiveValue, setActiveValue] = useState(dataCards[0]?.name)
-
-	useEffect(() => {
-		if (dataCards.length > 0) {
-			setActiveValue(dataCards[0]?.name)
-		}
-	}, [dataCards, isActiveValue])
-
-	console.log({ isActiveValue })
 
 	const getInfoCurrentCheckList = async () => {
 		const { data } = await serviceCheckList.getById(params?.idApp, params.idCheckList)
@@ -44,15 +35,15 @@ const StepSex = () => {
 
 	const setUserSexValueHandler = async () => {
 		const payload = {
-			sex: isActiveValue,
-			days: undefined,
-			destination: undefined,
-			weather: undefined,
-			trip_type: undefined
+			sex: activeValue.key,
+			days: null,
+			destination: null,
+			weather: null,
+			trip_type: null
 		}
 
 		await serviceCheckList.updateCurrentStep(params?.idApp, params?.idCheckList, payload)
-		await dispatch(userModel({ sex: isActiveValue }))
+		await dispatch(userModel({ sex: activeValue.key }))
 	}
 
 	return (
@@ -61,12 +52,11 @@ const StepSex = () => {
 			<p>Выбор пола</p>
 			<UILink to={"/dashboard/app/8743b52063cd84097a65d1633f5c74f5"}>Назад</UILink>
 			<ListCards
-				setActiveValue={setActiveValue}
-				listData={dataCards}
-				defaultValue={isActiveValue}
+				listData={listData}
+				defaultValue={activeValue.name}
 				usePickActiveCardRadio={usePickActiveCardRadio}
 			/>
-			Выбран - {isActiveValue}
+			Выбран - {activeValue.name}
 			<br />
 			<br />
 			<Link

@@ -1,18 +1,25 @@
-import { useEffect } from "react"
 import { StepperElement } from "@/features/steps/model/steps.reducer.ts"
 import { UICardRadioButton } from "@/shared/UI"
 import UIWrapperCardRadioButtons from "@/shared/UI/UIWrapperCardRadioButtons/UIWrapperCardRadioButtons.tsx"
+import { useEffect, useState } from "react"
+import { useDispatch } from "react-redux"
 
-const ListCards = ({ listData, defaultValue, setActiveValue, usePickActiveCardRadio }: any) => {
+const ListCards = ({ listData, defaultValue, activeValue, usePickActiveCardRadio }: any) => {
+	const dispatch = useDispatch()
 	const [value, onChangeRadio] = usePickActiveCardRadio(defaultValue)
 
-	useEffect(() => {
-		setActiveValue(value)
-	}, [value])
+	console.log({ value })
+
+	useEffect(() => {}, [])
 
 	const cards = listData.map((item: StepperElement) => {
 		return (
-			<UICardRadioButton key={item.key} onChange={onChangeRadio} defaultValue={item.name} isActive={value}>
+			<UICardRadioButton
+				key={item.key}
+				onChange={onChangeRadio}
+				defaultValue={item.name}
+				isActive={defaultValue}
+			>
 				{item.name}
 			</UICardRadioButton>
 		)

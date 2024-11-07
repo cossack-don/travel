@@ -8,18 +8,34 @@ export interface StepperElement {
 }
 
 export interface StepperElements {
-	elements_step: StepperElement[]
+	data: {
+		elements_step: StepperElement[]
+	}
+	activeValue: StepperElement
 }
 
-export const initialState: StepperElement[] = []
+export const initialState: StepperElements = {
+	data: {
+		elements_step: []
+	},
+	activeValue: {
+		key: "",
+		name: ""
+	}
+}
 
 export const slice = createSlice({
 	name: "app/steps",
 	initialState,
-	reducers: {},
+	reducers: {
+		setActiveValue: (state, action: PayloadAction<StepperElement>) => {
+			state.activeValue = action.payload
+			
+		}
+	},
 	extraReducers: builder => {
-		builder.addCase(fetchStepsElement.fulfilled, (_, action: PayloadAction<StepperElements>) => {
-			return action.payload.elements_step
+		builder.addCase(fetchStepsElement.fulfilled, (state, action: PayloadAction<StepperElements>) => {
+			state.data.elements_step = action.payload.data.elements_step
 		})
 	}
 })
@@ -30,13 +46,12 @@ export const stepperActions = slice.actions
 export const fetchStepsElement = createAsyncThunk(
 	"app/steps/stepperElements",
 	async (arg: { link: string }, thunkAPI) => {
-		const { rejectWithValue } = thunkAPI
+		const { rejectWithValue, dispatch } = thunkAPI
 		const { link } = arg
 		try {
-			const response = await stepperApi.getStepsElement(link)
-			const { data } = response
-
-			return data
+			const { data } = await stepperApi.getStepsElement(link)
+			dispatch(stepperActions.setActiveValue(data.elements_step[0]))
+			return { data }
 		} catch (error) {
 			if (axios.isAxiosError(error)) {
 				return rejectWithValue(null)
