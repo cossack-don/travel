@@ -8,6 +8,9 @@ interface Props {
 }
 
 export default function UICardRadioButton({ children, defaultValue, isActive, onChange }: Props) {
+	console.log("defV:", defaultValue)
+	console.log("isActive:", isActive)
+
 	return (
 		<label
 			className={`${style.wrapper} ${defaultValue === isActive ? style.activeButton : style.notActiveButton}`}
