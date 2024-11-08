@@ -4,22 +4,14 @@ import UIWrapperCardRadioButtons from "@/shared/UI/UIWrapperCardRadioButtons/UIW
 import { useEffect, useState } from "react"
 import { useDispatch } from "react-redux"
 
-const ListCards = ({ listData, defaultValue, activeValue, usePickActiveCardRadio }: any) => {
-	const dispatch = useDispatch()
+const ListCards = ({ listData, defaultValue, usePickActiveCardRadio }: any) => {
 	const [value, onChangeRadio] = usePickActiveCardRadio(defaultValue)
 
-	console.log({ value })
-
-	useEffect(() => {}, [])
+	// console.log(value)
 
 	const cards = listData.map((item: StepperElement) => {
 		return (
-			<UICardRadioButton
-				key={item.key}
-				onChange={onChangeRadio}
-				defaultValue={item.name}
-				isActive={defaultValue}
-			>
+			<UICardRadioButton key={item.key} onChange={onChangeRadio} defaultValue={item.name} isActive={value}>
 				{item.name}
 			</UICardRadioButton>
 		)

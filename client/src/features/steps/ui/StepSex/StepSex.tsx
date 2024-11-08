@@ -1,10 +1,11 @@
-import { Link, useParams, useLocation } from "react-router-dom"
-import { ChangeEvent, useEffect, useState } from "react"
+import { Link, useParams } from "react-router-dom"
+import { useEffect, useState } from "react"
 import { ListCards, UILink } from "@/shared/UI"
 import { useAppDispatch, useAppSelector } from "@/shared/hooks/hooks.ts"
 import { fetchStepsElement } from "@/features/steps/model/steps.reducer.ts"
 import { userModel } from "@/entities/model/userSlice.ts"
 import { serviceCheckList } from "@/shared/api/transport"
+import { usePickActiveCardRadio } from "@/shared/hooks"
 
 const StepSex = () => {
 	const dispatch = useAppDispatch()
@@ -21,17 +22,10 @@ const StepSex = () => {
 	const getInfoCurrentCheckList = async () => {
 		const { data } = await serviceCheckList.getById(params?.idApp, params.idCheckList)
 		setCurrentCheckList(data)
-		console.log(currentCheckList, "test")
+		// console.log(currentCheckList, "test")
 	}
 
-	const usePickActiveCardRadio = (defaultValue: string) => {
-		const [value, setValue] = useState(defaultValue)
-
-		const onChangeRadio = (e: ChangeEvent<HTMLInputElement>) => {
-			setValue(e.target.value)
-		}
-		return [value, onChangeRadio]
-	}
+	console.log({ activeValue })
 
 	const setUserSexValueHandler = async () => {
 		const payload = {

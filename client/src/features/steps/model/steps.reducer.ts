@@ -30,7 +30,6 @@ export const slice = createSlice({
 	reducers: {
 		setActiveValue: (state, action: PayloadAction<StepperElement>) => {
 			state.activeValue = action.payload
-			
 		}
 	},
 	extraReducers: builder => {
@@ -43,9 +42,9 @@ export const slice = createSlice({
 export const stepperReducer = slice.reducer
 export const stepperActions = slice.actions
 
-export const fetchStepsElement = createAsyncThunk(
+export const fetchStepsElement = createAsyncThunk<StepperElements, { link: string }>(
 	"app/steps/stepperElements",
-	async (arg: { link: string }, thunkAPI) => {
+	async (arg, thunkAPI) => {
 		const { rejectWithValue, dispatch } = thunkAPI
 		const { link } = arg
 		try {
