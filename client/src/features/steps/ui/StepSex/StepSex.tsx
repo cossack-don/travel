@@ -10,6 +10,12 @@ const StepSex = () => {
 	const dispatch = useAppDispatch()
 	const params = useParams()
 	const [currentCheckList, setCurrentCheckList] = useState(null)
+	const [isActiveValue, setActiveValue] = useState()
+	const dataCards = useAppSelector(state => state.stepper)
+
+	useEffect(() => {
+		dispatch(fetchStepsElement({ link: "step-sex" }))
+	}, [])
 
 	const getInfoCurrentCheckList = async () => {
 		const { data } = await serviceCheckList.getById(params?.idApp, params.idCheckList)
@@ -17,34 +23,18 @@ const StepSex = () => {
 		console.log(currentCheckList, "test")
 	}
 
-	useEffect(() => {
-		dispatch(fetchStepsElement({ link: "step-sex" }))
-		getInfoCurrentCheckList()
-	}, [])
-
-	const dataCards = useAppSelector(state => state.stepper)
-
 	const usePickActiveCardRadio = (defaultValue: string) => {
 		const [value, setValue] = useState(defaultValue)
 
 		const onChangeRadio = (e: ChangeEvent<HTMLInputElement>) => {
-			setValue(e.target.value)
+			setValue(e.currentTarget.value)
 		}
 		return [value, onChangeRadio]
 	}
-	const [isActiveValue, setActiveValue] = useState()
 
 	const setUserSexValueHandler = async () => {
-		// Как будет приходить с бекенда
-		// steps_check = {
-		// 	"sex": ["male", "female"],
-		// 	"days": ["1", "3", "7", "14"],
-		// 	"destination": ["domestic", "international"],
-		// 	"weather": ["warm", "cold"],
-		// 	"trip": ["skiing", "beach", "buisness", "campimg"],
-		// }
 		const payload = {
-			sex: "female",
+			sex: isActiveValue,
 			days: undefined,
 			destination: undefined,
 			weather: undefined,
@@ -54,6 +44,12 @@ const StepSex = () => {
 		await serviceCheckList.updateCurrentStep(params?.idApp, params?.idCheckList, payload)
 		await dispatch(userModel({ sex: isActiveValue }))
 	}
+
+	useEffect(() => {
+		setActiveValue(dataCards[0]?.name)
+	}, [isActiveValue, dataCards])
+
+	// console.log(isActiveValue)
 
 	return (
 		<div>
