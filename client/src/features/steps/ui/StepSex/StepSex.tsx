@@ -1,58 +1,43 @@
-import { Link, useParams, useLocation } from "react-router-dom"
-import { ChangeEvent, useEffect, useState } from "react"
+import { Link, useParams } from "react-router-dom"
+import { useEffect, useState } from "react"
 import { ListCards, UILink } from "@/shared/UI"
 import { useAppDispatch, useAppSelector } from "@/shared/hooks/hooks.ts"
 import { fetchStepsElement } from "@/features/steps/model/steps.reducer.ts"
 import { userModel } from "@/entities/model/userSlice.ts"
 import { serviceCheckList } from "@/shared/api/transport"
+import { usePickActiveCardRadio } from "@/shared/hooks"
 
 const StepSex = () => {
 	const dispatch = useAppDispatch()
 	const params = useParams()
 	const [currentCheckList, setCurrentCheckList] = useState(null)
-
-	const getInfoCurrentCheckList = async () => {
-		const { data } = await serviceCheckList.getById(params?.idApp, params.idCheckList)
-		setCurrentCheckList(data)
-		console.log(currentCheckList, "test")
-	}
+	const { data, activeValue } = useAppSelector(state => state.stepper)
+	const listData = data.elements_step
 
 	useEffect(() => {
 		dispatch(fetchStepsElement({ link: "step-sex" }))
 		getInfoCurrentCheckList()
 	}, [])
 
-	const dataCards = useAppSelector(state => state.stepper)
-
-	const usePickActiveCardRadio = (defaultValue: string) => {
-		const [value, setValue] = useState(defaultValue)
-
-		const onChangeRadio = (e: ChangeEvent<HTMLInputElement>) => {
-			setValue(e.target.value)
-		}
-		return [value, onChangeRadio]
+	const getInfoCurrentCheckList = async () => {
+		const { data } = await serviceCheckList.getById(params?.idApp, params.idCheckList)
+		setCurrentCheckList(data)
+		// console.log(currentCheckList, "test")
 	}
-	const [isActiveValue, setActiveValue] = useState()
+
+	console.log({ activeValue })
 
 	const setUserSexValueHandler = async () => {
-		// Как будет приходить с бекенда
-		// steps_check = {
-		// 	"sex": ["male", "female"],
-		// 	"days": ["1", "3", "7", "14"],
-		// 	"destination": ["domestic", "international"],
-		// 	"weather": ["warm", "cold"],
-		// 	"trip": ["skiing", "beach", "buisness", "campimg"],
-		// }
 		const payload = {
-			sex: "female",
-			days: undefined,
-			destination: undefined,
-			weather: undefined,
-			trip_type: undefined
+			sex: activeValue.key,
+			days: null,
+			destination: null,
+			weather: null,
+			trip_type: null
 		}
 
 		await serviceCheckList.updateCurrentStep(params?.idApp, params?.idCheckList, payload)
-		await dispatch(userModel({ sex: isActiveValue }))
+		await dispatch(userModel({ sex: activeValue.key }))
 	}
 
 	return (
@@ -61,12 +46,11 @@ const StepSex = () => {
 			<p>Выбор пола</p>
 			<UILink to={"/dashboard/app/8743b52063cd84097a65d1633f5c74f5"}>Назад</UILink>
 			<ListCards
-				setActiveValue={setActiveValue}
-				listData={dataCards}
-				defaultValue={isActiveValue}
+				listData={listData}
+				defaultValue={activeValue.name}
 				usePickActiveCardRadio={usePickActiveCardRadio}
 			/>
-			Выбран - {isActiveValue}
+			Выбран - {activeValue.name}
 			<br />
 			<br />
 			<Link
