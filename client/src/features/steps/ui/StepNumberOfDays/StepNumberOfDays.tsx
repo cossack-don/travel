@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom"
+import { Link, useParams } from "react-router-dom"
 import { useEffect } from "react"
 import { ListCards } from "@/shared/UI"
 import { useAppDispatch, useAppSelector } from "@/shared/hooks/hooks.ts"
@@ -7,6 +7,7 @@ import { userModel } from "@/entities/model/userSlice.ts"
 import { usePickActiveCardRadio } from "@/shared/hooks"
 
 const StepNumberOfDays = () => {
+	const params = useParams()
 	const dispatch = useAppDispatch()
 	const { data, activeValue } = useAppSelector(state => state.stepper)
 	const dataCards = data.elements_step
@@ -33,7 +34,7 @@ const StepNumberOfDays = () => {
 				usePickActiveCardRadio={usePickActiveCardRadio}
 			/>
 			<Link
-				to="/dashboard/app/8743b52063cd84097a65d1633f5c74f5/check-list/:id/step-type-place"
+				to={`/dashboard/app/${params.idApp}/check-list/${params.idCheckList}/step-type-place`}
 				style={{ width: "200px", height: "200px", marginRight: "15px" }}
 				onClick={setUserDaysHandler}
 			>

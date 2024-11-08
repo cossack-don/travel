@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom"
+import { Link, useParams } from "react-router-dom"
 import { ChangeEvent, useEffect, useState } from "react"
 import { ListCards } from "@/shared/UI"
 import { useAppDispatch, useAppSelector } from "@/shared/hooks/hooks.ts"
@@ -6,6 +6,7 @@ import { userModel } from "@/entities/model/userSlice.ts"
 import { fetchStepsElement } from "@/features/steps/model/steps.reducer.ts"
 
 const StepTypeOfTrip = () => {
+	const params = useParams()
 	const dataCards = useAppSelector(state => state.stepper)
 	const dispatch = useAppDispatch()
 
@@ -39,7 +40,7 @@ const StepTypeOfTrip = () => {
 				usePickActiveCardRadio={usePickActiveCardRadio}
 			/>
 			<Link
-				to="/dashboard/app/8743b52063cd84097a65d1633f5c74f5/check-list/:id/step-list-of-things"
+				to={`/dashboard/app/${params.idApp}/check-list/${params.idCheckList}/step-list-of-things`}
 				style={{ width: "200px", height: "200px", marginRight: "15px" }}
 				onClick={selectTripHandler}
 			>
