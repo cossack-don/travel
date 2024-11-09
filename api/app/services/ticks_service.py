@@ -1,5 +1,5 @@
 from sqlalchemy.ext.asyncio import AsyncSession
-from app.models.choices import *
+from app.models.check_boxes import *
 from sqlalchemy import select, delete, update
 from sqlalchemy.orm import selectinload
 from app.schemas.ticks import *

@@ -1,25 +1,18 @@
-from typing import Union
-from fastapi import APIRouter, Depends, HTTPException, Query
+from fastapi import APIRouter, Depends, HTTPException
 from fastapi import status
 from fastapi.responses import JSONResponse
 from app.schemas.clothes import *
-from app.database.session import get_db
-from app.services.choice_services import *
+from app.services.check_box_services import *
 from app.services.clothes_services import *
-from sqlalchemy.ext.asyncio import AsyncSession
+from app.dependencies.clothes import *
+from app.dependencies.permissions.user_permissions import current_superuser
 
 
 router = APIRouter(
     prefix="/api/v1",
+    dependencies=[Depends(current_superuser),]
 )
 
-
-async def get_category_instanse(db: AsyncSession = Depends(get_db)):
-    return ClothesCategoryEntity(db_session=db)
-
-
-async def get_clothes_instanse(db: AsyncSession = Depends(get_db)):
-    return ClothesTypeEntity(db_session=db)
 
 
 @router.get(

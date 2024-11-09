@@ -1,30 +1,20 @@
-from typing import Union
 from fastapi import APIRouter, Depends, HTTPException, Query
 from fastapi import status
 from fastapi.responses import JSONResponse
-from app.schemas.choices import *
-from app.database.session import get_db
-from app.services.choice_services import *
-from sqlalchemy.ext.asyncio import AsyncSession
+from app.schemas.check_box import *
+from app.services.check_box_services import *
 from app.routers.ticks import get_tick_instanse
 from app.services.ticks_service import TicksEntity
-
+from app.dependencies.check_box import *
+from app.models.users import Users
+from app.dependencies.permissions import user_permissions
 
 router = APIRouter(
     prefix="/api/v1/apps",
+    dependencies=[
+        Depends(user_permissions.current_user),
+    ],
 )
-
-
-async def get_app_instanse(db: AsyncSession = Depends(get_db)):
-    return ChoisesAppRepisitory(db_session=db)
-
-
-async def get_check_list_instanse(db: AsyncSession = Depends(get_db)):
-    return ItemsCheckListRepository(db_session=db)
-
-
-async def get_steps_instanse(db: AsyncSession = Depends(get_db)):
-    return StepsRepository(db_session=db)
 
 
 @router.get(

@@ -1,6 +1,6 @@
 from tests.testlib.utils import *
 import sqlalchemy as sa
-from app.models.choices import App, ItemsCheckListEntity
+from app.models.check_boxes import App, ItemsCheckListEntity
 
 
 def create_and_delete_check_list(get_test_db):
