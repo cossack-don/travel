@@ -1,0 +1,121 @@
+/*resets*/
+
+ul {
+	list-style-type: none;
+}
+
+/*style landing*/
+
+.landing-wrapper {
+	background: #fff;
+}
+
+.landing-header {
+	border-bottom: var(--gray) solid 2px;
+}
+
+.landing-list-navigation {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 15px 25px;
+}
+
+.landing-main {
+}
+
+.landing-footer {
+	display: flex;
+	justify-content: center;
+	border-top: var(--gray) solid 2px;
+	padding: 15px 25px;
+}
+
+/**/
+.landing-button-link {
+	background: var(--green);
+	display: inline-block;
+	border: none;
+	border-radius: 8px;
+	color: #fff;
+	padding: 10px 24px;
+	transition: 0.5s;
+}
+
+.landing-button-link:hover {
+	background: var(--green-hover);
+}
+
+.landing-banner {
+	margin-top: 25px;
+	height: 500px;
+	background-image: url("../../landing/assets/banner.jpg");
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: 100% 100%;
+}
+
+/**/
+.landing-services-title {
+	text-align: center;
+	margin-top: 60px;
+}
+.landing-services {
+	width: 1400px;
+	display: flex;
+	justify-content: space-between;
+	margin: 60px auto;
+}
+
+.landing-services-item {
+	border-radius: 24px;
+	background-color: #d8f6fe;
+	min-width: 140px;
+	min-height: 140px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-wrap: wrap;
+	transition: all 0.3s ease-in-out;
+}
+
+.landing-services-item:hover {
+	box-shadow: 0 8px 8px #e6e6e6;
+	transform: scale(1.05);
+}
+
+.landing-services-item:nth-child(1) {
+	background-color: #d8f6fe;
+}
+
+.landing-services-item:nth-child(2) {
+	background-color: #dffef6;
+}
+
+.landing-services-item:nth-child(3) {
+	background-color: #e6efff;
+}
+
+.landing-services-item:nth-child(4) {
+	background-color: #f6f6fe;
+}
+
+.landing-services-item:nth-child(5) {
+	background-color: #e6ffe8;
+}
+
+.landing-services-item:nth-child(6) {
+	background-color: #ffd1ca;
+}
+
+.landing-services-item:nth-child(7) {
+	background-color: #f0f9ff;
+}
+
+.landing-services-item:nth-child(8) {
+	background-color: #f7f8fa;
+}
+
+.landing-services-item:nth-child(9) {
+	background-color: #d7ffdb;
+}

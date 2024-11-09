@@ -1,16 +1,21 @@
-import { ReactNode, useState } from "react"
+import { ReactNode, useEffect, useState } from "react"
 import {
 	UIHeader,
-	UILogo,
-	UIFooter,
+	UIAfterHeader,
 	UILink,
 	UIDrawer,
 	UIAvatar,
 	UICol,
 	UIContainer,
-	UINavigation
+	UINavigation,
+	UILogo
 } from "@/shared/UI"
 import style from "./MainDashBoardLayout.module.scss"
+import { serviceApp } from "@/shared/api/transport"
+import { useParams } from "react-router-dom"
+import { useDispatch, useSelector } from "react-redux"
+import { updateStateInfoEvent } from "@/features/infoEvent/infoEventSlice.ts"
+import { RootState } from "@/app/providers/store/store.ts"
 import { listNavigation } from "@/shared/UI/UINavigation/listNavigation"
 
 type Props = {
@@ -20,7 +25,7 @@ type Props = {
 const list = [
 	{
 		id: 1,
-		name: "Создать App",
+		name: "Создать событие",
 		url: "/dashboard/create-app"
 	}
 ]
@@ -41,6 +46,21 @@ const ListLinks = () => {
 const AppLayout = ({ children }: Props) => {
 	const [showModal, setShowModal] = useState(false)
 
+	const params = useParams()
+
+	const infoEvent = useSelector((state: RootState) => state.infoEvent.data)
+	const dispatch = useDispatch()
+
+	const apiGetByIdApp = async () => {
+		const { data } = await serviceApp.getById(params.idApp)
+		// console.log(data, 3)
+		await dispatch(updateStateInfoEvent(data))
+	}
+
+	useEffect(() => {
+		apiGetByIdApp()
+	}, [])
+
 	return (
 		<>
 			<UIHeader
@@ -52,7 +72,7 @@ const AppLayout = ({ children }: Props) => {
 				}
 				rightElement={<UIAvatar onClick={() => setShowModal(!showModal)} />}
 			/>
-
+			<UIAfterHeader />
 			<main className={style.wrapper}>
 				<UIContainer listClasses={"row"}>
 					<UICol listClasses={"col-sm-3"}>

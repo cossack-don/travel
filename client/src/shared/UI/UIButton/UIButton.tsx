@@ -36,7 +36,7 @@ export default function UIButton({
 	isLoading = false
 }: Props) {
 	const buttonClassName = `${styles.button} ${listTypesButton[type]} ${className} ${styles[size]}`
-	console.log(type, 3)
+
 	const content = (
 		<>
 			{iconLeft && <span className={styles.icon}>{iconLeft}</span>}

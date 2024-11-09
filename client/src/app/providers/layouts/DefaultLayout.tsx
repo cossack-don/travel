@@ -1,5 +1,5 @@
 import { ReactNode } from "react"
-import { UIHeader, UILogo, UIButton, UIFooter } from "@/shared/UI"
+import { UIHeader, UIButton, UIFooter, UILogo } from "@/shared/UI"
 import { useNavigate } from "react-router-dom"
 import styles from "./DefaultLayout.module.scss"
 

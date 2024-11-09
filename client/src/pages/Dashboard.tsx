@@ -1,14 +1,12 @@
-import { useNavigate } from "react-router-dom"
-import { UIButton, UILink, UIContainer, UIHeadingTypography, UICol } from "@/shared/UI"
+import { UIContainer, UIHeadingTypography, UICol } from "@/shared/UI"
 
 import { RenderListFourApps } from "@/features/App/RenderListFourApps"
 import { RenderBannerInfo } from "@/features/BannerInfo/RenderBannerInfo"
 
 const Dashboard = () => {
-	const navigate = useNavigate()
 	return (
 		<UIContainer listClasses={"row"}>
-			<UICol listClasses={"col-lg-12 col-md-12"}>
+			<UICol listClasses={"col-lg-12 col-md-12 mb-25"}>
 				<UIContainer listClasses={"row"}>
 					<UICol listClasses={"col-lg-12 col-md-12"}>
 						<UIHeadingTypography as="h2">Дашборд</UIHeadingTypography>
@@ -25,23 +23,7 @@ const Dashboard = () => {
 			</UICol>
 
 			<UICol listClasses={"col-lg-12 col-md-12"}>
-				<UIContainer listClasses={"row"}>
-					<UICol listClasses={"col-lg-12 col-md-12 col-sm-12"}>
-						<UIButton onClick={() => navigate("/dashboard/create-app")}>Создать App</UIButton>
-					</UICol>
-				</UIContainer>
-			</UICol>
-
-			<UICol listClasses={"col-lg-12 col-md-12"}>
 				<RenderListFourApps />
-			</UICol>
-
-			<UICol listClasses={"col-lg-12 col-md-12"}>
-				<UIContainer listClasses={"row"}>
-					<UICol listClasses={"col-lg-12 col-md-12 col-sm-12"}>
-						<UILink to={"/dashboard/apps"}>Смотреть все Apps</UILink>
-					</UICol>
-				</UIContainer>
 			</UICol>
 		</UIContainer>
 	)

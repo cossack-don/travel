@@ -11,7 +11,7 @@ export const ListNavigation = ({ list, params }: any) => {
 			<li key={item.id} className={`${styles.card}`}>
 				<NavLink
 					end
-					to={`/dashboard/app/${params?.id}/${item.url}`}
+					to={`/dashboard/app/${params?.idApp}/${item.url}`}
 					className={({ isActive, isPending }) => (isPending ? "" : isActive ? styles.isActive : "")}
 				>
 					{item.title}

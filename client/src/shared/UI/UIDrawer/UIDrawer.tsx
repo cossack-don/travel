@@ -19,7 +19,8 @@ const BodyContent = ({ onClose }: any) => {
 
 				<div className={style.body}>
 					body <br />
-					<UIButton onClick={() => navigate("/")}>Выход</UIButton>
+					{/*<UIButton onClick={() => navigate("/")}>Выход</UIButton>*/}
+					<UIButton onClick={() => window.location.assign("/")}>Выход</UIButton>
 				</div>
 
 				<div className={style.footer}>Footer</div>

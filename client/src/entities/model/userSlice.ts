@@ -14,7 +14,7 @@ interface UserType {
 	selectedUser: User | null
 }
 
-const initialState: UserType = {
+let initialState: UserType = {
 	selectedUser: {
 		id: null,
 		name: null,
@@ -30,15 +30,14 @@ const slice = createSlice({
 	name: "user",
 	initialState,
 	reducers: {
-		userModel: (state, action: PayloadAction<Partial<User>>) => {
+		userModel: (state, action: PayloadAction<User>) => {
 			state.selectedUser = {
 				...state.selectedUser,
 				...action.payload
 			}
-			console.log(state.selectedUser)
 		},
-		resetUserModel: (state, action: PayloadAction<Partial<User>>) => {
-			state[action.payload.id].selectedUser = {
+		resetUserModel: state => {
+			state.selectedUser = {
 				id: null,
 				name: null,
 				sex: null,
@@ -51,5 +50,5 @@ const slice = createSlice({
 	}
 })
 
-export const { userModel } = slice.actions
 export const userSlice = slice.reducer
+export const { userModel } = slice.actions

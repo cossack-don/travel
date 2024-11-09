@@ -1,4 +1,10 @@
 import { createRoot } from "react-dom/client"
 import App from "@/app/App.tsx"
 
-createRoot(document.getElementById("root")!).render(<App />)
+const app = document.getElementById("root")
+
+try {
+	createRoot(app).render(<App />)
+} catch (e) {
+	console.log("App-Error")
+}
