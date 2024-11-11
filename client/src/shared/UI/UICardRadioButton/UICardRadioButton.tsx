@@ -1,15 +1,14 @@
 import style from "./UICardRadioButton.module.scss"
+import { ReactNode } from "react"
 
 interface Props {
 	defaultValue: string
-	isActive: any
-	onChange: any
-	children: any
+	isActive: string
+	onChange: () => void
+	children: ReactNode
 }
 
 export default function UICardRadioButton({ children, defaultValue, isActive, onChange }: Props) {
-	console.log(defaultValue)
-	console.log(isActive)
 	return (
 		<label
 			className={`${style.wrapper} ${defaultValue === isActive ? style.activeButton : style.notActiveButton}`}

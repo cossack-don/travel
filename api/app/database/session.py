@@ -10,7 +10,8 @@ async def get_db():
     try:
         yield db
     except Exception as e:
-        logger.info(e)
         await db.rollback()
+        logger.info(e)
+        raise e
     finally:
         await db.close()

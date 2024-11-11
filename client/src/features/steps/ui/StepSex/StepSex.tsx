@@ -1,55 +1,41 @@
-import { Link, useParams, useLocation } from "react-router-dom"
-import { ChangeEvent, useEffect, useState } from "react"
+import { Link, useParams } from "react-router-dom"
+import { useEffect, useState } from "react"
 import { ListCards, UILink } from "@/shared/UI"
 import { useAppDispatch, useAppSelector } from "@/shared/hooks/hooks.ts"
 import { fetchStepsElement } from "@/features/steps/model/steps.reducer.ts"
 import { userModel } from "@/entities/model/userSlice.ts"
 import { serviceCheckList } from "@/shared/api/transport"
+import { usePickActiveCardRadio } from "@/shared/hooks"
 
 const StepSex = () => {
 	const dispatch = useAppDispatch()
 	const params = useParams()
 	const [currentCheckList, setCurrentCheckList] = useState(null)
-	const [isActiveValue, setActiveValue] = useState()
-	const dataCards = useAppSelector(state => state.stepper)
+	const { data, activeValue } = useAppSelector(state => state.stepper)
+	const listData = data.elements_step
 
 	useEffect(() => {
 		dispatch(fetchStepsElement({ link: "step-sex" }))
+		getInfoCurrentCheckList()
 	}, [])
 
 	const getInfoCurrentCheckList = async () => {
 		const { data } = await serviceCheckList.getById(params?.idApp, params.idCheckList)
 		setCurrentCheckList(data)
-		console.log(currentCheckList, "test")
-	}
-
-	const usePickActiveCardRadio = (defaultValue: string) => {
-		const [value, setValue] = useState(defaultValue)
-
-		const onChangeRadio = (e: ChangeEvent<HTMLInputElement>) => {
-			setValue(e.currentTarget.value)
-		}
-		return [value, onChangeRadio]
 	}
 
 	const setUserSexValueHandler = async () => {
 		const payload = {
-			sex: isActiveValue,
-			days: undefined,
-			destination: undefined,
-			weather: undefined,
-			trip_type: undefined
+			sex: activeValue.key,
+			days: null,
+			destination: null,
+			weather: null,
+			trip_type: null
 		}
 
 		await serviceCheckList.updateCurrentStep(params?.idApp, params?.idCheckList, payload)
-		await dispatch(userModel({ sex: isActiveValue }))
+		await dispatch(userModel({ sex: activeValue.key }))
 	}
-
-	useEffect(() => {
-		setActiveValue(dataCards[0]?.name)
-	}, [isActiveValue, dataCards])
-
-	// console.log(isActiveValue)
 
 	return (
 		<div>
@@ -57,16 +43,15 @@ const StepSex = () => {
 			<p>Выбор пола</p>
 			<UILink to={"/dashboard/app/8743b52063cd84097a65d1633f5c74f5"}>Назад</UILink>
 			<ListCards
-				setActiveValue={setActiveValue}
-				listData={dataCards}
-				defaultValue={isActiveValue}
+				listData={listData}
+				defaultValue={activeValue.name}
 				usePickActiveCardRadio={usePickActiveCardRadio}
 			/>
-			Выбран - {isActiveValue}
+			Выбран - {activeValue.name}
 			<br />
 			<br />
 			<Link
-				to="/dashboard/app/8743b52063cd84097a65d1633f5c74f5/check-list/:id/step-number-of-days"
+				to={`/dashboard/app/${params.idApp}/check-list/${params.idCheckList}/step-number-of-days`}
 				style={{ width: "200px", height: "200px", marginRight: "15px" }}
 				onClick={setUserSexValueHandler}
 			>

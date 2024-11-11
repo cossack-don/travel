@@ -1,45 +1,40 @@
-import { Link } from "react-router-dom"
-import { ChangeEvent, useEffect, useState } from "react"
+import { Link, useParams } from "react-router-dom"
+import { useEffect } from "react"
 import { ListCards } from "@/shared/UI"
 import { useAppDispatch, useAppSelector } from "@/shared/hooks/hooks.ts"
 import { fetchStepsElement } from "@/features/steps/model/steps.reducer.ts"
 import { userModel } from "@/entities/model/userSlice.ts"
+import { usePickActiveCardRadio } from "@/shared/hooks"
 
 const StepNumberOfDays = () => {
+	const params = useParams()
 	const dispatch = useAppDispatch()
-	const dataCards = useAppSelector(state => state.stepper)
+	const { data, activeValue } = useAppSelector(state => state.stepper)
+	const dataCards = data.elements_step
+	const userData = useAppSelector(state => state.user)
+
+	console.log(userData)
 
 	useEffect(() => {
 		dispatch(fetchStepsElement({ link: "step-days" }))
 	}, [])
 
-	const usePickActiveCardRadio = (defaultValue: string) => {
-		const [value, setValue] = useState(defaultValue)
-
-		const onChangeRadio = (e: ChangeEvent<HTMLInputElement>) => {
-			setValue(e.target.value)
-		}
-		return [value, onChangeRadio]
-	}
-	const [isActiveValue, setActiveValue] = useState(1)
-
 	const setUserDaysHandler = () => {
-		dispatch(userModel({ days: isActiveValue }))
+		dispatch(userModel({ days: activeValue.key }))
 	}
 
 	return (
 		<div>
 			<p>StepNumberOfDays</p>
 			<p>На сколько дней</p>
-			Выбран - {isActiveValue}
+			Выбран - {activeValue.name}
 			<ListCards
-				setActiveValue={setActiveValue}
 				listData={dataCards}
-				defaultValue={isActiveValue}
+				defaultValue={activeValue.name}
 				usePickActiveCardRadio={usePickActiveCardRadio}
 			/>
 			<Link
-				to="/dashboard/app/8743b52063cd84097a65d1633f5c74f5/check-list/:id/step-type-place"
+				to={`/dashboard/app/${params.idApp}/check-list/${params.idCheckList}/step-type-place`}
 				style={{ width: "200px", height: "200px", marginRight: "15px" }}
 				onClick={setUserDaysHandler}
 			>
