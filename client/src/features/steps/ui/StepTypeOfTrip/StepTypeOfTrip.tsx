@@ -1,48 +1,52 @@
 import { Link, useParams } from "react-router-dom"
-import { ChangeEvent, useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 import { ListCards } from "@/shared/UI"
 import { useAppDispatch, useAppSelector } from "@/shared/hooks/hooks.ts"
-import { userModel } from "@/entities/model/userSlice.ts"
+import { fetchUserSteps, userModel } from "@/entities/model/userSlice.ts"
 import { fetchStepsElement } from "@/features/steps/model/steps.reducer.ts"
+import { usePickActiveCardRadio } from "@/shared/hooks"
+import { serviceCheckList } from "@/shared/api/transport"
 
 const StepTypeOfTrip = () => {
 	const params = useParams()
-	const dataCards = useAppSelector(state => state.stepper)
 	const dispatch = useAppDispatch()
+	const { data, activeValue } = useAppSelector(state => state.stepper)
+	const dataCards = data.elements_step
+	const [currentCheckList, setCurrentCheckList] = useState(null)
 
 	useEffect(() => {
-		dispatch(fetchStepsElement({ link: "step-trip" }))
+		const fetchData = async () => {
+			dispatch(fetchStepsElement({ link: "step-trip" }))
+			await getInfoCurrentCheckList()
+			await dispatch(fetchUserSteps({ idApp: params.idApp, idCheckList: params.idCheckList }))
+		}
+		fetchData()
 	}, [])
 
-	const usePickActiveCardRadio = (defaultValue: string) => {
-		const [value, setValue] = useState(defaultValue)
-
-		const onChangeRadio = (e: ChangeEvent<HTMLInputElement>) => {
-			setValue(e.target.value)
-		}
-		return [value, onChangeRadio]
+	const getInfoCurrentCheckList = async () => {
+		setCurrentCheckList(currentCheckList)
 	}
-	const [isActiveValue, setActiveValue] = useState("alpineSkiing")
 
-	const selectTripHandler = () => {
-		dispatch(userModel({ typeOfTrip: isActiveValue }))
+	const selectStepOfTripHandler = async () => {
+		const payload = { ...currentCheckList, trip_type: activeValue.key }
+		dispatch(userModel(payload))
+		await serviceCheckList.updateCurrentStep(params?.idApp, params?.idCheckList, payload)
 	}
 
 	return (
 		<div>
 			<p>StepTypeOfTrip</p>
 			<p>Тип поездки (пляж, горные лыжи, командировка,экскурсия и тд)</p>
-			Выбран - {isActiveValue}
+			Выбран - {activeValue.name}
 			<ListCards
-				setActiveValue={setActiveValue}
 				listData={dataCards}
-				defaultValue={isActiveValue}
+				defaultValue={activeValue.name}
 				usePickActiveCardRadio={usePickActiveCardRadio}
 			/>
 			<Link
 				to={`/dashboard/app/${params.idApp}/check-list/${params.idCheckList}/step-list-of-things`}
 				style={{ width: "200px", height: "200px", marginRight: "15px" }}
-				onClick={selectTripHandler}
+				onClick={selectStepOfTripHandler}
 			>
 				к готовому списку
 			</Link>

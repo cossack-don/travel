@@ -1,42 +1,46 @@
 import { Link, useParams } from "react-router-dom"
 import { ChangeEvent, useEffect, useState } from "react"
 import { useAppDispatch, useAppSelector } from "@/shared/hooks/hooks.ts"
-import { userModel } from "@/entities/model/userSlice.ts"
+import { fetchUserSteps, userModel } from "@/entities/model/userSlice.ts"
 import { fetchStepsElement } from "@/features/steps/model/steps.reducer.ts"
 import { ListCards } from "@/shared/UI"
+import { usePickActiveCardRadio } from "@/shared/hooks"
+import { serviceCheckList } from "@/shared/api/transport"
 
 const StepTypePlace = () => {
 	const params = useParams()
-	const dataCards = useAppSelector(state => state.stepper)
+	const { data, activeValue } = useAppSelector(state => state.stepper)
+	const dataCards = data.elements_step
+	const dispatch = useAppDispatch()
+	const [currentCheckList, setCurrentCheckList] = useState(null)
 
 	useEffect(() => {
-		dispatch(fetchStepsElement({ link: "step-destination" }))
+		const fetchData = async () => {
+			dispatch(fetchStepsElement({ link: "step-destination" }))
+			await getInfoCurrentCheckList()
+			await dispatch(fetchUserSteps({ idApp: params.idApp, idCheckList: params.idCheckList }))
+		}
+		fetchData()
 	}, [])
 
-	const usePickActiveCardRadio = (defaultValue: string) => {
-		const [value, setValue] = useState(defaultValue)
-
-		const onChangeRadio = (e: ChangeEvent<HTMLInputElement>) => {
-			setValue(e.target.value)
-		}
-		return [value, onChangeRadio]
+	const getInfoCurrentCheckList = async () => {
+		setCurrentCheckList(currentCheckList)
 	}
-	const [isActiveValue, setActiveValue] = useState("country")
-	const dispatch = useAppDispatch()
 
-	const selectPlaceHandler = () => {
-		dispatch(userModel({ place: isActiveValue }))
+	const selectPlaceHandler = async () => {
+		const payload = { ...currentCheckList, destination: activeValue.key }
+		dispatch(userModel(payload))
+		await serviceCheckList.updateCurrentStep(params?.idApp, params?.idCheckList, payload)
 	}
 
 	return (
 		<div>
 			<p>StepTypePlace</p>
 			<p>По стране или заграницу</p>
-			Выбран - {isActiveValue}
+			Выбран - {activeValue.name}
 			<ListCards
-				setActiveValue={setActiveValue}
 				listData={dataCards}
-				defaultValue={isActiveValue}
+				defaultValue={activeValue.name}
 				usePickActiveCardRadio={usePickActiveCardRadio}
 			/>
 			<Link

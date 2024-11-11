@@ -1,26 +1,36 @@
 import { Link, useParams } from "react-router-dom"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { ListCards } from "@/shared/UI"
 import { useAppDispatch, useAppSelector } from "@/shared/hooks/hooks.ts"
 import { fetchStepsElement } from "@/features/steps/model/steps.reducer.ts"
-import { userModel } from "@/entities/model/userSlice.ts"
+import { fetchUserSteps, userModel } from "@/entities/model/userSlice.ts"
 import { usePickActiveCardRadio } from "@/shared/hooks"
+import { serviceCheckList } from "@/shared/api/transport"
 
 const StepNumberOfDays = () => {
 	const params = useParams()
 	const dispatch = useAppDispatch()
 	const { data, activeValue } = useAppSelector(state => state.stepper)
 	const dataCards = data.elements_step
-	const userData = useAppSelector(state => state.user)
-
-	console.log(userData)
+	const [currentCheckList, setCurrentCheckList] = useState(null)
 
 	useEffect(() => {
-		dispatch(fetchStepsElement({ link: "step-days" }))
+		const fetchData = async () => {
+			await dispatch(fetchStepsElement({ link: "step-days" }))
+			await getInfoCurrentCheckList()
+			await dispatch(fetchUserSteps({ idApp: params.idApp, idCheckList: params.idCheckList }))
+		}
+		fetchData()
 	}, [])
 
-	const setUserDaysHandler = () => {
-		dispatch(userModel({ days: activeValue.key }))
+	const getInfoCurrentCheckList = async () => {
+		setCurrentCheckList(currentCheckList)
+	}
+
+	const setUserDaysHandler = async () => {
+		const payload = { ...currentCheckList, days: activeValue.key }
+		dispatch(userModel(payload))
+		await serviceCheckList.updateCurrentStep(params?.idApp, params?.idCheckList, payload)
 	}
 
 	return (

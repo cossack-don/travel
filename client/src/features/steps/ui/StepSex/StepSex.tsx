@@ -25,13 +25,7 @@ const StepSex = () => {
 	}
 
 	const setUserSexValueHandler = async () => {
-		const payload = {
-			sex: activeValue.key,
-			days: null,
-			destination: null,
-			weather: null,
-			trip_type: null
-		}
+		const payload = { ...currentCheckList, sex: activeValue.key }
 
 		await serviceCheckList.updateCurrentStep(params?.idApp, params?.idCheckList, payload)
 		await dispatch(userModel({ sex: activeValue.key }))
