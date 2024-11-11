@@ -13,6 +13,7 @@ const StepNumberOfDays = () => {
 	const { data, activeValue } = useAppSelector(state => state.stepper)
 	const dataCards = data.elements_step
 	const [currentCheckList, setCurrentCheckList] = useState(null)
+	const actualStep = useAppSelector(state => state.user.selectedUser)
 
 	useEffect(() => {
 		const fetchData = async () => {
@@ -24,7 +25,7 @@ const StepNumberOfDays = () => {
 	}, [])
 
 	const getInfoCurrentCheckList = async () => {
-		setCurrentCheckList(currentCheckList)
+		setCurrentCheckList(actualStep)
 	}
 
 	const setUserDaysHandler = async () => {

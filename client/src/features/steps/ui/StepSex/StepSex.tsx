@@ -3,7 +3,7 @@ import { useEffect, useState } from "react"
 import { ListCards, UILink } from "@/shared/UI"
 import { useAppDispatch, useAppSelector } from "@/shared/hooks/hooks.ts"
 import { fetchStepsElement } from "@/features/steps/model/steps.reducer.ts"
-import { userModel } from "@/entities/model/userSlice.ts"
+import { fetchUserSteps, userModel } from "@/entities/model/userSlice.ts"
 import { serviceCheckList } from "@/shared/api/transport"
 import { usePickActiveCardRadio } from "@/shared/hooks"
 
@@ -13,15 +13,19 @@ const StepSex = () => {
 	const [currentCheckList, setCurrentCheckList] = useState(null)
 	const { data, activeValue } = useAppSelector(state => state.stepper)
 	const listData = data.elements_step
+	const actualStep = useAppSelector(state => state.user.selectedUser)
 
 	useEffect(() => {
-		dispatch(fetchStepsElement({ link: "step-sex" }))
-		getInfoCurrentCheckList()
+		const fetchData = async () => {
+			dispatch(fetchStepsElement({ link: "step-sex" }))
+			await getInfoCurrentCheckList()
+			await dispatch(fetchUserSteps({ idApp: params.idApp, idCheckList: params.idCheckList }))
+		}
+		fetchData()
 	}, [])
 
 	const getInfoCurrentCheckList = async () => {
-		const { data } = await serviceCheckList.getById(params?.idApp, params.idCheckList)
-		setCurrentCheckList(data)
+		setCurrentCheckList(actualStep)
 	}
 
 	const setUserSexValueHandler = async () => {

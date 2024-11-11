@@ -1,5 +1,5 @@
 import { Link, useParams } from "react-router-dom"
-import { ChangeEvent, useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 import { useAppDispatch, useAppSelector } from "@/shared/hooks/hooks.ts"
 import { fetchUserSteps, userModel } from "@/entities/model/userSlice.ts"
 import { fetchStepsElement } from "@/features/steps/model/steps.reducer.ts"
@@ -13,6 +13,7 @@ const StepTypePlace = () => {
 	const dataCards = data.elements_step
 	const dispatch = useAppDispatch()
 	const [currentCheckList, setCurrentCheckList] = useState(null)
+	const actualStep = useAppSelector(state => state.user.selectedUser)
 
 	useEffect(() => {
 		const fetchData = async () => {
@@ -24,7 +25,7 @@ const StepTypePlace = () => {
 	}, [])
 
 	const getInfoCurrentCheckList = async () => {
-		setCurrentCheckList(currentCheckList)
+		setCurrentCheckList(actualStep)
 	}
 
 	const selectPlaceHandler = async () => {

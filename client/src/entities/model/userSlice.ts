@@ -57,9 +57,7 @@ const slice = createSlice({
 	},
 	extraReducers: builder => {
 		builder.addCase(fetchUserSteps.fulfilled, (state, action) => {
-			console.log(state)
 			state.selectedUser = action.payload.data.steps[0]
-			console.log(state.selectedUser)
 		})
 	}
 })
