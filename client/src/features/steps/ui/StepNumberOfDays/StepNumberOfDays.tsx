@@ -22,8 +22,7 @@ const StepNumberOfDays = () => {
 			getAllInfoCurrentCheckListAPI({
 				idApp: params?.idApp,
 				idCheckList: params?.idCheckList,
-				nameStep: EnumNamesSteps.DAYS,
-				link: "step-days"
+				nameStep: EnumNamesSteps.DAYS
 			})
 		)
 	}, [])

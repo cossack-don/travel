@@ -8,7 +8,6 @@ import {
 	$resetStateStepper,
 	EnumNamesSteps,
 	getAllInfoCurrentCheckListAPI,
-	IAllInfoCurrentCheckListAPI,
 	listResetsStates
 } from "@/entities/model/stepperSlice.ts"
 
@@ -23,8 +22,7 @@ const StepSex = () => {
 			getAllInfoCurrentCheckListAPI({
 				idApp: params?.idApp,
 				idCheckList: params?.idCheckList,
-				nameStep: EnumNamesSteps.SEX,
-				link: "step-sex"
+				nameStep: EnumNamesSteps.SEX
 			})
 		)
 	}, [])

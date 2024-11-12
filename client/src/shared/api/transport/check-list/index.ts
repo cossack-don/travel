@@ -53,9 +53,9 @@ export const serviceCheckList = {
 			}
 		})
 	},
-	getListSteps: (link: string) => {
+	getListCards: (nameStep: string) => {
 		return ADAPTER_API_REQUEST({
-			url: getBaseURL(`/apps/current/check_list/current/${link}`),
+			url: getBaseURL(`/apps/check_list/list-cards/${nameStep}`),
 			method: Methods.GET
 		})
 	}

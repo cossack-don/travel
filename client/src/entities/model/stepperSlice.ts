@@ -118,7 +118,7 @@ export const getAllInfoCurrentCheckListAPI = createAsyncThunk<IAllInfoCurrentChe
 	"step2per/fetch",
 	async (args: any, thunkAPI: any) => {
 		const { dispatch } = thunkAPI
-		const { idApp, idCheckList, nameStep, link } = args
+		const { idApp, idCheckList, nameStep } = args
 
 		try {
 			//Берем инфу по текущему чек-листу => steps
@@ -126,13 +126,11 @@ export const getAllInfoCurrentCheckListAPI = createAsyncThunk<IAllInfoCurrentChe
 			await dispatch(setSteps(data.steps[0]))
 
 			// получаем список элементов для карточек
-			const {
-				data: { elements_step }
-			} = await serviceCheckList.getListSteps(link)
-			await dispatch(setListCards(elements_step))
+			const responseListCards = await serviceCheckList.getListCards(nameStep)
+			await dispatch(setListCards(responseListCards.data))
 
 			if (data.steps[0][nameStep] === null) {
-				await dispatch(setPickedCard(elements_step[0]?.key))
+				await dispatch(setPickedCard(responseListCards[0].data?.key))
 			} else {
 				await dispatch(setPickedCard(data.steps[0][nameStep])) //обновляем текущий шаг // переменовать в card
 			}
