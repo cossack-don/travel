@@ -3,12 +3,11 @@ import { useEffect } from "react"
 import { ListCards, UILink } from "@/shared/UI"
 import { useAppDispatch, useAppSelector } from "@/shared/hooks/hooks.ts"
 import {
-	getListStepsAPI,
 	updateCurrentStepAPI,
-	getCurrentCheckListAPI,
 	setCurrentStep,
 	$resetStateStepper,
-	EnumNamesSteps
+	EnumNamesSteps,
+	getAllInfoCurrentCheckListAPI
 } from "@/entities/model/stepperSlice.ts"
 
 const StepSex = () => {
@@ -18,8 +17,14 @@ const StepSex = () => {
 	const stepper = useAppSelector(state => state.stepperF)
 
 	useEffect(() => {
-		dispatch(getListStepsAPI({ link: "step-sex" }))
-		dispatch(getCurrentCheckListAPI({ idApp: params?.idApp, idCheckList: params?.idCheckList }))
+		dispatch(
+			getAllInfoCurrentCheckListAPI({
+				idApp: params?.idApp,
+				idCheckList: params?.idCheckList,
+				nameStep: EnumNamesSteps.SEX,
+				link: "step-sex"
+			})
+		)
 	}, [])
 
 	const onMoveNextStep = async () => {

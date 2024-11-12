@@ -1,26 +1,31 @@
 import { Link, useParams } from "react-router-dom"
 import { useEffect, useState } from "react"
-import { ListCards } from "@/shared/UI"
+import { ListCards, UILink } from "@/shared/UI"
 import { useAppDispatch, useAppSelector } from "@/shared/hooks/hooks.ts"
-import { fetchStepsElement } from "@/features/steps/model/steps.reducer.ts"
-import { fetchUserSteps, userModel } from "@/entities/model/userSlice.ts"
-import { usePickActiveCardRadio } from "@/shared/hooks"
 import { serviceCheckList } from "@/shared/api/transport"
-import { getCurrentCheckListAPI, getListStepsAPI, setCurrentStep } from "@/entities/model/stepperSlice.ts"
+import {
+	EnumNamesSteps,
+	getAllInfoCurrentCheckListAPI,
+	setCurrentStep
+} from "@/entities/model/stepperSlice.ts"
 
 const StepNumberOfDays = () => {
 	const params = useParams()
 	const dispatch = useAppDispatch()
-	const { data, activeValue } = useAppSelector(state => state.stepper)
-	const dataCards = data.elements_step
 	const [currentCheckList, setCurrentCheckList] = useState(null)
 	const actualStep = useAppSelector(state => state.user.selectedUser)
 	const stepper = useAppSelector(state => state.stepperF)
 
 	//v2
 	useEffect(() => {
-		dispatch(getListStepsAPI({ link: "step-days" }))
-		dispatch(getCurrentCheckListAPI({ idApp: params?.idApp, idCheckList: params?.idCheckList }))
+		dispatch(
+			getAllInfoCurrentCheckListAPI({
+				idApp: params?.idApp,
+				idCheckList: params?.idCheckList,
+				nameStep: EnumNamesSteps.DAYS,
+				link: "step-days"
+			})
+		)
 	}, [])
 
 	//v1
@@ -39,20 +44,22 @@ const StepNumberOfDays = () => {
 	}
 
 	const setUserDaysHandler = async () => {
-		const payload = { ...currentCheckList, days: activeValue.key }
-		dispatch(userModel(payload))
-		await serviceCheckList.updateCurrentStep(params?.idApp, params?.idCheckList, payload)
+		// const payload = { ...currentCheckList, days: activeValue.key }
+		// dispatch(userModel(payload))
+		// await serviceCheckList.updateCurrentStep(params?.idApp, params?.idCheckList, payload)
 	}
 
 	return (
 		<div>
+			<UILink to={`/dashboard/app/${params.idApp}/check-list/${params.idCheckList}/step-sex`}>
+				На шаг Назад
+			</UILink>
 			<p>StepNumberOfDays</p>
 			<p>На сколько дней</p>
-			Выбран - {activeValue.name}
 			<ListCards
 				listSteps={stepper.listSteps}
 				isActiveStep={stepper.currentStep}
-				onChangeStep={({ target: { value } }: any): any => dispatch(setCurrentStep(value))}
+				onChangeStep={({ target: { value } }: any): any => dispatch(setCurrentStep(Number(value)))}
 			/>
 			<Link
 				to={`/dashboard/app/${params.idApp}/check-list/${params.idCheckList}/step-type-place`}

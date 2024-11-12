@@ -429,10 +429,10 @@ async def get_elements_step_sex():
 async def get_elements_step_days():
     data = {
         "elements_step": [
-            {"name": "1 день", "key": "1"},
-            {"name": "3 дня", "key": "3"},
-            {"name": "7 дней", "key": "7"},
-            {"name": "14 дней", "key": "14"},
+            {"name": "1 день", "key": 1},
+            {"name": "3 дня", "key": 3},
+            {"name": "7 дней", "key": 7},
+            {"name": "14 дней", "key": 14},
         ]
     }
 

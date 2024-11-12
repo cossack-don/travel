@@ -77,49 +77,44 @@ const slice = createSlice({
 export const stepperSlice = slice.reducer
 export const { setListSteps, setSteps, setCurrentStep, $resetStateStepper } = slice.actions
 
-export const getCurrentCheckListAPI = createAsyncThunk<any>(
-	"stepper/fetch",
+export const updateCurrentStepAPI = createAsyncThunk<any>(
+	"stepp3er/fetch",
 	async (args: any, thunkAPI: any) => {
+		const { rejectWithValue, dispatch } = thunkAPI
+		const { idApp, idCheckList, nameStep, pickValueStep } = args
 		try {
-			const { rejectWithValue, dispatch } = thunkAPI
-			const { idApp, idCheckList } = args
-
-			const { data } = await serviceCheckList.getById(idApp, idCheckList)
-			await dispatch(setSteps(data.steps[0]))
+			await serviceCheckList.updateCurrentStep(idApp, idCheckList, {
+				[nameStep]: pickValueStep
+			})
+			await toast.success("Шаг успешно обновлен", { position: "bottom-right" })
 		} catch (error) {
 			console.log(error)
 		}
 	}
 )
 
-export const getListStepsAPI = createAsyncThunk<any>("stepper/fetch", async (args?: any, thunkAPI: any) => {
-	const { rejectWithValue, dispatch } = thunkAPI
-	const { link } = args
-	try {
-		const {
-			data: { elements_step }
-		} = await serviceCheckList.getListSteps(link)
-		await dispatch(setListSteps(elements_step))
-		await dispatch(setCurrentStep(elements_step[0]?.key))
-	} catch (error) {
-		console.log(error)
-	}
-})
-
-export const updateCurrentStepAPI = createAsyncThunk<any>(
-	"stepper/fetch",
+export const getAllInfoCurrentCheckListAPI = createAsyncThunk<any>(
+	"step2per/fetch",
 	async (args: any, thunkAPI: any) => {
-		const { rejectWithValue, dispatch } = thunkAPI
-		const { idApp, idCheckList, nameStep, pickValueStep } = args
-		try {
-			const { data } = await serviceCheckList.updateCurrentStep(idApp, idCheckList, {
-				[nameStep]: pickValueStep
-			})
-			// const { data } = await serviceCheckList.getById(idApp, idCheckList)
-			// await dispatch(setSteps(data.steps[0]))
-			// await dispatch(setSteps(data.steps[0]))
+		const { dispatch } = thunkAPI
+		const { idApp, idCheckList, nameStep, link } = args
 
-			toast.success("Шаг успешно обновлен", { position: "bottom-right" })
+		try {
+			//Берем инфу по текущему чек-листу => steps
+			const { data } = await serviceCheckList.getById(idApp, idCheckList)
+			await dispatch(setSteps(data.steps[0]))
+
+			// получаем список элементов для карточек
+			const {
+				data: { elements_step }
+			} = await serviceCheckList.getListSteps(link)
+			await dispatch(setListSteps(elements_step))
+
+			if (data.steps[0][nameStep] === null) {
+				await dispatch(setCurrentStep(elements_step[0]?.key))
+			} else {
+				await dispatch(setCurrentStep(data.steps[0][nameStep])) //обновляем текущий шаг // переменовать в card
+			}
 		} catch (error) {
 			console.log(error)
 		}
