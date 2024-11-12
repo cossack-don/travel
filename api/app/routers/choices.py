@@ -8,7 +8,7 @@ from app.services.choice_services import *
 from sqlalchemy.ext.asyncio import AsyncSession
 from app.routers.ticks import get_tick_instanse
 from app.services.ticks_service import TicksEntity
-
+from enum import Enum
 
 router = APIRouter(
     prefix="/api/v1/apps",
@@ -398,6 +398,57 @@ async def delete_check_list(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail={e}
         )
 
+class Enum_names_steps(Enum):
+    STEP_SEX = 'sex'
+    STEP_DAYS = 'days'
+    STEP_DESTINATION = 'destination'
+    STEP_WEATHER = 'weather'
+    STEP_TRIP = 'trip'
+
+@router.get(
+   "/check_list/list-cards/{name_step}",
+    tags=[
+        "Steps",
+    ],
+    summary="-",
+    description="-",
+)
+async def get_list_cards(name_step: str):
+    listsCards = {
+        'sex':[
+            {"name": "Мужчина", "key": "male"},
+            {"name": "Женщина", "key": "female"}
+        ],
+        'days':[
+            {"name": "1 день", "key": 1},
+            {"name": "3 дня", "key": 3},
+            {"name": "7 дней", "key": 7},
+            {"name": "14 дней", "key": 14}
+        ],
+        'destination':[
+            {"name": "По стране", "key": "domestic"},
+            {"name": "За границу", "key": "international"}
+        ],
+        'weather':[
+            {"name": "Холодно", "key": "cold"},
+            {"name": "Жарко", "key": "warm"}
+        ],
+        'trip':[
+            {"name": "Горные лыжи", "key": "skiing"},
+            {"name": "Пляж", "key": "beach"},
+            {"name": "Бизнес", "key": "buisness"},
+            {"name": "Поход с палатками", "key": "campimg"}
+        ]
+    }
+
+    try:
+        if name_step in listsCards.keys():
+            return JSONResponse(content=listsCards[name_step],status_code=status.HTTP_200_OK)
+        else:
+            return JSONResponse(status_code=status.HTTP_404_NOT_FOUND, content={"details": "Entity not found"})
+
+    except Exception as e:
+            raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail={e})
 
 @router.get(
     "/current/check_list/current/step-sex",
