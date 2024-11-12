@@ -52,5 +52,11 @@ export const serviceCheckList = {
 				trip_type: payload.trip_type
 			}
 		})
+	},
+	getListSteps: (link: string) => {
+		return ADAPTER_API_REQUEST({
+			url: getBaseURL(`/apps/current/check_list/current/${link}`),
+			method: Methods.GET
+		})
 	}
 }

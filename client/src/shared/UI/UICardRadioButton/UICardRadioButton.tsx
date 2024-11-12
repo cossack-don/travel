@@ -2,7 +2,7 @@ import style from "./UICardRadioButton.module.scss"
 import { ReactNode } from "react"
 
 interface Props {
-	defaultValue: string
+	defaultValue: any
 	isActive: string
 	onChange: () => void
 	children: ReactNode
