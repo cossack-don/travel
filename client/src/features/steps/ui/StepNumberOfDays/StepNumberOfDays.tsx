@@ -6,6 +6,7 @@ import { fetchStepsElement } from "@/features/steps/model/steps.reducer.ts"
 import { fetchUserSteps, userModel } from "@/entities/model/userSlice.ts"
 import { usePickActiveCardRadio } from "@/shared/hooks"
 import { serviceCheckList } from "@/shared/api/transport"
+import { getCurrentCheckListAPI, getListStepsAPI, setCurrentStep } from "@/entities/model/stepperSlice.ts"
 
 const StepNumberOfDays = () => {
 	const params = useParams()
@@ -14,15 +15,24 @@ const StepNumberOfDays = () => {
 	const dataCards = data.elements_step
 	const [currentCheckList, setCurrentCheckList] = useState(null)
 	const actualStep = useAppSelector(state => state.user.selectedUser)
+	const stepper = useAppSelector(state => state.stepperF)
 
+	//v2
 	useEffect(() => {
-		const fetchData = async () => {
-			await dispatch(fetchStepsElement({ link: "step-days" }))
-			await getInfoCurrentCheckList()
-			await dispatch(fetchUserSteps({ idApp: params.idApp, idCheckList: params.idCheckList }))
-		}
-		fetchData()
+		dispatch(getListStepsAPI({ link: "step-days" }))
+		dispatch(getCurrentCheckListAPI({ idApp: params?.idApp, idCheckList: params?.idCheckList }))
 	}, [])
+
+	//v1
+	// console.log(stepper.stepsLifeCycle)
+	// useEffect(() => {
+	// 	const fetchData = async () => {
+	// 		await dispatch(fetchStepsElement({ link: "step-days" }))
+	// 		await getInfoCurrentCheckList()
+	// 		await dispatch(fetchUserSteps({ idApp: params.idApp, idCheckList: params.idCheckList }))
+	// 	}
+	// 	fetchData()
+	// }, [])
 
 	const getInfoCurrentCheckList = async () => {
 		setCurrentCheckList(actualStep)
@@ -40,9 +50,9 @@ const StepNumberOfDays = () => {
 			<p>На сколько дней</p>
 			Выбран - {activeValue.name}
 			<ListCards
-				listData={dataCards}
-				defaultValue={activeValue.name}
-				usePickActiveCardRadio={usePickActiveCardRadio}
+				listSteps={stepper.listSteps}
+				isActiveStep={stepper.currentStep}
+				onChangeStep={({ target: { value } }: any): any => dispatch(setCurrentStep(value))}
 			/>
 			<Link
 				to={`/dashboard/app/${params.idApp}/check-list/${params.idCheckList}/step-type-place`}

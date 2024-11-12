@@ -18,24 +18,24 @@ const StepSex = () => {
 	const stepper = useAppSelector(state => state.stepperF)
 
 	useEffect(() => {
-		dispatch(getListStepsAPI())
+		dispatch(getListStepsAPI({ link: "step-sex" }))
 		dispatch(getCurrentCheckListAPI({ idApp: params?.idApp, idCheckList: params?.idCheckList }))
 	}, [])
 
-	const onMoveNextStep = () => {
+	const onMoveNextStep = async () => {
 		const payload = {
 			nameStep: EnumNamesSteps.SEX,
 			pickValueStep: stepper.currentStep,
 			idApp: params?.idApp,
 			idCheckList: params?.idCheckList
 		}
-
-		dispatch(updateCurrentStepAPI(payload))
-		dispatch($resetStateStepper())
 		// TODO доделать позже, посмотреть глобал адаптер почему проблема с error in catch
 		// TODO цель - если ошибка на след шаг не переходить
 		const url = `/dashboard/app/${params.idApp}/check-list/${params.idCheckList}/step-number-of-days`
-		navigate(url)
+
+		await dispatch(updateCurrentStepAPI(payload))
+		await dispatch($resetStateStepper())
+		await navigate(url)
 	}
 
 	return (
