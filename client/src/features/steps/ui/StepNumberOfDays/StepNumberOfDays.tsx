@@ -6,7 +6,7 @@ import { serviceCheckList } from "@/shared/api/transport"
 import {
 	EnumNamesSteps,
 	getAllInfoCurrentCheckListAPI,
-	setCurrentStep
+	setPickedCard
 } from "@/entities/model/stepperSlice.ts"
 
 const StepNumberOfDays = () => {
@@ -57,9 +57,9 @@ const StepNumberOfDays = () => {
 			<p>StepNumberOfDays</p>
 			<p>На сколько дней</p>
 			<ListCards
-				listSteps={stepper.listSteps}
-				isActiveStep={stepper.currentStep}
-				onChangeStep={({ target: { value } }: any): any => dispatch(setCurrentStep(Number(value)))}
+				listSteps={stepper.listCards}
+				isActiveStep={stepper.pickedCard}
+				onChangeStep={({ target: { value } }: any): any => dispatch(setPickedCard(Number(value)))}
 			/>
 			<Link
 				to={`/dashboard/app/${params.idApp}/check-list/${params.idCheckList}/step-type-place`}

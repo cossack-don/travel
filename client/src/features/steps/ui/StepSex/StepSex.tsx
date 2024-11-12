@@ -4,10 +4,12 @@ import { ListCards, UILink } from "@/shared/UI"
 import { useAppDispatch, useAppSelector } from "@/shared/hooks/hooks.ts"
 import {
 	updateCurrentStepAPI,
-	setCurrentStep,
+	setPickedCard,
 	$resetStateStepper,
 	EnumNamesSteps,
-	getAllInfoCurrentCheckListAPI
+	getAllInfoCurrentCheckListAPI,
+	IAllInfoCurrentCheckListAPI,
+	listResetsStates
 } from "@/entities/model/stepperSlice.ts"
 
 const StepSex = () => {
@@ -30,7 +32,7 @@ const StepSex = () => {
 	const onMoveNextStep = async () => {
 		const payload = {
 			nameStep: EnumNamesSteps.SEX,
-			pickValueStep: stepper.currentStep,
+			pickValueStep: stepper.pickedCard,
 			idApp: params?.idApp,
 			idCheckList: params?.idCheckList
 		}
@@ -39,7 +41,7 @@ const StepSex = () => {
 		const url = `/dashboard/app/${params.idApp}/check-list/${params.idCheckList}/step-number-of-days`
 
 		await dispatch(updateCurrentStepAPI(payload))
-		await dispatch($resetStateStepper())
+		await dispatch($resetStateStepper(listResetsStates))
 		await navigate(url)
 	}
 
@@ -49,9 +51,9 @@ const StepSex = () => {
 			<p>Выбор пола</p>
 			<UILink to={`/dashboard/app/${params.idApp}`}>Назад</UILink>
 			<ListCards
-				listSteps={stepper.listSteps}
-				isActiveStep={stepper.currentStep}
-				onChangeStep={({ target: { value } }: any): any => dispatch(setCurrentStep(value))}
+				listSteps={stepper.listCards}
+				isActiveStep={stepper.pickedCard}
+				onChangeStep={({ target: { value } }: any): any => dispatch(setPickedCard(value))}
 			/>
 
 			<button onClick={onMoveNextStep}>Перейти на 2-й шаг</button>

@@ -10,13 +10,13 @@ export enum EnumNamesSteps {
 	TRIP_TYPE = "trip_type"
 }
 
-export interface IStep {
+export interface ICard {
 	key: string
 	name: string
 }
 
 export interface IStepper {
-	listSteps: IStep[]
+	listCards: ICard[] | []
 	stepsLifeCycle: {
 		sex?: string | null | undefined
 		days?: number | null | undefined
@@ -24,11 +24,11 @@ export interface IStepper {
 		weather?: string | null | undefined
 		trip_type?: string | null | undefined
 	}
-	currentStep: string | null | undefined
+	pickedCard: string | null | undefined
 }
 
 const initialState: IStepper = {
-	listSteps: [],
+	listCards: [],
 	stepsLifeCycle: {
 		sex: undefined,
 		days: undefined,
@@ -36,7 +36,13 @@ const initialState: IStepper = {
 		weather: undefined,
 		trip_type: undefined
 	},
-	currentStep: null
+	pickedCard: null
+}
+
+export const listResetsStates = {
+	isResetListCards: true,
+	isResetPickedCard: true,
+	isResetStepsLifeCycle: true
 }
 
 const slice = createSlice({
@@ -46,22 +52,30 @@ const slice = createSlice({
 		setSteps: (state, action: PayloadAction<any>) => {
 			state.stepsLifeCycle = action.payload
 		},
-		setListSteps: (state, action: PayloadAction<any>) => {
-			state.listSteps = action.payload
+		setListCards: (state, action: PayloadAction<any>) => {
+			state.listCards = action.payload
 		},
-		setCurrentStep: (state, action: PayloadAction<any>) => {
-			state.currentStep = action.payload
+		setPickedCard: (state, action: PayloadAction<any>) => {
+			state.pickedCard = action.payload
 		},
-		$resetStateStepper: state => {
-			state.currentStep = null
-			state.stepsLifeCycle = {
-				sex: undefined,
-				days: undefined,
-				destination: undefined,
-				weather: undefined,
-				trip_type: undefined
+		$resetStateStepper: (state, action: PayloadAction<any>) => {
+			if (action.payload.isResetPickedCard) {
+				state.pickedCard = null
 			}
-			state.listSteps = []
+
+			if (action.payload.isResetStepsLifeCycle) {
+				state.stepsLifeCycle = {
+					sex: undefined,
+					days: undefined,
+					destination: undefined,
+					weather: undefined,
+					trip_type: undefined
+				}
+			}
+
+			if (action.payload.isResetListCards) {
+				state.listCards = []
+			}
 		}
 	}
 	// extraReducers: builder => {
@@ -75,7 +89,7 @@ const slice = createSlice({
 })
 
 export const stepperSlice = slice.reducer
-export const { setListSteps, setSteps, setCurrentStep, $resetStateStepper } = slice.actions
+export const { setListCards, setSteps, setPickedCard, $resetStateStepper } = slice.actions
 
 export const updateCurrentStepAPI = createAsyncThunk<any>(
 	"stepp3er/fetch",
@@ -93,7 +107,14 @@ export const updateCurrentStepAPI = createAsyncThunk<any>(
 	}
 )
 
-export const getAllInfoCurrentCheckListAPI = createAsyncThunk<any>(
+export interface IAllInfoCurrentCheckListAPI {
+	idApp: string | undefined
+	idCheckList: string | undefined
+	nameStep: EnumNamesSteps
+	link: string
+}
+
+export const getAllInfoCurrentCheckListAPI = createAsyncThunk<IAllInfoCurrentCheckListAPI>(
 	"step2per/fetch",
 	async (args: any, thunkAPI: any) => {
 		const { dispatch } = thunkAPI
@@ -108,12 +129,12 @@ export const getAllInfoCurrentCheckListAPI = createAsyncThunk<any>(
 			const {
 				data: { elements_step }
 			} = await serviceCheckList.getListSteps(link)
-			await dispatch(setListSteps(elements_step))
+			await dispatch(setListCards(elements_step))
 
 			if (data.steps[0][nameStep] === null) {
-				await dispatch(setCurrentStep(elements_step[0]?.key))
+				await dispatch(setPickedCard(elements_step[0]?.key))
 			} else {
-				await dispatch(setCurrentStep(data.steps[0][nameStep])) //обновляем текущий шаг // переменовать в card
+				await dispatch(setPickedCard(data.steps[0][nameStep])) //обновляем текущий шаг // переменовать в card
 			}
 		} catch (error) {
 			console.log(error)
