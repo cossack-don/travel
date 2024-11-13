@@ -8,7 +8,7 @@ from alembic import context
 from app.models.check_boxes import *
 from app.models.blog import *
 from app.models.users import *
-from app.models.tokens import *
+from app.models.token import *
 from app.models.base import Base
 from app.settings import settings
 

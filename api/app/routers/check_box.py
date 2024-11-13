@@ -6,14 +6,11 @@ from app.services.check_box_services import *
 from app.routers.ticks import get_tick_instanse
 from app.services.ticks_service import TicksEntity
 from app.dependencies.check_box import *
-from app.models.users import Users
-from app.dependencies.permissions import user_permissions
+from app.dependencies.permissions.user_permissions import current_user
 
 router = APIRouter(
     prefix="/api/v1/apps",
-    dependencies=[
-        Depends(user_permissions.current_user),
-    ],
+    dependencies= [Depends(current_user),]
 )
 
 

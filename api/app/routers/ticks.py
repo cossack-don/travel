@@ -7,14 +7,13 @@ from app.services.ticks_service import *
 from app.dependencies.ticks import *
 from app.dependencies.permissions.user_permissions import current_superuser
 
+
 router = APIRouter(
     prefix="/api/v1/ticks",
     tags=[
         "Ticks",
     ],
-    dependencies=[
-        Depends(current_superuser),
-    ],
+    dependencies=[Depends(current_superuser),]
 )
 
 

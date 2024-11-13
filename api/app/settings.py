@@ -20,9 +20,8 @@ class Settings(BaseSettings):
 
     SUPERUSER_EMAIL:str
     SUPERUSER_PASSWORD: str
-    SUPERUSER_IS_ACTIVE: bool
-    SUPERUSER_IS_VERIFIED: bool
-    SUPERUSER_ROLE: int
+
+    AUTHENTICATED_SIMPLE_USER_ROLE: int
 
     @property
     def database_url_asyncpg(self):

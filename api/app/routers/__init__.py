@@ -6,3 +6,4 @@ from app.routers.users import router as user_router
 
 
 routers = [choises_router, clothes_router, ticks_router, blog_router, user_router]
+
