@@ -1,6 +1,6 @@
 import { Link, useNavigate, useParams } from "react-router-dom"
 import { useEffect, useState } from "react"
-import { ListCards } from "@/shared/UI"
+import { ListCards, UILink } from "@/shared/UI"
 import { useAppDispatch, useAppSelector } from "@/shared/hooks/hooks.ts"
 import { fetchUserSteps, userModel } from "@/entities/model/userSlice.ts"
 import { fetchStepsElement } from "@/features/steps/model/steps.reducer.ts"
@@ -33,7 +33,7 @@ const StepTypeSeasons = () => {
 
 	const onMoveNextStep = async () => {
 		const payload = {
-			nameStep: EnumNamesSteps.WEATHER,
+			nameStep: stepper.listSteps?.weather,
 			pickValueStep: stepper.pickedCard,
 			idApp: params?.idApp,
 			idCheckList: params?.idCheckList
@@ -47,6 +47,9 @@ const StepTypeSeasons = () => {
 
 	return (
 		<div>
+			<UILink to={`/dashboard/app/${params.idApp}/check-list/${params.idCheckList}/step-type-of-trip`}>
+				Назад
+			</UILink>
 			<p>StepTypeSeasons</p>
 			Выбран - {stepper.pickedCard}
 			<ListCards

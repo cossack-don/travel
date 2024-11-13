@@ -3,7 +3,7 @@ import { useEffect, useState } from "react"
 import { useAppDispatch, useAppSelector } from "@/shared/hooks/hooks.ts"
 import { fetchUserSteps, userModel } from "@/entities/model/userSlice.ts"
 import { fetchStepsElement } from "@/features/steps/model/steps.reducer.ts"
-import { ListCards } from "@/shared/UI"
+import { ListCards, UILink } from "@/shared/UI"
 import { usePickActiveCardRadio } from "@/shared/hooks"
 import { serviceCheckList } from "@/shared/api/transport"
 import {
@@ -47,6 +47,9 @@ const StepTypePlace = () => {
 
 	return (
 		<div>
+			<UILink to={`/dashboard/app/${params.idApp}/check-list/${params.idCheckList}/step-number-of-days`}>
+				Назад
+			</UILink>
 			<p>StepTypePlace</p>
 			<p>По стране или заграницу</p>
 			Выбран - {stepper.pickedCard}

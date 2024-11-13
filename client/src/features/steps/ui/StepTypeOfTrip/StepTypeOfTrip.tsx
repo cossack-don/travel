@@ -1,6 +1,6 @@
 import { useNavigate, useParams } from "react-router-dom"
 import { useEffect } from "react"
-import { ListCards } from "@/shared/UI"
+import { ListCards, UILink } from "@/shared/UI"
 import { useAppDispatch, useAppSelector } from "@/shared/hooks/hooks.ts"
 import {
 	$resetStateStepper,
@@ -29,7 +29,7 @@ const StepTypeOfTrip = () => {
 
 	const onMoveNextStep = async () => {
 		const payload = {
-			nameStep: EnumNamesSteps.TRIP_TYPE,
+			nameStep: stepper.listSteps?.trip_type,
 			pickValueStep: stepper.pickedCard,
 			idApp: params?.idApp,
 			idCheckList: params?.idCheckList
@@ -42,9 +42,11 @@ const StepTypeOfTrip = () => {
 	}
 
 	console.log(stepper?.listCards)
-
 	return (
 		<div>
+			<UILink to={`/dashboard/app/${params.idApp}/check-list/${params.idCheckList}/step-type-seasons`}>
+				Назад
+			</UILink>
 			<p>StepTypeOfTrip</p>
 			<p>Тип поездки (пляж, горные лыжи, командировка,экскурсия и тд)</p>
 			Выбран - {stepper.pickedCard}

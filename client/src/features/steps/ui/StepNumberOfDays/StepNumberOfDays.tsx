@@ -54,13 +54,7 @@ const StepNumberOfDays = () => {
 				isActiveStep={stepper.pickedCard}
 				onChangeStep={({ target: { value } }: any): any => dispatch(setPickedCard(Number(value)))}
 			/>
-			<Link
-				// to={`/dashboard/app/${params.idApp}/check-list/${params.idCheckList}/step-type-place`}
-				style={{ width: "200px", height: "200px", marginRight: "15px" }}
-				onClick={onMoveNextStep}
-			>
-				к 3-му шагу
-			</Link>
+
 			<button onClick={onMoveNextStep}>к 3-му шагу</button>
 		</div>
 	)
