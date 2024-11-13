@@ -1,22 +1,23 @@
-import { Link, useParams } from "react-router-dom"
+import { Link, useNavigate, useParams } from "react-router-dom"
 import { useEffect, useState } from "react"
 import { ListCards, UILink } from "@/shared/UI"
 import { useAppDispatch, useAppSelector } from "@/shared/hooks/hooks.ts"
 import { serviceCheckList } from "@/shared/api/transport"
 import {
+	$resetStateStepper,
 	EnumNamesSteps,
 	getAllInfoCurrentCheckListAPI,
-	setPickedCard
+	listResetsStates,
+	setPickedCard,
+	updateCurrentStepAPI
 } from "@/entities/model/stepperSlice.ts"
 
 const StepNumberOfDays = () => {
 	const params = useParams()
+	const navigate = useNavigate()
 	const dispatch = useAppDispatch()
-	const [currentCheckList, setCurrentCheckList] = useState(null)
-	const actualStep = useAppSelector(state => state.user.selectedUser)
 	const stepper = useAppSelector(state => state.stepperF)
 
-	//v2
 	useEffect(() => {
 		dispatch(
 			getAllInfoCurrentCheckListAPI({
@@ -27,25 +28,18 @@ const StepNumberOfDays = () => {
 		)
 	}, [])
 
-	//v1
-	// console.log(stepper.stepsLifeCycle)
-	// useEffect(() => {
-	// 	const fetchData = async () => {
-	// 		await dispatch(fetchStepsElement({ link: "step-days" }))
-	// 		await getInfoCurrentCheckList()
-	// 		await dispatch(fetchUserSteps({ idApp: params.idApp, idCheckList: params.idCheckList }))
-	// 	}
-	// 	fetchData()
-	// }, [])
+	const onMoveNextStep = async () => {
+		const payload = {
+			nameStep: EnumNamesSteps.DAYS,
+			pickValueStep: stepper.pickedCard,
+			idApp: params?.idApp,
+			idCheckList: params?.idCheckList
+		}
+		const url = `/dashboard/app/${params.idApp}/check-list/${params.idCheckList}/step-type-place`
 
-	const getInfoCurrentCheckList = async () => {
-		setCurrentCheckList(actualStep)
-	}
-
-	const setUserDaysHandler = async () => {
-		// const payload = { ...currentCheckList, days: activeValue.key }
-		// dispatch(userModel(payload))
-		// await serviceCheckList.updateCurrentStep(params?.idApp, params?.idCheckList, payload)
+		await dispatch(updateCurrentStepAPI(payload))
+		await dispatch($resetStateStepper(listResetsStates))
+		await navigate(url)
 	}
 
 	return (
@@ -61,12 +55,13 @@ const StepNumberOfDays = () => {
 				onChangeStep={({ target: { value } }: any): any => dispatch(setPickedCard(Number(value)))}
 			/>
 			<Link
-				to={`/dashboard/app/${params.idApp}/check-list/${params.idCheckList}/step-type-place`}
+				// to={`/dashboard/app/${params.idApp}/check-list/${params.idCheckList}/step-type-place`}
 				style={{ width: "200px", height: "200px", marginRight: "15px" }}
-				onClick={setUserDaysHandler}
+				onClick={onMoveNextStep}
 			>
 				к 3-му шагу
 			</Link>
+			<button onClick={onMoveNextStep}>к 3-му шагу</button>
 		</div>
 	)
 }

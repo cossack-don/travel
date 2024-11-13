@@ -7,7 +7,7 @@ export enum EnumNamesSteps {
 	DAYS = "days",
 	DESTINATION = "destination",
 	WEATHER = "weather",
-	TRIP_TYPE = "trip_type"
+	TRIP_TYPE = "trip"
 }
 
 export interface ICard {
