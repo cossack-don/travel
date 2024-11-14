@@ -14,7 +14,6 @@ router = APIRouter(
 )
 
 
-
 @router.get(
     "/categories",
     tags=[
