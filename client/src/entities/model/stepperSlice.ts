@@ -24,7 +24,7 @@ export interface ISteps {
 }
 
 export interface IStepper {
-	listSteps: ISteps | {}
+	listSteps: ISteps | null
 	listCards: ICard[] | []
 	stepsLifeCycle: {
 		sex?: string | null | undefined
@@ -38,6 +38,7 @@ export interface IStepper {
 
 const initialState: IStepper = {
 	listCards: [],
+	listSteps: null,
 	stepsLifeCycle: {
 		sex: undefined,
 		days: undefined,
@@ -89,15 +90,18 @@ const slice = createSlice({
 				state.listCards = []
 			}
 		}
+	},
+	extraReducers: builder => {
+		builder
+			.addCase(getListSteps.fulfilled, (state: any, action) => {
+				state.listSteps = action.payload
+				// console.log(state.listSteps, 321)
+			})
+			.addCase(getListCards.fulfilled, (state, action) => {
+				state.listCards = action.payload
+				// await dispatch(setListCards(responseListCards.data))
+			})
 	}
-	// extraReducers: builder => {
-	// 	builder.addCase(updateCurrentStepAPI.fulfilled, (state, action) => {
-	// 		// state.selectedUser = action.payload.data.steps[0]
-	// 	})
-	// 	builder.addCase(getListStepsAPI.fulfilled, (state, action) => {
-	// 		// state.selectedUser = action.payload.data.steps[0]
-	// 	})
-	// }
 })
 
 export const stepperSlice = slice.reducer
@@ -127,7 +131,7 @@ export interface IAllInfoCurrentCheckListAPI {
 }
 
 export const getAllInfoCurrentCheckListAPI = createAsyncThunk<IAllInfoCurrentCheckListAPI>(
-	"step2per/fetch",
+	"getAllInfoCurrentCheckList/api",
 	async (args: any, thunkAPI: any) => {
 		const { dispatch } = thunkAPI
 		const { idApp, idCheckList, nameStep } = args
@@ -136,10 +140,6 @@ export const getAllInfoCurrentCheckListAPI = createAsyncThunk<IAllInfoCurrentChe
 			//Берем инфу по текущему чек-листу => steps
 			const { data } = await serviceCheckList.getById(idApp, idCheckList)
 			await dispatch(setSteps(data.steps[0]))
-
-			//получаем какие шаги вообще есть
-			const responseListSteps = await serviceCheckList.getListSteps()
-			await dispatch(setListSteps(responseListSteps.data))
 
 			// получаем список элементов для карточек
 			const responseListCards = await serviceCheckList.getListCards(nameStep)
@@ -151,6 +151,33 @@ export const getAllInfoCurrentCheckListAPI = createAsyncThunk<IAllInfoCurrentChe
 				console.log(123, nameStep)
 				await dispatch(setPickedCard(data.steps[0][nameStep])) //обновляем текущий шаг // переменовать в card
 			}
+
+			return 1
+		} catch (error) {
+			console.log(error)
+		}
+	}
+)
+
+export const getListCards = createAsyncThunk<IAllInfoCurrentCheckListAPI>("getListCards/api", async args => {
+	const { step } = args
+
+	try {
+		const responseListCards = await serviceCheckList.getListCards(step) //name step из запроса
+		return responseListCards.data
+	} catch (error) {
+		console.log(error)
+	}
+})
+
+export const getListSteps = createAsyncThunk<IAllInfoCurrentCheckListAPI>(
+	"getListSteps/api",
+	async (_, thunkAPI: any) => {
+		// const { dispatch } = thunkAPI
+		try {
+			//получаем какие шаги вообще есть
+			const responseListSteps = await serviceCheckList.getListSteps()
+			return responseListSteps.data
 		} catch (error) {
 			console.log(error)
 		}
