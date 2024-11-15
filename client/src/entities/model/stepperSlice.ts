@@ -34,6 +34,7 @@ export interface IStepper {
 		trip_type?: string | null | undefined
 	}
 	pickedCard: string | null | undefined
+	listsCategories: [] | any
 }
 
 const initialState: IStepper = {
@@ -46,7 +47,8 @@ const initialState: IStepper = {
 		weather: undefined,
 		trip_type: undefined
 	},
-	pickedCard: null
+	pickedCard: null,
+	listsCategories: []
 }
 
 export const listResetsStates = {
@@ -59,18 +61,10 @@ const slice = createSlice({
 	name: "stepper",
 	initialState,
 	reducers: {
-		setSteps: (state, action: PayloadAction<any>) => {
-			state.stepsLifeCycle = action.payload
-		},
-		setListSteps: (state, action: PayloadAction<any>) => {
-			state.listSteps = action.payload
-		},
-		setListCards: (state, action: PayloadAction<any>) => {
-			state.listCards = action.payload
-		},
 		setPickedCard: (state, action: PayloadAction<any>) => {
 			state.pickedCard = action.payload
 		},
+
 		$resetStateStepper: (state, action: PayloadAction<any>) => {
 			if (action.payload.isResetPickedCard) {
 				state.pickedCard = null
@@ -93,22 +87,35 @@ const slice = createSlice({
 	},
 	extraReducers: builder => {
 		builder
+			.addCase(getInfoCurrentCheckList.fulfilled, (state: any, { payload }) => {
+				state.stepsLifeCycle = payload.steps[0]
+
+				//TODO бага, бек должен отдавать массив а не объект
+				state.listsCategories.push(payload.items)
+				console.log(JSON.stringify(state))
+			})
 			.addCase(getListSteps.fulfilled, (state: any, action) => {
 				state.listSteps = action.payload
-				// console.log(state.listSteps, 321)
 			})
-			.addCase(getListCards.fulfilled, (state, action) => {
+			.addCase(getListCards.fulfilled, (state: any, action) => {
 				state.listCards = action.payload
-				// await dispatch(setListCards(responseListCards.data))
+			})
+			.addCase(chainApiStepper.fulfilled, (state: any, { payload }) => {
+				if (payload?.currentSteps[payload?.currentStep] === null) {
+					state.pickedCard = payload.listCards[0].key
+					console.log(JSON.stringify(state))
+				} else {
+					state.pickedCard = payload.currentSteps[payload.currentStep]
+				}
 			})
 	}
 })
 
 export const stepperSlice = slice.reducer
-export const { setListCards, setSteps, setPickedCard, $resetStateStepper, setListSteps } = slice.actions
+export const { setPickedCard, $resetStateStepper } = slice.actions
 
 export const updateCurrentStepAPI = createAsyncThunk<any>(
-	"stepp3er/fetch",
+	"stepp3er/api",
 	async (args: any, thunkAPI: any) => {
 		const { rejectWithValue, dispatch } = thunkAPI
 		const { idApp, idCheckList, nameStep, pickValueStep } = args
@@ -130,38 +137,18 @@ export interface IAllInfoCurrentCheckListAPI {
 	link: string
 }
 
-export const getAllInfoCurrentCheckListAPI = createAsyncThunk<IAllInfoCurrentCheckListAPI>(
-	"getAllInfoCurrentCheckList/api",
-	async (args: any, thunkAPI: any) => {
-		const { dispatch } = thunkAPI
-		const { idApp, idCheckList, nameStep } = args
-
-		try {
-			//Берем инфу по текущему чек-листу => steps
-			const { data } = await serviceCheckList.getById(idApp, idCheckList)
-			await dispatch(setSteps(data.steps[0]))
-
-			// получаем список элементов для карточек
-			const responseListCards = await serviceCheckList.getListCards(nameStep)
-			await dispatch(setListCards(responseListCards.data))
-
-			if (data.steps[0][nameStep] === null) {
-				await dispatch(setPickedCard(responseListCards[0].data?.key))
-			} else {
-				console.log(123, nameStep)
-				await dispatch(setPickedCard(data.steps[0][nameStep])) //обновляем текущий шаг // переменовать в card
-			}
-
-			return 1
-		} catch (error) {
-			console.log(error)
-		}
+export const getInfoCurrentCheckList = createAsyncThunk<any>("getInfoCurrentCheckList/api", async args => {
+	const { idApp, idCheckList } = args
+	try {
+		const { data } = await serviceCheckList.getById(idApp, idCheckList)
+		return data
+	} catch (error) {
+		console.log(error)
 	}
-)
+})
 
 export const getListCards = createAsyncThunk<IAllInfoCurrentCheckListAPI>("getListCards/api", async args => {
 	const { step } = args
-
 	try {
 		const responseListCards = await serviceCheckList.getListCards(step) //name step из запроса
 		return responseListCards.data
@@ -170,14 +157,34 @@ export const getListCards = createAsyncThunk<IAllInfoCurrentCheckListAPI>("getLi
 	}
 })
 
-export const getListSteps = createAsyncThunk<IAllInfoCurrentCheckListAPI>(
-	"getListSteps/api",
-	async (_, thunkAPI: any) => {
-		// const { dispatch } = thunkAPI
+export const getListSteps = createAsyncThunk<IAllInfoCurrentCheckListAPI>("getListSteps/api", async () => {
+	try {
+		const responseListSteps = await serviceCheckList.getListSteps()
+		return responseListSteps.data
+	} catch (error) {
+		console.log(error)
+	}
+})
+
+export const chainApiStepper = createAsyncThunk<IAllInfoCurrentCheckListAPI>(
+	"chainApiStepper/api",
+	async (args: any, thunkAPI: any) => {
+		const { dispatch } = thunkAPI
+		const { idApp, idCheckList, nameStep } = args
+
 		try {
-			//получаем какие шаги вообще есть
-			const responseListSteps = await serviceCheckList.getListSteps()
-			return responseListSteps.data
+			const currentCheckList = await dispatch(
+				getInfoCurrentCheckList({ idApp: idApp, idCheckList: idCheckList })
+			)
+			const listSteps = await dispatch(getListSteps())
+			const listCards = await dispatch(getListCards({ step: nameStep }))
+
+			return {
+				currentSteps: currentCheckList.payload.steps[0],
+				currentStep: nameStep,
+				listSteps: listSteps.payload,
+				listCards: listCards.payload
+			}
 		} catch (error) {
 			console.log(error)
 		}

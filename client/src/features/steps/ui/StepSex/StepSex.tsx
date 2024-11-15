@@ -7,8 +7,8 @@ import {
 	setPickedCard,
 	$resetStateStepper,
 	EnumNamesSteps,
-	getAllInfoCurrentCheckListAPI,
-	listResetsStates
+	listResetsStates,
+	chainApiStepper
 } from "@/entities/model/stepperSlice.ts"
 
 const StepSex = () => {
@@ -19,7 +19,7 @@ const StepSex = () => {
 
 	useEffect(() => {
 		dispatch(
-			getAllInfoCurrentCheckListAPI({
+			chainApiStepper({
 				idApp: params?.idApp,
 				idCheckList: params?.idCheckList,
 				nameStep: EnumNamesSteps.SEX

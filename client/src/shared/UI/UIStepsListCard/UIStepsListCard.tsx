@@ -3,8 +3,6 @@ import { UICardRadioButton } from "@/shared/UI"
 import UIWrapperCardRadioButtons from "@/shared/UI/UIWrapperCardRadioButtons/UIWrapperCardRadioButtons.tsx"
 
 const ListCards = ({ listSteps, isActiveStep, onChangeStep }: any) => {
-	console.log(isActiveStep)
-
 	const cards = listSteps?.map((item: StepperElement) => {
 		return (
 			<UICardRadioButton

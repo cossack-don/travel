@@ -8,8 +8,8 @@ import { usePickActiveCardRadio } from "@/shared/hooks"
 import { serviceCheckList } from "@/shared/api/transport"
 import {
 	$resetStateStepper,
+	chainApiStepper,
 	EnumNamesSteps,
-	getAllInfoCurrentCheckListAPI,
 	listResetsStates,
 	setPickedCard,
 	updateCurrentStepAPI
@@ -23,7 +23,7 @@ const StepTypePlace = () => {
 
 	useEffect(() => {
 		dispatch(
-			getAllInfoCurrentCheckListAPI({
+			chainApiStepper({
 				idApp: params?.idApp,
 				idCheckList: params?.idCheckList,
 				nameStep: EnumNamesSteps.DESTINATION

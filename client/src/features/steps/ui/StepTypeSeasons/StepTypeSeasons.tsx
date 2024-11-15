@@ -1,17 +1,12 @@
-import { Link, useNavigate, useParams } from "react-router-dom"
-import { useEffect, useState, useCallback } from "react"
+import { useNavigate, useParams } from "react-router-dom"
+import { useEffect } from "react"
 import { ListCards, UILink } from "@/shared/UI"
 import { useAppDispatch, useAppSelector } from "@/shared/hooks/hooks.ts"
-import { fetchUserSteps, userModel } from "@/entities/model/userSlice.ts"
-import { fetchStepsElement } from "@/features/steps/model/steps.reducer.ts"
-import { serviceCheckList } from "@/shared/api/transport"
-import { usePickActiveCardRadio } from "@/shared/hooks"
+
 import {
 	$resetStateStepper,
+	chainApiStepper,
 	EnumNamesSteps,
-	getAllInfoCurrentCheckListAPI,
-	getListCards,
-	getListSteps,
 	listResetsStates,
 	setPickedCard,
 	updateCurrentStepAPI
@@ -22,26 +17,16 @@ const StepTypeSeasons = () => {
 	const navigate = useNavigate()
 	const dispatch = useAppDispatch()
 	const stepper = useAppSelector(state => state.stepperF)
-	const listSteps = useAppSelector(state => state.stepperF.listSteps)
 
-	const f = async () => {
-		const { payload } = await dispatch(getListSteps())
-		console.log(listSteps, payload)
-		await dispatch(getListCards({ step: payload.weather }))
-	}
 	useEffect(() => {
-		f()
-		// Запускаем запрос на получение пользователя с ID=123
+		dispatch(
+			chainApiStepper({
+				idApp: params?.idApp,
+				idCheckList: params?.idCheckList,
+				nameStep: EnumNamesSteps.WEATHER
+			})
+		)
 	}, [])
-
-	// После успешного получения пользователя запускаем запрос для получения постов
-	// useEffect(() => {
-	// 	if (listSteps) {
-	// 		const { weather } = listSteps
-	// 		console.log(weather, 3333)
-	// 		// dispatch(getListSteps(weather))
-	// 	}
-	// }, [listSteps])
 
 	const onMoveNextStep = async () => {
 		const payload = {

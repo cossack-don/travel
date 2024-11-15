@@ -4,8 +4,8 @@ import { ListCards, UILink } from "@/shared/UI"
 import { useAppDispatch, useAppSelector } from "@/shared/hooks/hooks.ts"
 import {
 	$resetStateStepper,
+	chainApiStepper,
 	EnumNamesSteps,
-	getAllInfoCurrentCheckListAPI,
 	listResetsStates,
 	setPickedCard,
 	updateCurrentStepAPI
@@ -19,7 +19,7 @@ const StepTypeOfTrip = () => {
 
 	useEffect(() => {
 		dispatch(
-			getAllInfoCurrentCheckListAPI({
+			chainApiStepper({
 				idApp: params?.idApp,
 				idCheckList: params?.idCheckList,
 				nameStep: EnumNamesSteps.TRIP_TYPE
@@ -41,7 +41,6 @@ const StepTypeOfTrip = () => {
 		await navigate(url)
 	}
 
-	console.log(stepper?.listCards)
 	return (
 		<div>
 			<UILink to={`/dashboard/app/${params.idApp}/check-list/${params.idCheckList}/step-type-seasons`}>

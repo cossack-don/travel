@@ -1,12 +1,12 @@
-import { Link, useNavigate, useParams } from "react-router-dom"
-import { useEffect, useState } from "react"
+import { useNavigate, useParams } from "react-router-dom"
+import { useEffect } from "react"
 import { ListCards, UILink } from "@/shared/UI"
 import { useAppDispatch, useAppSelector } from "@/shared/hooks/hooks.ts"
-import { serviceCheckList } from "@/shared/api/transport"
+
 import {
 	$resetStateStepper,
+	chainApiStepper,
 	EnumNamesSteps,
-	getAllInfoCurrentCheckListAPI,
 	listResetsStates,
 	setPickedCard,
 	updateCurrentStepAPI
@@ -20,7 +20,7 @@ const StepNumberOfDays = () => {
 
 	useEffect(() => {
 		dispatch(
-			getAllInfoCurrentCheckListAPI({
+			chainApiStepper({
 				idApp: params?.idApp,
 				idCheckList: params?.idCheckList,
 				nameStep: EnumNamesSteps.DAYS
