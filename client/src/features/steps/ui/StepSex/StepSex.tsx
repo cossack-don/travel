@@ -1,66 +1,60 @@
-import { Link, useParams } from "react-router-dom"
-import { useEffect, useState } from "react"
+import { useParams, useNavigate } from "react-router-dom"
+import { useEffect } from "react"
 import { ListCards, UILink } from "@/shared/UI"
 import { useAppDispatch, useAppSelector } from "@/shared/hooks/hooks.ts"
-import { fetchStepsElement } from "@/features/steps/model/steps.reducer.ts"
-import { userModel } from "@/entities/model/userSlice.ts"
-import { serviceCheckList } from "@/shared/api/transport"
-import { usePickActiveCardRadio } from "@/shared/hooks"
+import {
+	updateCurrentStepAPI,
+	setPickedCard,
+	$resetStateStepper,
+	EnumNamesSteps,
+	listResetsStates,
+	chainApiStepper
+} from "@/entities/model/stepperSlice.ts"
 
 const StepSex = () => {
-	const dispatch = useAppDispatch()
 	const params = useParams()
-	const [currentCheckList, setCurrentCheckList] = useState(null)
-	const { data, activeValue } = useAppSelector(state => state.stepper)
-	const listData = data.elements_step
+	const navigate = useNavigate()
+	const dispatch = useAppDispatch()
+	const stepper = useAppSelector(state => state.stepperF)
 
 	useEffect(() => {
-		dispatch(fetchStepsElement({ link: "step-sex" }))
-		getInfoCurrentCheckList()
-		console.log(currentCheckList, 1)
+		dispatch(
+			chainApiStepper({
+				idApp: params?.idApp,
+				idCheckList: params?.idCheckList,
+				nameStep: EnumNamesSteps.SEX
+			})
+		)
 	}, [])
 
-	const getInfoCurrentCheckList = async () => {
-		const { data } = await serviceCheckList.getById(params?.idApp, params.idCheckList)
-		setCurrentCheckList(data)
-		// console.log(currentCheckList, "test")
-	}
-
-	console.log({ activeValue })
-
-	const setUserSexValueHandler = async () => {
+	const onMoveNextStep = async () => {
 		const payload = {
-			sex: activeValue.key,
-			days: null,
-			destination: null,
-			weather: null,
-			trip_type: null
+			nameStep: EnumNamesSteps.SEX,
+			pickValueStep: stepper.pickedCard,
+			idApp: params?.idApp,
+			idCheckList: params?.idCheckList
 		}
+		// TODO доделать позже, посмотреть глобал адаптер почему проблема с error in catch
+		// TODO цель - если ошибка на след шаг не переходить
+		const url = `/dashboard/app/${params.idApp}/check-list/${params.idCheckList}/step-number-of-days`
 
-		await serviceCheckList.updateCurrentStep(params?.idApp, params?.idCheckList, payload)
-		await dispatch(userModel({ sex: activeValue.key }))
+		await dispatch(updateCurrentStepAPI(payload))
+		await dispatch($resetStateStepper(listResetsStates))
+		await navigate(url)
 	}
 
 	return (
 		<div>
 			<p>ШАГ 1- StepSex </p>
 			<p>Выбор пола</p>
-			<UILink to={"/dashboard/app/8743b52063cd84097a65d1633f5c74f5"}>Назад</UILink>
+			<UILink to={`/dashboard/app/${params.idApp}`}>Назад</UILink>
 			<ListCards
-				listData={listData}
-				defaultValue={activeValue.name}
-				usePickActiveCardRadio={usePickActiveCardRadio}
+				listSteps={stepper.listCards}
+				isActiveStep={stepper.pickedCard}
+				onChangeStep={({ target: { value } }: any): any => dispatch(setPickedCard(value))}
 			/>
-			Выбран - {activeValue.name}
-			<br />
-			<br />
-			<Link
-				to={`/dashboard/app/${params.idApp}/check-list/${params.idCheckList}/step-number-of-days`}
-				style={{ width: "200px", height: "200px", marginRight: "15px" }}
-				onClick={setUserSexValueHandler}
-			>
-				На 2-й шаг
-			</Link>
+
+			<button onClick={onMoveNextStep}>Перейти на 2-й шаг</button>
 		</div>
 	)
 }
