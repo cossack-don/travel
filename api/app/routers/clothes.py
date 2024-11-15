@@ -90,7 +90,12 @@ async def create_category(
     category_service: ClothesCategoryEntity = Depends(get_category_instanse),
 ):
     try:
-
+        category_check = category_service.get_clothes_category_by_name(cat_name=category_name)
+        if category_check:
+            return JSONResponse(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                content={"details": "This category already exists"},
+            )
         result = await category_service.create_clothes_category(
             category_name=category_name
         )
@@ -121,6 +126,12 @@ async def update_category(
     category_service: ClothesCategoryEntity = Depends(get_category_instanse),
 ):
     try:
+        category_check = category_service.get_clothes_category_by_name(cat_name=update_data)
+        if category_check:
+            return JSONResponse(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                content={"details": "This category already exists"},
+            )
         result = await category_service.update_clothes_category(
             cat_id=cat_id_to_update, category_name=update_data
         )
@@ -210,6 +221,7 @@ async def get_clothes_item_by_name(
     clothes_service: ClothesTypeEntity = Depends(get_clothes_instanse),
 ):
     try:
+
         result = await clothes_service.get_clothes_type_by_name(
             clothes_name=clothes_name
         )
@@ -242,6 +254,12 @@ async def create_clothes_item(
     clothes_service: ClothesTypeEntity = Depends(get_clothes_instanse),
 ):
     try:
+        clothes_check = clothes_service.get_clothes_type_by_name(clothes_name=ClothesCreate.name)
+        if clothes_check:
+            return JSONResponse(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                content={"details": "This clothes type already exists"},
+            )
         result = await clothes_service.create_new_type_of_clothes(clothes=clothes)
 
         if not result:
@@ -275,10 +293,15 @@ async def update_clothes_item(
 ):
 
     try:
+        clothes_check = clothes_service.get_clothes_type_by_name(clothes_name=update_data.name)
+        if clothes_check:
+            return JSONResponse(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                content={"details": "This clothes type already exists"},
+            )
         result = await clothes_service.update_clothes_item(
             cl_name=clothes_name_to_update, upd_data=update_data
         )
-
         if not result:
 
             return JSONResponse(
