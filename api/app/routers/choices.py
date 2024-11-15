@@ -398,23 +398,8 @@ async def delete_check_list(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail={e}
         )
 
-class Enum_names_steps(Enum):
-    STEP_SEX = 'sex'
-    STEP_DAYS = 'days'
-    STEP_DESTINATION = 'destination'
-    STEP_WEATHER = 'weather'
-    STEP_TRIP = 'trip'
 
-@router.get(
-   "/check_list/list-cards/{name_step}",
-    tags=[
-        "Steps",
-    ],
-    summary="-",
-    description="-",
-)
-async def get_list_cards(name_step: str):
-    listsCards = {
+listsCards = {
         'sex':[
             {"name": "Мужчина", "key": "male"},
             {"name": "Женщина", "key": "female"}
@@ -433,13 +418,24 @@ async def get_list_cards(name_step: str):
             {"name": "Холодно", "key": "cold"},
             {"name": "Жарко", "key": "warm"}
         ],
-        'trip':[
+        'trip_type':[
             {"name": "Горные лыжи", "key": "skiing"},
             {"name": "Пляж", "key": "beach"},
             {"name": "Бизнес", "key": "buisness"},
             {"name": "Поход с палатками", "key": "campimg"}
         ]
     }
+
+@router.get(
+   "/check_list/list-cards/{name_step}",
+    tags=[
+        "Steps",
+    ],
+    summary="-",
+    description="-",
+)
+async def get_list_cards(name_step: str):
+
 
     try:
         if name_step in listsCards.keys():
@@ -451,102 +447,22 @@ async def get_list_cards(name_step: str):
             raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail={e})
 
 @router.get(
-    "/current/check_list/current/step-sex",
+   "/check_list/list-steps",
     tags=[
         "Steps",
     ],
-    summary="Получаем список с элементами для шага пол",
-    description="Получаю список с name, key по мужчине и женщине",
+    summary="-",
+    description="-",
 )
-async def get_elements_step_sex():
-    data = {
-        "elements_step": [
-            {"name": "Мужчина", "key": "male"},
-            {"name": "Женщина", "key": "female"},
-        ]
-    }
+async def get_list_steps():
+    arr = []
 
-    return data
+    for item in listsCards:
+        arr.append(item)
 
+    result = dict((item, item) for item in arr)
 
-@router.get(
-    "/current/check_list/current/step-days",
-    tags=[
-        "Steps",
-    ],
-    summary="Получаем список с элементами для шага дни",
-    description="Получаю список с name, key по дням",
-)
-async def get_elements_step_days():
-    data = {
-        "elements_step": [
-            {"name": "1 день", "key": 1},
-            {"name": "3 дня", "key": 3},
-            {"name": "7 дней", "key": 7},
-            {"name": "14 дней", "key": 14},
-        ]
-    }
-
-    return data
-
-
-@router.get(
-    "/current/check_list/current/step-destination",
-    tags=[
-        "Steps",
-    ],
-    summary="Получаем список с элементами для шага местности",
-    description="Получаю список с name, key по загранице и по стране",
-)
-async def get_elements_step_destination():
-    data = {
-        "elements_step": [
-            {"name": "По стране", "key": "domestic"},
-            {"name": "За границу", "key": "international"},
-        ]
-    }
-
-    return data
-
-
-@router.get(
-    "/current/check_list/current/step-weather",
-    tags=[
-        "Steps",
-    ],
-    summary="Получаем список с элементами для шага погода",
-    description="Получаю список с name, key для холодно и жарко",
-)
-async def get_elements_step_weather():
-    data = {
-        "elements_step": [
-            {"name": "Холодно", "key": "cold"},
-            {"name": "Жарко", "key": "warm"},
-        ]
-    }
-
-    return data
-
-
-@router.get(
-    "/current/check_list/current/step-trip",
-    tags=[
-        "Steps",
-    ],
-    summary="Получаем список с элементами для шага варианта активности",
-    description="Получаю список с name, key для горные лыжи, пляж, бизнес, поход с палатками",
-)
-async def get_elements_step_trip():
-    data = {
-        "elements_step": [
-            {"name": "Горные лыжи", "key": "skiing"},
-            {"name": "Пляж", "key": "beach"},
-            {"name": "Бизнес", "key": "buisness"},
-            {"name": "Поход с палатками", "key": "campimg"},
-        ]
-    }
-
-    return data
+    return result
 
 
 @router.patch(
