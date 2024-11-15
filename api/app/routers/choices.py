@@ -256,21 +256,25 @@ async def get_check_list_by_id(
                 status_code=status.HTTP_404_NOT_FOUND,
                 content={"details": "Entity not found"},
             )
-        if cl_list:
-            pre_cl_list = ClothesCategoryShema.model_validate(cl_list).model_dump()
-            for i in pre_cl_list["clothes"]:
-                i["is_checked"] = (
-                    True
-                    if await tick_service.get_tick_by_id(
-                        check_list_id=ch_list_id, clothes_id=i["id"]
-                    )
-                    else False
-                )
 
-            updated_cl_list_model = ClothesCategoryShema(**pre_cl_list)
-            updated_cl_list = ClothesCategoryShema.model_validate(
-                updated_cl_list_model
-            ).model_dump()
+        if cl_list:
+            pre_cl_list = [ClothesCategoryShema.model_validate(item).model_dump() for item in cl_list]
+            for pre_cl_list_items in  pre_cl_list:
+                for i in pre_cl_list_items["clothes"]:
+                    i["is_checked"] = (
+                        True
+                        if await tick_service.get_tick_by_id(
+                            check_list_id=ch_list_id, clothes_id=i["id"]
+                        )
+                        else False
+                    )
+                updated_cl_list_model = [ClothesCategoryShema(**item) for item in pre_cl_list]
+
+                updated_cl_list = [ClothesCategoryShema.model_validate(
+                    item
+                ).model_dump() for item in updated_cl_list_model]
+
+            
         else:
             updated_cl_list = []
 
