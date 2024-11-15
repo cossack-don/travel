@@ -1,50 +1,61 @@
-import { Link } from "react-router-dom"
-import { ChangeEvent, useEffect, useState } from "react"
-import { ListCards } from "@/shared/UI"
+import { useNavigate, useParams } from "react-router-dom"
+import { useEffect } from "react"
+import { ListCards, UILink } from "@/shared/UI"
 import { useAppDispatch, useAppSelector } from "@/shared/hooks/hooks.ts"
-import { fetchStepsElement } from "@/features/steps/model/steps.reducer.ts"
-import { userModel } from "@/entities/model/userSlice.ts"
+
+import {
+	$resetStateStepper,
+	chainApiStepper,
+	EnumNamesSteps,
+	listResetsStates,
+	setPickedCard,
+	updateCurrentStepAPI
+} from "@/entities/model/stepperSlice.ts"
 
 const StepNumberOfDays = () => {
+	const params = useParams()
+	const navigate = useNavigate()
 	const dispatch = useAppDispatch()
-	const dataCards = useAppSelector(state => state.stepper)
+	const stepper = useAppSelector(state => state.stepperF)
 
 	useEffect(() => {
-		dispatch(fetchStepsElement({ link: "step-days" }))
+		dispatch(
+			chainApiStepper({
+				idApp: params?.idApp,
+				idCheckList: params?.idCheckList,
+				nameStep: EnumNamesSteps.DAYS
+			})
+		)
 	}, [])
 
-	const usePickActiveCardRadio = (defaultValue: string) => {
-		const [value, setValue] = useState(defaultValue)
-
-		const onChangeRadio = (e: ChangeEvent<HTMLInputElement>) => {
-			setValue(e.target.value)
+	const onMoveNextStep = async () => {
+		const payload = {
+			nameStep: EnumNamesSteps.DAYS,
+			pickValueStep: stepper.pickedCard,
+			idApp: params?.idApp,
+			idCheckList: params?.idCheckList
 		}
-		return [value, onChangeRadio]
-	}
-	const [isActiveValue, setActiveValue] = useState(1)
+		const url = `/dashboard/app/${params.idApp}/check-list/${params.idCheckList}/step-type-place`
 
-	const setUserDaysHandler = () => {
-		dispatch(userModel({ days: isActiveValue }))
+		await dispatch(updateCurrentStepAPI(payload))
+		await dispatch($resetStateStepper(listResetsStates))
+		await navigate(url)
 	}
 
 	return (
 		<div>
+			<UILink to={`/dashboard/app/${params.idApp}/check-list/${params.idCheckList}/step-sex`}>
+				На шаг Назад
+			</UILink>
 			<p>StepNumberOfDays</p>
 			<p>На сколько дней</p>
-			Выбран - {isActiveValue}
 			<ListCards
-				setActiveValue={setActiveValue}
-				listData={dataCards}
-				defaultValue={isActiveValue}
-				usePickActiveCardRadio={usePickActiveCardRadio}
+				listSteps={stepper.listCards}
+				isActiveStep={stepper.pickedCard}
+				onChangeStep={({ target: { value } }: any): any => dispatch(setPickedCard(Number(value)))}
 			/>
-			<Link
-				to="/dashboard/app/8743b52063cd84097a65d1633f5c74f5/check-list/:id/step-type-place"
-				style={{ width: "200px", height: "200px", marginRight: "15px" }}
-				onClick={setUserDaysHandler}
-			>
-				к 3-му шагу
-			</Link>
+
+			<button onClick={onMoveNextStep}>к 3-му шагу</button>
 		</div>
 	)
 }

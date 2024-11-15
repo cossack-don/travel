@@ -1,50 +1,67 @@
-import { Link } from "react-router-dom"
-import { ChangeEvent, useEffect, useState } from "react"
-import { ListCards } from "@/shared/UI"
+import { useNavigate, useParams } from "react-router-dom"
+import { useEffect } from "react"
+import { ListCards, UILink } from "@/shared/UI"
 import { useAppDispatch, useAppSelector } from "@/shared/hooks/hooks.ts"
-import { userModel } from "@/entities/model/userSlice.ts"
-import { fetchStepsElement } from "@/features/steps/model/steps.reducer.ts"
+import {
+	$resetStateStepper,
+	chainApiStepper,
+	EnumNamesSteps,
+	listResetsStates,
+	setPickedCard,
+	updateCurrentStepAPI
+} from "@/entities/model/stepperSlice.ts"
 
 const StepTypeOfTrip = () => {
-	const dataCards = useAppSelector(state => state.stepper)
+	const params = useParams()
+	const navigate = useNavigate()
 	const dispatch = useAppDispatch()
+	const stepper = useAppSelector(state => state.stepperF)
 
 	useEffect(() => {
-		dispatch(fetchStepsElement({ link: "step-trip" }))
+		dispatch(
+			chainApiStepper({
+				idApp: params?.idApp,
+				idCheckList: params?.idCheckList,
+				nameStep: EnumNamesSteps.TRIP_TYPE
+			})
+		)
 	}, [])
 
-	const usePickActiveCardRadio = (defaultValue: string) => {
-		const [value, setValue] = useState(defaultValue)
-
-		const onChangeRadio = (e: ChangeEvent<HTMLInputElement>) => {
-			setValue(e.target.value)
+	const onMoveNextStep = async () => {
+		const payload = {
+			nameStep: stepper.listSteps?.trip_type,
+			pickValueStep: stepper.pickedCard,
+			idApp: params?.idApp,
+			idCheckList: params?.idCheckList
 		}
-		return [value, onChangeRadio]
-	}
-	const [isActiveValue, setActiveValue] = useState("alpineSkiing")
+		const url = `/dashboard/app/${params.idApp}/check-list/${params.idCheckList}/step-list-of-things`
 
-	const selectTripHandler = () => {
-		dispatch(userModel({ typeOfTrip: isActiveValue }))
+		await dispatch(updateCurrentStepAPI(payload))
+		await dispatch($resetStateStepper(listResetsStates))
+		await navigate(url)
 	}
 
 	return (
 		<div>
+			<UILink to={`/dashboard/app/${params.idApp}/check-list/${params.idCheckList}/step-type-seasons`}>
+				Назад
+			</UILink>
 			<p>StepTypeOfTrip</p>
 			<p>Тип поездки (пляж, горные лыжи, командировка,экскурсия и тд)</p>
-			Выбран - {isActiveValue}
+			Выбран - {stepper.pickedCard}
 			<ListCards
-				setActiveValue={setActiveValue}
-				listData={dataCards}
-				defaultValue={isActiveValue}
-				usePickActiveCardRadio={usePickActiveCardRadio}
+				listSteps={stepper.listCards}
+				isActiveStep={stepper.pickedCard}
+				onChangeStep={({ target: { value } }: any): any => dispatch(setPickedCard(value))}
 			/>
-			<Link
-				to="/dashboard/app/8743b52063cd84097a65d1633f5c74f5/check-list/:id/step-list-of-things"
-				style={{ width: "200px", height: "200px", marginRight: "15px" }}
-				onClick={selectTripHandler}
-			>
-				к готовому списку
-			</Link>
+			{/*<Link*/}
+			{/*	to={`/dashboard/app/${params.idApp}/check-list/${params.idCheckList}/step-list-of-things`}*/}
+			{/*	style={{ width: "200px", height: "200px", marginRight: "15px" }}*/}
+			{/*	onClick={selectStepOfTripHandler}*/}
+			{/*>*/}
+			{/*	к готовому списку*/}
+			{/*</Link>*/}
+			<button onClick={onMoveNextStep}>к готовому списку</button>
 		</div>
 	)
 }

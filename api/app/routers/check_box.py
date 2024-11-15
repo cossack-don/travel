@@ -243,21 +243,25 @@ async def get_check_list_by_id(
                 status_code=status.HTTP_404_NOT_FOUND,
                 content={"details": "Entity not found"},
             )
-        if cl_list:
-            pre_cl_list = ClothesCategoryShema.model_validate(cl_list).model_dump()
-            for i in pre_cl_list["clothes"]:
-                i["is_checked"] = (
-                    True
-                    if await tick_service.get_tick_by_id(
-                        check_list_id=ch_list_id, clothes_id=i["id"]
-                    )
-                    else False
-                )
 
-            updated_cl_list_model = ClothesCategoryShema(**pre_cl_list)
-            updated_cl_list = ClothesCategoryShema.model_validate(
-                updated_cl_list_model
-            ).model_dump()
+        if cl_list:
+            pre_cl_list = [ClothesCategoryShema.model_validate(item).model_dump() for item in cl_list]
+            for pre_cl_list_items in  pre_cl_list:
+                for i in pre_cl_list_items["clothes"]:
+                    i["is_checked"] = (
+                        True
+                        if await tick_service.get_tick_by_id(
+                            check_list_id=ch_list_id, clothes_id=i["id"]
+                        )
+                        else False
+                    )
+                updated_cl_list_model = [ClothesCategoryShema(**item) for item in pre_cl_list]
+
+                updated_cl_list = [ClothesCategoryShema.model_validate(
+                    item
+                ).model_dump() for item in updated_cl_list_model]
+
+            
         else:
             updated_cl_list = []
 
@@ -386,103 +390,70 @@ async def delete_check_list(
         )
 
 
-@router.get(
-    "/current/check_list/current/step-sex",
-    tags=[
-        "Steps",
-    ],
-    summary="Получаем список с элементами для шага пол",
-    description="Получаю список с name, key по мужчине и женщине",
-)
-async def get_elements_step_sex():
-    data = {
-        "elements_step": [
+listsCards = {
+        'sex':[
             {"name": "Мужчина", "key": "male"},
-            {"name": "Женщина", "key": "female"},
-        ]
-    }
-
-    return data
-
-
-@router.get(
-    "/current/check_list/current/step-days",
-    tags=[
-        "Steps",
-    ],
-    summary="Получаем список с элементами для шага дни",
-    description="Получаю список с name, key по дням",
-)
-async def get_elements_step_days():
-    data = {
-        "elements_step": [
-            {"name": "1 день", "key": "1"},
-            {"name": "3 дня", "key": "3"},
-            {"name": "7 дней", "key": "7"},
-            {"name": "14 дней", "key": "14"},
-        ]
-    }
-
-    return data
-
-
-@router.get(
-    "/current/check_list/current/step-destination",
-    tags=[
-        "Steps",
-    ],
-    summary="Получаем список с элементами для шага местности",
-    description="Получаю список с name, key по загранице и по стране",
-)
-async def get_elements_step_destination():
-    data = {
-        "elements_step": [
+            {"name": "Женщина", "key": "female"}
+        ],
+        'days':[
+            {"name": "1 день", "key": 1},
+            {"name": "3 дня", "key": 3},
+            {"name": "7 дней", "key": 7},
+            {"name": "14 дней", "key": 14}
+        ],
+        'destination':[
             {"name": "По стране", "key": "domestic"},
-            {"name": "За границу", "key": "international"},
-        ]
-    }
-
-    return data
-
-
-@router.get(
-    "/current/check_list/current/step-weather",
-    tags=[
-        "Steps",
-    ],
-    summary="Получаем список с элементами для шага погода",
-    description="Получаю список с name, key для холодно и жарко",
-)
-async def get_elements_step_weather():
-    data = {
-        "elements_step": [
+            {"name": "За границу", "key": "international"}
+        ],
+        'weather':[
             {"name": "Холодно", "key": "cold"},
-            {"name": "Жарко", "key": "warm"},
-        ]
-    }
-
-    return data
-
-
-@router.get(
-    "/current/check_list/current/step-trip",
-    tags=[
-        "Steps",
-    ],
-    summary="Получаем список с элементами для шага варианта активности",
-    description="Получаю список с name, key для горные лыжи, пляж, бизнес, поход с палатками",
-)
-async def get_elements_step_trip():
-    data = {
-        "elements_step": [
+            {"name": "Жарко", "key": "warm"}
+        ],
+        'trip_type':[
             {"name": "Горные лыжи", "key": "skiing"},
             {"name": "Пляж", "key": "beach"},
             {"name": "Бизнес", "key": "buisness"},
-            {"name": "Поход с палатками", "key": "campimg"},
+            {"name": "Поход с палатками", "key": "campimg"}
         ]
     }
 
-    return data
+@router.get(
+   "/check_list/list-cards/{name_step}",
+    tags=[
+        "Steps",
+    ],
+    summary="-",
+    description="-",
+)
+async def get_list_cards(name_step: str):
+
+
+    try:
+        if name_step in listsCards.keys():
+            return JSONResponse(content=listsCards[name_step],status_code=status.HTTP_200_OK)
+        else:
+            return JSONResponse(status_code=status.HTTP_404_NOT_FOUND, content={"details": "Entity not found"})
+
+    except Exception as e:
+            raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail={e})
+
+@router.get(
+   "/check_list/list-steps",
+    tags=[
+        "Steps",
+    ],
+    summary="-",
+    description="-",
+)
+async def get_list_steps():
+    arr = []
+
+    for item in listsCards:
+        arr.append(item)
+
+    result = dict((item, item) for item in arr)
+
+    return result
 
 
 @router.patch(
