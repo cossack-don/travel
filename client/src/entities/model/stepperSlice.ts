@@ -85,13 +85,13 @@ const slice = createSlice({
 			}
 		}
 	},
+
 	extraReducers: builder => {
 		builder
+			.addCase(createCheckList.fulfilled, (state: any, action) => {})
 			.addCase(getInfoCurrentCheckList.fulfilled, (state: any, { payload }) => {
 				state.stepsLifeCycle = payload.steps[0]
-
-				//TODO бага, бек должен отдавать массив а не объект
-				state.listsCategories.push(payload.items)
+				state.listsCategories = payload.items
 				console.log(JSON.stringify(state))
 			})
 			.addCase(getListSteps.fulfilled, (state: any, action) => {
@@ -123,7 +123,7 @@ export const updateCurrentStepAPI = createAsyncThunk<any>(
 			await serviceCheckList.updateCurrentStep(idApp, idCheckList, {
 				[nameStep]: pickValueStep
 			})
-			await toast.success("Шаг успешно обновлен", { position: "bottom-right" })
+			await toast.success("Шаг успешно обновлен", { position: "top-right" })
 		} catch (error) {
 			console.log(error)
 		}
@@ -137,15 +137,23 @@ export interface IAllInfoCurrentCheckListAPI {
 	link: string
 }
 
-export const getInfoCurrentCheckList = createAsyncThunk<any>("getInfoCurrentCheckList/api", async args => {
-	const { idApp, idCheckList } = args
-	try {
-		const { data } = await serviceCheckList.getById(idApp, idCheckList)
-		return data
-	} catch (error) {
-		console.log(error)
+export interface IInfoCurrentCheckList {
+	idApp: string | undefined
+	idCheckList: string | undefined
+}
+
+export const getInfoCurrentCheckList = createAsyncThunk<IInfoCurrentCheckList, IInfoCurrentCheckList>(
+	"getInfoCurrentCheckList/api",
+	async (args: IInfoCurrentCheckList) => {
+		const { idApp, idCheckList } = args
+		try {
+			const { data } = await serviceCheckList.getById(idApp, idCheckList)
+			return data
+		} catch (error) {
+			console.log(error)
+		}
 	}
-})
+)
 
 export const getListCards = createAsyncThunk<IAllInfoCurrentCheckListAPI>("getListCards/api", async args => {
 	const { step } = args
@@ -185,6 +193,19 @@ export const chainApiStepper = createAsyncThunk<IAllInfoCurrentCheckListAPI>(
 				listSteps: listSteps.payload,
 				listCards: listCards.payload
 			}
+		} catch (error) {
+			console.log(error)
+		}
+	}
+)
+
+export const createCheckList = createAsyncThunk<IAllInfoCurrentCheckListAPI>(
+	"createCheckList/api",
+	async (args: any) => {
+		const { idApp, payload } = args
+		try {
+			const { data } = await serviceCheckList.create(idApp, payload)
+			return data
 		} catch (error) {
 			console.log(error)
 		}

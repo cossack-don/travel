@@ -11,6 +11,7 @@ import {
 	setPickedCard,
 	updateCurrentStepAPI
 } from "@/entities/model/stepperSlice.ts"
+import UIBreadCrumbs from "../../../../shared/UI/UIBreadCrumbs/UIBreadCrumbs.tsx"
 
 const StepNumberOfDays = () => {
 	const params = useParams()
@@ -44,17 +45,13 @@ const StepNumberOfDays = () => {
 
 	return (
 		<div>
-			<UILink to={`/dashboard/app/${params.idApp}/check-list/${params.idCheckList}/step-sex`}>
-				На шаг Назад
-			</UILink>
-			<p>StepNumberOfDays</p>
-			<p>На сколько дней</p>
+			<UIBreadCrumbs />
+
 			<ListCards
 				listSteps={stepper.listCards}
 				isActiveStep={stepper.pickedCard}
 				onChangeStep={({ target: { value } }: any): any => dispatch(setPickedCard(Number(value)))}
 			/>
-
 			<button onClick={onMoveNextStep}>к 3-му шагу</button>
 		</div>
 	)

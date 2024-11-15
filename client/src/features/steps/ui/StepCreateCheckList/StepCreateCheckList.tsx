@@ -7,6 +7,8 @@ import { z } from "zod"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { serviceCheckList } from "@/shared/api/transport"
+import { createCheckList } from "@/entities/model/stepperSlice.ts"
+import { useAppDispatch } from "@/shared/hooks/hooks.ts"
 
 const StepCreateCheckList = () => {
 	const [name, setName] = useState("")
@@ -14,6 +16,7 @@ const StepCreateCheckList = () => {
 	const [isError, setError] = useState(false)
 	const navigate = useNavigate()
 	const params = useParams()
+	const dispatch = useAppDispatch()
 
 	const infoFields = {
 		name: {
@@ -35,8 +38,11 @@ const StepCreateCheckList = () => {
 				name: name,
 				description: description
 			}
-			const { data } = await serviceCheckList.create(params?.idApp, payload)
-			await navigate(`/dashboard/app/${params?.idApp}/check-list/${data?.check_list_id}/step-sex`)
+			const {
+				payload: { check_list_id }
+			} = await dispatch(createCheckList({ idApp: params?.idApp, payload: payload }))
+
+			await navigate(`/dashboard/app/${params?.idApp}/check-list/${check_list_id}/step-sex`)
 		} catch (e: any) {
 			console.log(e)
 		}

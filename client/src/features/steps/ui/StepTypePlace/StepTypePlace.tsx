@@ -14,6 +14,7 @@ import {
 	setPickedCard,
 	updateCurrentStepAPI
 } from "@/entities/model/stepperSlice.ts"
+import UIBreadCrumbs from "../../../../shared/UI/UIBreadCrumbs/UIBreadCrumbs.tsx"
 
 const StepTypePlace = () => {
 	const params = useParams()
@@ -47,24 +48,14 @@ const StepTypePlace = () => {
 
 	return (
 		<div>
-			<UILink to={`/dashboard/app/${params.idApp}/check-list/${params.idCheckList}/step-number-of-days`}>
-				Назад
-			</UILink>
-			<p>StepTypePlace</p>
-			<p>По стране или заграницу</p>
-			Выбран - {stepper.pickedCard}
+			<UIBreadCrumbs />
+
 			<ListCards
 				listSteps={stepper.listCards}
 				isActiveStep={stepper.pickedCard}
 				onChangeStep={({ target: { value } }: any): any => dispatch(setPickedCard(value))}
 			/>
-			{/*<Link*/}
-			{/*	to={`/dashboard/app/${params.idApp}/check-list/${params.idCheckList}/step-type-seasons`}*/}
-			{/*	style={{ width: "200px", height: "200px", marginRight: "15px" }}*/}
-			{/*	onClick={selectPlaceHandler}*/}
-			{/*>*/}
-			{/*	к 4-му шагу*/}
-			{/*</Link>*/}
+
 			<button onClick={onMoveNextStep}>к 4-му шагу</button>
 		</div>
 	)

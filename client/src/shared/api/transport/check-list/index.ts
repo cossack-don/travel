@@ -23,7 +23,7 @@ export const serviceCheckList = {
 			}
 		})
 	},
-	getById: (idApp: number | string, idCheckList: number | string) => {
+	getById: (idApp: string | undefined, idCheckList: string | undefined) => {
 		return ADAPTER_API_REQUEST({
 			url: getBaseURL(`/apps/${idApp}/check_list/${idCheckList}`),
 			method: Methods.GET

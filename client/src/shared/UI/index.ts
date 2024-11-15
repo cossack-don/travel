@@ -19,6 +19,7 @@ import UIAvatar from "@/shared/UI/UIAvatar/UIAvatar"
 import UILogo from "@/shared/UI/UILogo/UILogo"
 import ListCards from "@/shared/UI/UIStepsListCard/UIStepsListCard"
 import UIAfterHeader from "@/shared/UI/UIAfterHeader/UIAfterHeader"
+import UIBreadCrumbs from "@/shared/UI/UIBreadCrumbs/UIBreadCrumbs"
 
 export {
 	UILogo,
@@ -41,5 +42,6 @@ export {
 	UIDrawer,
 	UIAvatar,
 	ListCards,
-	UIAfterHeader
+	UIAfterHeader,
+	UIBreadCrumbs
 }
