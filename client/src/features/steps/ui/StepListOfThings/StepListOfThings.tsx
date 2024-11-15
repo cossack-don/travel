@@ -1,7 +1,8 @@
 import { useAppDispatch, useAppSelector } from "@/shared/hooks/hooks.ts"
 import { useEffect } from "react"
 import { getInfoCurrentCheckList } from "@/entities/model/stepperSlice.ts"
-import { useParams } from "react-router-dom"
+import { useParams, NavLink, Link } from "react-router-dom"
+import UIBreadCrumbs from "../../../../shared/UI/UIBreadCrumbs/UIBreadCrumbs.tsx"
 
 const StepListOfThings = () => {
 	const params = useParams()
@@ -11,8 +12,8 @@ const StepListOfThings = () => {
 	useEffect(() => {
 		dispatch(
 			getInfoCurrentCheckList({
-				idApp: params?.idApp,
-				idCheckList: params?.idCheckList
+				idApp: params.idApp,
+				idCheckList: params.idCheckList
 			})
 		)
 	}, [])
@@ -34,7 +35,12 @@ const StepListOfThings = () => {
 		)
 	})
 
-	return <div>{listsCategories}</div>
+	return (
+		<div>
+			<UIBreadCrumbs />
+			{listsCategories}
+		</div>
+	)
 }
 
 export default StepListOfThings

@@ -1,6 +1,6 @@
 import { useParams, useNavigate } from "react-router-dom"
 import { useEffect } from "react"
-import { ListCards, UILink } from "@/shared/UI"
+import { ListCards, UIBreadCrumbs } from "@/shared/UI"
 import { useAppDispatch, useAppSelector } from "@/shared/hooks/hooks.ts"
 import {
 	updateCurrentStepAPI,
@@ -45,9 +45,7 @@ const StepSex = () => {
 
 	return (
 		<div>
-			<p>ШАГ 1- StepSex </p>
-			<p>Выбор пола</p>
-			<UILink to={`/dashboard/app/${params.idApp}`}>Назад</UILink>
+			<UIBreadCrumbs />
 			<ListCards
 				listSteps={stepper.listCards}
 				isActiveStep={stepper.pickedCard}

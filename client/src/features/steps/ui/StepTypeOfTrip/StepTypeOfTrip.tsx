@@ -10,6 +10,7 @@ import {
 	setPickedCard,
 	updateCurrentStepAPI
 } from "@/entities/model/stepperSlice.ts"
+import UIBreadCrumbs from "../../../../shared/UI/UIBreadCrumbs/UIBreadCrumbs.tsx"
 
 const StepTypeOfTrip = () => {
 	const params = useParams()
@@ -43,24 +44,14 @@ const StepTypeOfTrip = () => {
 
 	return (
 		<div>
-			<UILink to={`/dashboard/app/${params.idApp}/check-list/${params.idCheckList}/step-type-seasons`}>
-				Назад
-			</UILink>
-			<p>StepTypeOfTrip</p>
-			<p>Тип поездки (пляж, горные лыжи, командировка,экскурсия и тд)</p>
-			Выбран - {stepper.pickedCard}
+			<UIBreadCrumbs />
+
 			<ListCards
 				listSteps={stepper.listCards}
 				isActiveStep={stepper.pickedCard}
 				onChangeStep={({ target: { value } }: any): any => dispatch(setPickedCard(value))}
 			/>
-			{/*<Link*/}
-			{/*	to={`/dashboard/app/${params.idApp}/check-list/${params.idCheckList}/step-list-of-things`}*/}
-			{/*	style={{ width: "200px", height: "200px", marginRight: "15px" }}*/}
-			{/*	onClick={selectStepOfTripHandler}*/}
-			{/*>*/}
-			{/*	к готовому списку*/}
-			{/*</Link>*/}
+
 			<button onClick={onMoveNextStep}>к готовому списку</button>
 		</div>
 	)
