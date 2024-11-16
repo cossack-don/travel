@@ -53,6 +53,7 @@ const AppLayout = ({ children }: Props) => {
 
 	const apiGetByIdApp = async () => {
 		const { data } = await serviceApp.getById(params.idApp)
+		console.log(data, "test snakeCase,toCamelCase")
 		// console.log(data, 3)
 		await dispatch(updateStateInfoEvent(data))
 	}

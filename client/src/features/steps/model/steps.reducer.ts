@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit"
-import { stepperApi } from "@/features/steps/api/stepperApi.ts"
+
 import axios from "axios"
 
 export interface StepperElement {
@@ -48,9 +48,9 @@ export const fetchStepsElement = createAsyncThunk<StepperElements, { link: strin
 		const { rejectWithValue, dispatch } = thunkAPI
 		const { link } = arg
 		try {
-			const { data } = await stepperApi.getStepsElement(link)
-			dispatch(stepperActions.setActiveValue(data.elements_step[0]))
-			return { data }
+			// const { data } = await stepperApi.getStepsElement(link)
+			// dispatch(stepperActions.setActiveValue(data.elements_step[0]))
+			// return { data }
 		} catch (error) {
 			if (axios.isAxiosError(error)) {
 				return rejectWithValue(null)
