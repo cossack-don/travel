@@ -3,7 +3,7 @@ import { AdapterApi, Methods, getBaseURL } from "@/shared/api/axios"
 export const serviceApp = {
 	getAll: () => {
 		return AdapterApi({
-			url: getBaseURL("/apps/get2222_list"),
+			url: getBaseURL("/apps/get_list"),
 			method: Methods.GET
 		})
 	},

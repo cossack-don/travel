@@ -4,16 +4,16 @@ import { AxiosRequestConfig } from "axios"
 
 export const AdapterApi = async (
 	config: AxiosRequestConfig,
-	isGenerateCamelCaste?: boolean,
-	isCustomErrors: boolean = false,
-	isGlobalToastWithSuccessResponse: boolean = false
+	isGenerateCamelCaste: boolean | undefined = true, // если хотим пропустить данный параметр = undefined
+	isCustomErrors: boolean | undefined = false, //  если хотим пропустить данный параметр = undefined
+	isGlobalToastWithSuccessResponse: boolean | undefined = false //  если хотим пропустить данный параметр = undefined
 ) => {
 	try {
 		const response = await CONFIG_AXIOS(config)
 		AdapterGlobalSuccessApi(isGlobalToastWithSuccessResponse)
 
 		return AdapterCase(isGenerateCamelCaste, response)
-	} catch (error: any) {
+	} catch (error: unknown) {
 		if (!isCustomErrors) AdapterErrors(error)
 
 		return Promise.reject(error)

@@ -1,6 +1,6 @@
 import { camelKeys } from "../utils"
 
-export const AdapterCase = (isGenerateCamelCase: boolean = true, response: any) => {
+export const AdapterCase = (isGenerateCamelCase: boolean, response: any) => {
 	if (isGenerateCamelCase) {
 		return Promise.resolve({
 			kind: "Success",
