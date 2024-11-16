@@ -1,16 +1,11 @@
-import axios, { AxiosResponse } from "axios"
+import { createCustomAxios } from "../utils"
+import { AxiosResponse } from "axios"
 
 export interface ApiResponse extends AxiosResponse {
 	kind: string
 }
-
-export const customConfigAxios = baseURL => {
-	const api = axios.create({
-		baseURL: baseURL,
-		withCredentials: false
-	})
-
-	api.interceptors.response.use(
+export const createInterceptorsResponse = (baseURL: string) => {
+	createCustomAxios(baseURL).interceptors.response.use(
 		(response): Promise<AxiosResponse> => {
 			return Promise.resolve({
 				kind: "Success",
@@ -25,6 +20,4 @@ export const customConfigAxios = baseURL => {
 			})
 		}
 	)
-
-	return api
 }
