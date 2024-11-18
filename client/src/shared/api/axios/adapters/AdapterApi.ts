@@ -11,7 +11,7 @@ export const AdapterApi = async (
 	try {
 		const response = await CONFIG_AXIOS(config)
 		AdapterGlobalSuccessApi(isGlobalToastWithSuccessResponse)
-
+		console.log(response, 11)
 		return AdapterCase(isGenerateCamelCaste, response)
 	} catch (error: unknown) {
 		if (!isCustomErrors) AdapterErrors(error)
