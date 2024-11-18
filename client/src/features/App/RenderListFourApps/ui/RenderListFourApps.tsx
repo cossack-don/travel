@@ -17,7 +17,6 @@ const RenderListFourApps = () => {
 			setBadRequest(false)
 			const { data } = await serviceApp.getAll()
 			const lastFourElements = data.data.slice(-4)
-
 			setApps(lastFourElements)
 		} catch {
 			setBadRequest(true)

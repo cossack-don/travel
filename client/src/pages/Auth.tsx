@@ -4,6 +4,7 @@ import styles from "./Auth.module.scss"
 import { z } from "zod"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
+import { serviceApp, serviceAuth } from "@/shared/api/transport"
 
 const Auth = () => {
 	const navigate = useNavigate()
@@ -26,14 +27,29 @@ const Auth = () => {
 
 		navigate("/dashboard")
 	}
+
+	const testAuth = async () => {
+		const { data } = await serviceAuth.login()
+
+		const auth = {
+			accessToken: data.accessToken,
+			tokenType: data.tokenType
+		}
+
+		//проверка нужна
+		localStorage.setItem("auth", JSON.stringify(auth))
+		console.log(JSON.parse(localStorage.getItem("auth")))
+		// console.log("AUTH", auth)
+		await serviceApp.getAll()
+	}
 	return (
 		<UIContainer listClasses={`row center-sm ${styles.wrapper}`}>
+			<button onClick={testAuth}>Test Auth</button>
 			<UICol listClasses={"col-sm-12"}>
 				<div>
 					<UIHeadingTypography>Авторизация</UIHeadingTypography>
 				</div>
 			</UICol>
-
 			<UICol listClasses={"col-sm-4"}>
 				<div>
 					<form onSubmit={handleSubmit(onSubmit)}>
@@ -45,7 +61,6 @@ const Auth = () => {
 					</form>
 				</div>
 			</UICol>
-
 			<UICol listClasses={"col-sm-12"}>
 				<div>
 					<UILink to={"/registration"}>Регистрация</UILink>

@@ -1,50 +1,62 @@
-import { Link } from "react-router-dom"
-import { ChangeEvent, useEffect, useState } from "react"
+import { Link, useNavigate, useParams } from "react-router-dom"
+import { useEffect, useState } from "react"
 import { useAppDispatch, useAppSelector } from "@/shared/hooks/hooks.ts"
-import { userModel } from "@/entities/model/userSlice.ts"
+import { fetchUserSteps, userModel } from "@/entities/model/userSlice.ts"
 import { fetchStepsElement } from "@/features/steps/model/steps.reducer.ts"
-import { ListCards } from "@/shared/UI"
+import { ListCards, UILink } from "@/shared/UI"
+import { usePickActiveCardRadio } from "@/shared/hooks"
+import { serviceCheckList } from "@/shared/api/transport"
+import {
+	$resetStateStepper,
+	chainApiStepper,
+	EnumNamesSteps,
+	listResetsStates,
+	setPickedCard,
+	updateCurrentStepAPI
+} from "@/entities/model/stepperSlice.ts"
+import UIBreadCrumbs from "../../../../shared/UI/UIBreadCrumbs/UIBreadCrumbs.tsx"
 
 const StepTypePlace = () => {
-	const dataCards = useAppSelector(state => state.stepper)
+	const params = useParams()
+	const navigate = useNavigate()
+	const dispatch = useAppDispatch()
+	const stepper = useAppSelector(state => state.stepperF)
 
 	useEffect(() => {
-		dispatch(fetchStepsElement({ link: "step-destination" }))
+		dispatch(
+			chainApiStepper({
+				idApp: params?.idApp,
+				idCheckList: params?.idCheckList,
+				nameStep: EnumNamesSteps.DESTINATION
+			})
+		)
 	}, [])
 
-	const usePickActiveCardRadio = (defaultValue: string) => {
-		const [value, setValue] = useState(defaultValue)
-
-		const onChangeRadio = (e: ChangeEvent<HTMLInputElement>) => {
-			setValue(e.target.value)
+	const onMoveNextStep = async () => {
+		const payload = {
+			nameStep: EnumNamesSteps.DESTINATION,
+			pickValueStep: stepper.pickedCard,
+			idApp: params?.idApp,
+			idCheckList: params?.idCheckList
 		}
-		return [value, onChangeRadio]
-	}
-	const [isActiveValue, setActiveValue] = useState("country")
-	const dispatch = useAppDispatch()
+		const url = `/dashboard/app/${params.idApp}/check-list/${params.idCheckList}/step-type-seasons`
 
-	const selectPlaceHandler = () => {
-		dispatch(userModel({ place: isActiveValue }))
+		await dispatch(updateCurrentStepAPI(payload))
+		await dispatch($resetStateStepper(listResetsStates))
+		await navigate(url)
 	}
 
 	return (
 		<div>
-			<p>StepTypePlace</p>
-			<p>По стране или заграницу</p>
-			Выбран - {isActiveValue}
+			<UIBreadCrumbs />
+
 			<ListCards
-				setActiveValue={setActiveValue}
-				listData={dataCards}
-				defaultValue={isActiveValue}
-				usePickActiveCardRadio={usePickActiveCardRadio}
+				listSteps={stepper.listCards}
+				isActiveStep={stepper.pickedCard}
+				onChangeStep={({ target: { value } }: any): any => dispatch(setPickedCard(value))}
 			/>
-			<Link
-				to="/dashboard/app/8743b52063cd84097a65d1633f5c74f5/check-list/:id/step-type-seasons"
-				style={{ width: "200px", height: "200px", marginRight: "15px" }}
-				onClick={selectPlaceHandler}
-			>
-				к 4-му шагу
-			</Link>
+
+			<button onClick={onMoveNextStep}>к 4-му шагу</button>
 		</div>
 	)
 }
