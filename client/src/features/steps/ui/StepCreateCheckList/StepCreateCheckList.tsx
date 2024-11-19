@@ -34,15 +34,13 @@ const StepCreateCheckList = () => {
 
 	const handlerSubmitForm = async () => {
 		try {
-			const payload = {
+			const payloadForm = {
 				name: name,
 				description: description
 			}
-			const {
-				payload: { check_list_id }
-			} = await dispatch(createCheckList({ idApp: params?.idApp, payload: payload }))
+			const { payload } = await dispatch(createCheckList({ idApp: params?.idApp, payload: payloadForm }))
 
-			await navigate(`/dashboard/app/${params?.idApp}/check-list/${check_list_id}/step-sex`)
+			await navigate(`/dashboard/app/${params?.idApp}/check-list/${payload.checkListId}/step-sex`)
 		} catch (e: any) {
 			console.log(e)
 		}

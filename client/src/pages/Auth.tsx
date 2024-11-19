@@ -4,14 +4,25 @@ import styles from "./Auth.module.scss"
 import { z } from "zod"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { serviceApp, serviceAuth } from "@/shared/api/transport"
+import { IAuth, serviceAuth } from "@/shared/api/transport"
+import { useEffect, useState } from "react"
+import { useOnMountedValidateAuth } from "@/shared/hooks"
+
+const mockUser = {
+	username: "test@yandex.ru",
+	password: "123456"
+}
 
 const Auth = () => {
+	const [userName, setUserName] = useState(mockUser.username)
+	const [password, setPassword] = useState(mockUser.password)
 	const navigate = useNavigate()
 
+	useOnMountedValidateAuth()
+
 	const schema = z.object({
-		login: z.string().min(3, "Логин обязателен! Минимум 3 символа"),
-		password: z.string().min(6, "Пароль должен содержать минимум 6 символов")
+		username: z.string().min(3, "Логин обязателен! Минимум 3 символа"),
+		password: z.string().min(3, "Пароль должен содержать минимум 3 символов")
 	})
 
 	const {
@@ -22,29 +33,13 @@ const Auth = () => {
 		resolver: zodResolver(schema)
 	})
 
-	const onSubmit = (data: any) => {
-		console.log("Данные для регистрации:", data)
-
-		navigate("/dashboard")
+	const onSubmit = async (data: IAuth) => {
+		await serviceAuth.login(data)
+		await navigate("/dashboard")
 	}
 
-	const testAuth = async () => {
-		const { data } = await serviceAuth.login()
-
-		const auth = {
-			accessToken: data.accessToken,
-			tokenType: data.tokenType
-		}
-
-		//проверка нужна
-		localStorage.setItem("auth", JSON.stringify(auth))
-		console.log(JSON.parse(localStorage.getItem("auth")))
-		// console.log("AUTH", auth)
-		await serviceApp.getAll()
-	}
 	return (
 		<UIContainer listClasses={`row center-sm ${styles.wrapper}`}>
-			<button onClick={testAuth}>Test Auth</button>
 			<UICol listClasses={"col-sm-12"}>
 				<div>
 					<UIHeadingTypography>Авторизация</UIHeadingTypography>
@@ -53,9 +48,22 @@ const Auth = () => {
 			<UICol listClasses={"col-sm-4"}>
 				<div>
 					<form onSubmit={handleSubmit(onSubmit)}>
-						<UIInput placeholder="Логин" validation={register("login", { minLength: 3 })} />
-						{errors.login ? <p style={{ color: "red" }}>{errors.login.message as string}</p> : null}
-						<UIInput type="password" placeholder="Пароль" validation={register("password")} />
+						<UIInput
+							label={"Логин"}
+							onInput={e => setUserName(e.target.value)}
+							value={userName}
+							placeholder="Логин"
+							validation={register("username", { minLength: 3 })}
+						/>
+						{errors.username ? <p style={{ color: "red" }}>{errors.username.message as string}</p> : null}
+						<UIInput
+							label={"Пароль"}
+							onInput={e => setPassword(e.target.value)}
+							value={password}
+							type="password"
+							placeholder="Пароль"
+							validation={register("password")}
+						/>
 						{errors.password ? <p style={{ color: "red" }}>{errors.password.message as string}</p> : null}
 						<UIButton type="submit">Вход</UIButton>
 					</form>

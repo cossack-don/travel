@@ -32,14 +32,12 @@ export const createConfigAxios = (baseURL: string) => {
 
 	api.interceptors.response.use(
 		(response): Promise<AxiosResponse> => {
-			// console.log(response)
 			return Promise.resolve({
 				kind: "Response success",
 				...response
 			})
 		},
 		(error): Promise<ApiResponse> => {
-			// Handle the error
 			return Promise.reject({
 				kind: "Error response",
 				...error

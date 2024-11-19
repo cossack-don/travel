@@ -6,7 +6,7 @@ export const AdapterAuth = () => {
 
 	const typeAuth = "Bearer"
 	const authModel: IAuth = Object.freeze(JSON.parse(<string>localStorage.getItem("auth")))
-	const token: string = authModel.accessToken ? `${typeAuth} ${authModel.accessToken}` : ""
+	const token: string = authModel?.accessToken ? `${typeAuth} ${authModel?.accessToken}` : null
 
 	return token
 }
