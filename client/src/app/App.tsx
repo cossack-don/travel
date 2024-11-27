@@ -11,12 +11,13 @@ import StoreProvider from "@/app/providers/store"
 import { router } from "@/app/providers/routers"
 import { RouterProvider } from "react-router-dom"
 import { ToastContainer } from "react-toastify"
+import { ReactNode } from "react"
 
-const App = () => {
+const App = (): ReactNode => {
 	return (
 		<StoreProvider>
 			<RouterProvider router={router} />
-			<ToastContainer />
+			{/*<ToastContainer />*/}
 		</StoreProvider>
 	)
 }
