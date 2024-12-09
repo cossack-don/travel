@@ -5,7 +5,7 @@ import { ReactNode } from "react"
 
 const BreadcrumbItem = ({ to, children }) => {
 	return (
-		<span className="breadcrumb-item">
+		<span className={styles.crumbItem}>
 			<UILink to={to}>{children}</UILink>
 		</span>
 	)
@@ -13,19 +13,29 @@ const BreadcrumbItem = ({ to, children }) => {
 
 const UIBreadCrumbs = (): ReactNode => {
 	const location = useLocation()
-	const pathNames = location.pathname.split("/").filter(el => el !== "")
+	const pathnames = location.pathname.split("/").filter(Boolean)
 
 	return (
 		<div className={styles.wrapper}>
-			{pathNames.map((pathname, index) => {
-				const isLast = index === pathNames.length - 1
-				return isLast ? (
-					<span>{decodeURIComponent(pathname.length < 15 ? pathname : `${pathname.slice(0, 14)}...`)}</span>
-				) : (
-					<BreadcrumbItem>
-						<span className={styles.crumbItem}>
-							{decodeURIComponent(pathname.length < 15 ? pathname : `${pathname.slice(0, 15)}...`)} &gt;
+			{pathnames.map((pathname, index) => {
+				const href = `/${pathnames.slice(0, index + 1).join("/")}`
+				const isLast = index === pathnames.length - 1
+
+				if (isLast) {
+					return (
+						<span key={href}>
+							{pathname.length > 12 ? (
+								<span className={styles.crumbItemActive}>{pathname.slice(0, 11)}...</span>
+							) : (
+								<span className={styles.crumbItemActive}>{pathname}</span>
+							)}
 						</span>
+					)
+				}
+
+				return (
+					<BreadcrumbItem key={href} to={href}>
+						{pathname.length > 12 ? `${pathname.slice(0, 11)}.../` : <span>{pathname}/</span>}
 					</BreadcrumbItem>
 				)
 			})}

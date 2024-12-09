@@ -114,6 +114,14 @@ export const router = createBrowserRouter([
 		)
 	},
 	{
+		path: "/dashboard/app/:idApp/check-list/:idCheckList/*",
+		element: (
+			<WrapperTypeLayout name="dashboard">
+				<Dashboard />
+			</WrapperTypeLayout>
+		)
+	},
+	{
 		path: "/dashboard/app/:idApp/check-list/:idCheckList/step-sex",
 		element: (
 			<WrapperTypeLayout name="dashboard">
