@@ -1,30 +1,17 @@
-from typing import Union
 from fastapi import APIRouter, Depends, HTTPException, Query
 from fastapi import status
 from fastapi.responses import JSONResponse
-from app.schemas.choices import *
-from app.database.session import get_db
-from app.services.choice_services import *
-from sqlalchemy.ext.asyncio import AsyncSession
+from app.schemas.check_box import *
+from app.services.check_box_services import *
 from app.routers.ticks import get_tick_instanse
 from app.services.ticks_service import TicksEntity
-from enum import Enum
+from app.dependencies.check_box import *
+from app.dependencies.permissions.user_permissions import current_user
 
 router = APIRouter(
     prefix="/api/v1/apps",
+    dependencies= [Depends(current_user),]
 )
-
-
-async def get_app_instanse(db: AsyncSession = Depends(get_db)):
-    return ChoisesAppRepisitory(db_session=db)
-
-
-async def get_check_list_instanse(db: AsyncSession = Depends(get_db)):
-    return ItemsCheckListRepository(db_session=db)
-
-
-async def get_steps_instanse(db: AsyncSession = Depends(get_db)):
-    return StepsRepository(db_session=db)
 
 
 @router.get(
@@ -274,7 +261,7 @@ async def get_check_list_by_id(
                     item
                 ).model_dump() for item in updated_cl_list_model]
 
-            
+
         else:
             updated_cl_list = []
 

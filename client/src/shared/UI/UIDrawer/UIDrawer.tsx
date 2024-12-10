@@ -3,10 +3,15 @@ import { createPortal } from "react-dom"
 import { useEffect } from "react"
 import { UIButton } from "@/shared/UI"
 import { useNavigate } from "react-router-dom"
+import { serviceAuth } from "@/shared/api/transport"
 
 const BodyContent = ({ onClose }: any) => {
 	const navigate = useNavigate()
 
+	const onLogOut = async () => {
+		await serviceAuth.logout()
+		await window.location.assign("/")
+	}
 	return (
 		<div className={style.wrapperDrawer}>
 			<div className={style.bg} onClick={onClose}></div>
@@ -20,7 +25,7 @@ const BodyContent = ({ onClose }: any) => {
 				<div className={style.body}>
 					body <br />
 					{/*<UIButton onClick={() => navigate("/")}>Выход</UIButton>*/}
-					<UIButton onClick={() => window.location.assign("/")}>Выход</UIButton>
+					<UIButton onClick={onLogOut}>Выход</UIButton>
 				</div>
 
 				<div className={style.footer}>Footer</div>

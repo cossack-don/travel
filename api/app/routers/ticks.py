@@ -1,11 +1,11 @@
-from typing import List, Union
-from fastapi import APIRouter, Depends, HTTPException, Query
+from typing import List
+from fastapi import APIRouter, Depends, HTTPException
 from fastapi import status
 from fastapi.responses import JSONResponse
 from app.schemas.ticks import *
-from app.database.session import get_db
 from app.services.ticks_service import *
-from sqlalchemy.ext.asyncio import AsyncSession
+from app.dependencies.ticks import *
+from app.dependencies.permissions.user_permissions import current_superuser
 
 
 router = APIRouter(
@@ -13,11 +13,8 @@ router = APIRouter(
     tags=[
         "Ticks",
     ],
+    dependencies=[Depends(current_superuser),]
 )
-
-
-async def get_tick_instanse(db: AsyncSession = Depends(get_db)):
-    return TicksEntity(db_session=db)
 
 
 @router.get("/", response_model=List[TicksSchema])

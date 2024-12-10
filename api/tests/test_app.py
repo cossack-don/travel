@@ -1,7 +1,7 @@
 import pytest
 from tests.testlib.utils import *
-from app.models.choices import *
-from app.models.choices import App
+from app.models.check_boxes import *
+from app.models.check_boxes import App
 import sqlalchemy as sa
 from tests.testlib.dataclasses import TestData
 

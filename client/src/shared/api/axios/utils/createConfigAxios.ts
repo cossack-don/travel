@@ -19,9 +19,7 @@ export const createConfigAxios = (baseURL: string) => {
 
 	api.interceptors.request.use(
 		function (config) {
-			// AdapterAuth()
-			// config.headers.Authorization = `Bearer 11111111` //example
-			console.log(config, 33)
+			config.headers.Authorization = AdapterAuth()
 			return config
 		},
 		function (error) {
@@ -34,14 +32,12 @@ export const createConfigAxios = (baseURL: string) => {
 
 	api.interceptors.response.use(
 		(response): Promise<AxiosResponse> => {
-			console.log(response)
 			return Promise.resolve({
 				kind: "Response success",
 				...response
 			})
 		},
 		(error): Promise<ApiResponse> => {
-			// Handle the error
 			return Promise.reject({
 				kind: "Error response",
 				...error

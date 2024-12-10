@@ -3,9 +3,12 @@ import { useNavigate } from "react-router-dom"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
+import { useOnMountedValidateAuth } from "@/shared/hooks"
 
 const Registration = () => {
 	const navigate = useNavigate()
+
+	useOnMountedValidateAuth()
 
 	const schema = z.object({
 		login: z.string().min(3, "Логин обязателен! Минимум 3 символа"),

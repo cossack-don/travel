@@ -2,7 +2,6 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.routers import routers
 
-
 app = FastAPI(
     docs_url="/api/docs",
 )
